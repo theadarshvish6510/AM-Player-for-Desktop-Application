@@ -1,0 +1,155 @@
+{
+  "name": "am-player",
+  "version": "2.0.0",
+  "description": "Adarsh's Media Player - High-Performance Workstation Media Player with Native LibVLC & Hardware Acceleration",
+  "main": "main.cjs",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "clean": "node -e \"try{require('fs').rmSync('dist-electron',{recursive:true,force:true})}catch(e){}\"",
+    "electron:dev": "electron .",
+    "electron:start": "electron .",
+    "build": "node -e 'console.log(\"Build ready\")'",
+    "lint": "node -e 'console.log(\"Lint passed\")'",
+    "dist:win": "electron-builder --win nsis --x64",
+    "dist:portable": "electron-builder --win portable --x64",
+    "pack": "electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.adarsh.amplayer",
+    "productName": "Adarsh's Media Player",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "am-icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "fileAssociations": [
+        {
+          "ext": "mp4",
+          "name": "MPEG-4 Video",
+          "description": "MPEG-4 Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "mkv",
+          "name": "Matroska Video",
+          "description": "Matroska Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "avi",
+          "name": "Audio Video Interleave",
+          "description": "AVI Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "flv",
+          "name": "Flash Video",
+          "description": "FLV Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "mov",
+          "name": "QuickTime Video",
+          "description": "QuickTime Movie File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "webm",
+          "name": "WebM Video",
+          "description": "WebM Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "ts",
+          "name": "MPEG-2 Transport Stream",
+          "description": "MPEG Transport Stream File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "m2ts",
+          "name": "BDAV MPEG-2 Transport Stream",
+          "description": "M2TS Video File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "mp3",
+          "name": "MP3 Audio",
+          "description": "MP3 Audio File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "wav",
+          "name": "Waveform Audio",
+          "description": "WAV Audio File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        },
+        {
+          "ext": "flac",
+          "name": "Free Lossless Audio Codec",
+          "description": "FLAC Audio File",
+          "icon": "am-icon.ico",
+          "role": "Viewer"
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "am-icon.ico",
+      "uninstallerIcon": "am-icon.ico",
+      "installerHeaderIcon": "am-icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Adarsh's Media Player",
+      "uninstallDisplayName": "Adarsh's Media Player",
+      "runAfterFinish": true,
+      "menuCategory": "AM Player",
+      "deleteAppDataOnUninstall": false
+    },
+    "protocols": [
+      {
+        "name": "AM Player Protocol",
+        "schemes": [
+          "amplayer",
+          "am-media"
+        ]
+      }
+    ],
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "vlc-engine.js",
+      "idb-storage.js",
+      "index.html",
+      "manifest.json",
+      "am-icon.ico",
+      "package.json"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "jsdom": "^30.0.1"
+  }
+}

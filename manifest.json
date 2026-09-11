@@ -1,0 +1,227 @@
+{
+  "id": "/?source=pwa",
+  "name": "Adarsh's Media Player",
+  "short_name": "AM Player",
+  "description": "Industrial-strength high-performance workstation media player with 3D Spatial Audio, Multi-band EQ, Lecture Notes, Subtitle Engine, and Theater Ambilight.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "background_color": "#050A07",
+  "theme_color": "#00FF66",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "entertainment",
+    "multimedia",
+    "music",
+    "video",
+    "productivity",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "./am-icon.ico",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./am-icon.ico",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Music Mode",
+      "short_name": "Music",
+      "description": "Launch player directly into Music Mode with 3D Spatial Audio and Visualizer",
+      "url": "./index.html?mode=music",
+      "icons": [
+        {
+          "src": "./am-icon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "./am-icon.ico",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Lecture Mode",
+      "short_name": "Lecture",
+      "description": "Launch player with Speech Enhancer and Timestamped Lecture Notes",
+      "url": "./index.html?mode=lecture",
+      "icons": [
+        {
+          "src": "./am-icon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "./am-icon.ico",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Theater Mode",
+      "short_name": "Theater",
+      "description": "Launch player with Dynamic Edge Ambilight and 4K AI Video Enhancer",
+      "url": "./index.html?mode=theater",
+      "icons": [
+        {
+          "src": "./am-icon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "./am-icon.ico",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Playlist Mode",
+      "short_name": "Playlist",
+      "description": "Open Folder Directory and Explorer Queue",
+      "url": "./index.html?mode=playlist",
+      "icons": [
+        {
+          "src": "./am-icon.ico",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "./am-icon.ico",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "./index.html",
+      "name": "Media Video Files",
+      "accept": {
+        "video/mp4": [".mp4", ".m4v"],
+        "video/webm": [".webm"],
+        "video/x-matroska": [".mkv"],
+        "video/quicktime": [".mov"],
+        "video/x-msvideo": [".avi"],
+        "video/ogg": [".ogv"],
+        "video/hevc": [".hevc"]
+      }
+    },
+    {
+      "action": "./index.html",
+      "name": "Media Audio Files",
+      "accept": {
+        "audio/mpeg": [".mp3"],
+        "audio/ogg": [".ogg", ".oga", ".opus"],
+        "audio/wav": [".wav"],
+        "audio/flac": [".flac"],
+        "audio/aac": [".aac"],
+        "audio/mp4": [".m4a"],
+        "audio/x-m4a": [".m4a"]
+      }
+    },
+    {
+      "action": "./index.html",
+      "name": "Subtitle Files",
+      "accept": {
+        "text/vtt": [".vtt"],
+        "text/x-ssa": [".ass", ".ssa"],
+        "application/x-subrip": [".srt"],
+        "text/plain": [".srt", ".vtt", ".ass", ".ssa"]
+      }
+    },
+    {
+      "action": "./index.html",
+      "name": "Lecture Notes Database",
+      "accept": {
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+media",
+      "url": "./index.html?stream=%s"
+    }
+  ],
+  "share_target": {
+    "action": "./index.html",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "media_files",
+          "accept": [
+            "video/*",
+            "audio/*",
+            ".srt",
+            ".vtt",
+            ".ass",
+            ".ssa",
+            ".json"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Adarsh's Media Player",
+  "description": "Industrial-strength high-performance workstation media player with 3D Spatial Audio, Multi-band EQ, Lecture Notes, Subtitle Engine, and Theater Ambilight.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
