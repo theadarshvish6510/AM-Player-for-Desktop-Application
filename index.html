@@ -251,7 +251,7 @@
                 else this.removeAttribute('disabled');
             }
         }
-        if (typeof customElements !== 'undefined' && !customElements.get('md-switch')) {
+        if (typeof customElements !== 'undefined' && typeof customElements.define === 'function' && (!customElements.get || !customElements.get('md-switch'))) {
             customElements.define('md-switch', MdSwitch);
         }
     </script>
@@ -866,61 +866,71 @@
         .upload-options {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 10px;
             width: 100%;
+            background: var(--md-sys-color-surface-container);
+            padding: 10px;
+            border-radius: 24px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            box-sizing: border-box;
         }
 
         .big-upload-btn {
-            background: var(--md-sys-color-surface-container);
+            background: var(--md-sys-color-surface-container-high);
             backdrop-filter: blur(var(--m3-blur-intensity));
             -webkit-backdrop-filter: blur(var(--m3-blur-intensity));
             color: var(--md-sys-color-on-background);
-            padding: 22px 14px;
-            border-radius: 24px;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 8px 10px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 6px;
             border: 1px solid var(--md-sys-color-outline-variant);
-            transition: transform 0.25s var(--md-sys-motion-bounce), background-color 0.3s ease, border-color 0.3s ease, border-radius 0.35s var(--md-sys-motion-standard), box-shadow 0.3s;
+            transition: transform 0.25s var(--md-sys-motion-bounce), background-color 0.25s ease, border-color 0.25s ease, border-radius 0.25s ease, box-shadow 0.25s ease;
+            text-align: center;
+            height: 42px;
+            min-height: 42px;
+            box-sizing: border-box;
         }
         .big-upload-btn:hover {
-            border-radius: 16px;
-            transform: translateY(-4px) scale(1.02);
-            background: var(--md-sys-color-surface-container-high);
+            transform: translateY(-2px) scale(1.01);
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
             border-color: var(--md-sys-color-primary);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.2), 0 0 20px var(--glow-primary);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.16), 0 0 12px var(--glow-primary);
         }
         .big-upload-btn span.material-symbols-rounded {
-            font-size: 36px;
+            font-size: 18px;
             color: var(--md-sys-color-primary);
-            transition: transform 0.3s var(--md-sys-motion-bounce);
+            transition: transform 0.25s var(--md-sys-motion-bounce);
         }
-        .big-upload-btn:hover span.material-symbols-rounded { transform: scale(1.2); }
+        .big-upload-btn:hover span.material-symbols-rounded { transform: scale(1.1); }
 
-        .btn-music { border-top: 3px solid var(--md-sys-color-primary); }
-        .btn-video { border-top: 3px solid var(--md-sys-color-primary); }
-        .btn-theater { border-top: 3px solid var(--md-sys-color-primary); }
-        .btn-folder { border-top: 3px solid var(--md-sys-color-primary); }
+        .btn-music { }
+        .btn-video { }
+        .btn-theater { }
+        .btn-playlist { }
 
         input[type="file"] { display: none; }
 
         .floating-input-group {
-            grid-column: span 4;
+            grid-column: 1 / -1;
             width: 100%;
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .url-input-box {
             display: flex;
             align-items: center;
             background: var(--md-sys-color-surface-container);
-            border: 2px solid var(--md-sys-color-outline-variant);
-            border-radius: var(--md-sys-shape-corner-full);
-            padding: 6px 8px 6px 20px;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 18px;
+            padding: 6px 8px 6px 18px;
+            box-sizing: border-box;
             transition: border-color 0.3s var(--md-sys-motion-standard), box-shadow 0.3s;
         }
         .url-input-box:focus-within {
@@ -933,20 +943,21 @@
             color: var(--md-sys-color-on-background);
             flex: 1;
             outline: none;
-            font-size: 15px;
+            font-size: 14.5px;
             font-family: inherit;
         }
         .url-input-box button {
             background: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
             border: none;
-            border-radius: var(--md-sys-shape-corner-full);
-            padding: 12px 24px;
+            border-radius: 14px;
+            padding: 10px 20px;
             font-weight: 700;
+            font-size: 13.5px;
             cursor: pointer;
             transition: transform 0.2s var(--md-sys-motion-bounce), box-shadow 0.2s;
         }
-        .url-input-box button:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--glow-primary); }
+        .url-input-box button:hover { transform: scale(1.04); box-shadow: 0 0 15px var(--glow-primary); }
 
         /* Next Player Library View & Recents */
         .library-section { width: 100%; display: flex; flex-direction: column; gap: 16px; }
@@ -1000,43 +1011,55 @@
         }
         .custom-folders-container {
             width: 100%;
-            overflow: hidden;
+            overflow: visible;
+            margin-top: -4px;
             margin-bottom: 8px;
+            padding: 6px 10px;
+            background: rgba(var(--md-sys-color-surface-container-rgb, 24, 30, 26), 0.5);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: 18px;
+            box-sizing: border-box;
+            backdrop-filter: blur(12px);
         }
         .custom-folders-scroll-row {
             display: flex;
+            align-items: center;
             gap: 10px;
             overflow-x: auto;
-            padding: 4px 2px 8px 2px;
+            overflow-y: visible;
+            padding: 4px 4px;
             scrollbar-width: thin;
         }
         .custom-folder-card {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 14px;
+            padding: 8px 16px;
+            min-height: 48px;
+            height: auto;
+            box-sizing: border-box;
             background: var(--md-sys-color-surface-container);
             border: 1px solid var(--md-sys-color-outline-variant);
-            border-radius: 16px;
+            border-radius: 24px;
             cursor: pointer;
             flex-shrink: 0;
             transition: all 0.2s var(--md-sys-motion-standard);
             user-select: none;
-            max-width: 220px;
+            max-width: none;
         }
         .custom-folder-card:hover {
             background: var(--md-sys-color-surface-container-high);
             border-color: var(--md-sys-color-primary);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         .custom-folder-card.active-folder {
             background: var(--md-sys-color-primary-container);
             border-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary-container);
-            box-shadow: 0 0 14px var(--glow-primary);
+            box-shadow: 0 0 10px var(--glow-primary);
         }
         .custom-folder-icon {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--md-sys-color-primary);
             display: flex;
             align-items: center;
@@ -1048,28 +1071,25 @@
         }
         .custom-folder-details {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             min-width: 0;
-            overflow: hidden;
+            flex: 1;
+            overflow: visible;
         }
         .custom-folder-name {
-            font-size: 12.5px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 600;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 120px;
+            overflow: visible;
+            text-overflow: clip;
+            max-width: none;
+            line-height: 1.5;
+            padding: 2px 0;
+            display: inline-block;
         }
-        .custom-folder-sub {
-            font-size: 10.5px;
-            color: var(--md-sys-color-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .custom-folder-card.active-folder .custom-folder-sub {
-            color: var(--md-sys-color-on-primary-container);
-            opacity: 0.85;
+        .custom-folder-sub,
+        .folder-mode-badge {
+            display: none !important;
         }
         .folder-remove-btn {
             background: transparent;
@@ -1078,30 +1098,83 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.15s ease;
-            margin-left: 4px;
+            margin-left: 2px;
             flex-shrink: 0;
+            padding: 0;
         }
         .folder-remove-btn:hover {
             background: rgba(255, 68, 68, 0.2);
             color: #ff5252;
-            transform: scale(1.15);
+            transform: scale(1.1);
         }
         .custom-folders-empty {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
+            gap: 8px;
+            padding: 6px 12px;
             background: var(--md-sys-color-surface-container-low);
             border: 1px dashed var(--md-sys-color-outline-variant);
-            border-radius: 16px;
+            border-radius: 12px;
             color: var(--md-sys-color-secondary);
-            font-size: 12.5px;
+            font-size: 11.5px;
             width: 100%;
+        }
+        .folder-mode-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1.5px solid var(--md-sys-color-outline-variant);
+            background: var(--md-sys-color-surface-container);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            user-select: none;
+        }
+        .folder-mode-option:hover {
+            background: var(--md-sys-color-surface-container-high);
+            border-color: var(--md-sys-color-outline);
+            transform: translateY(-1px);
+        }
+        .folder-mode-option.selected {
+            border-color: var(--md-sys-color-primary) !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .folder-mode-option.selected .folder-mode-radio {
+            color: var(--md-sys-color-primary) !important;
+        }
+        .folder-mode-option.selected .folder-mode-opt-desc {
+            color: var(--md-sys-color-on-primary-container) !important;
+            opacity: 0.9;
+        }
+        .explorer-item-mode-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+        .explorer-item-mode-tag.theater {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+        }
+        .explorer-item-mode-tag.lecture {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.15);
+        }
+        .explorer-item-mode-tag.music {
+            color: #22c55e;
+            background: rgba(34, 197, 94, 0.15);
         }
 
         /* ==========================================================================
@@ -1133,16 +1206,37 @@
             border-top-left-radius: 28px;
             border-bottom-left-radius: 28px;
             border-left: 1px solid var(--md-sys-color-outline-variant);
-            box-shadow: -10px 0 35px rgba(0, 0, 0, 0.55);
+            box-shadow: none;
             z-index: 1201;
             display: flex;
             flex-direction: column;
             transform: translateX(100%);
-            transition: transform 0.32s cubic-bezier(0.1, 0.9, 0.2, 1);
+            visibility: hidden;
+            pointer-events: none;
+            transition: transform 0.32s cubic-bezier(0.1, 0.9, 0.2, 1), visibility 0.32s ease, box-shadow 0.32s ease;
             overflow: hidden;
         }
         .shortcuts-drawer.open {
             transform: translateX(0);
+            visibility: visible;
+            pointer-events: auto;
+            box-shadow: -10px 0 35px rgba(0, 0, 0, 0.55);
+        }
+
+        /* Clean native scrollbars preventing blurry dark right-side bleed */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(128, 128, 128, 0.22);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(128, 128, 128, 0.45);
         }
         .shortcuts-drawer-header {
             display: flex;
@@ -1542,98 +1636,425 @@
             color: inherit;
         }
 
-        /* Surfaces Wrapper in Material View */
+        /* Surfaces Wrapper in Material View (Single Clean Surface + Modes Top Hub) */
         body.material-workspace-layout .start-screen-content-wrapper {
             display: flex !important;
-            flex-direction: row !important;
+            flex-direction: column !important;
             flex: 1 !important;
-            padding: 16px !important;
-            gap: 16px !important;
+            padding: 12px 18px !important;
+            gap: 10px !important;
             overflow: hidden !important;
             height: 100% !important;
             box-sizing: border-box !important;
         }
 
-        /* LEFT COLUMN (Search + Modes Grid) */
-        body.material-workspace-layout #workspace-column-left {
-            flex: 0 0 38% !important;
-            max-width: 42% !important;
-            min-width: 320px !important;
+        /* TOP SECTION: Square Rounded Playback Mode Cards + Quick Actions */
+        .modes-top-section {
+            display: flex !important;
+            align-items: stretch !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+            width: 100% !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Square Modes Group */
+        body.material-workspace-layout .square-modes-group {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 10px !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Square Rounded Playback Mode Card */
+        body.material-workspace-layout .square-mode-card {
             display: flex !important;
             flex-direction: column !important;
-            gap: 14px !important;
-            height: 100% !important;
-            overflow: hidden !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 118px !important;
+            height: 98px !important;
+            min-height: 98px !important;
+            max-height: 98px !important;
+            background: var(--md-sys-color-surface-container-high) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            border-radius: 16px !important;
+            cursor: pointer !important;
+            padding: 8px 6px !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
+            transition: transform 0.22s var(--md-sys-motion-bounce), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+            user-select: none !important;
+            position: relative !important;
+            gap: 3px !important;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06) !important;
         }
-
-        /* Blue line border: Search Card */
-        body.material-workspace-layout #material-search-card {
+        body.material-workspace-layout .square-mode-card:hover {
+            transform: translateY(-2px) scale(1.02) !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            border-color: var(--md-sys-color-primary) !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14), 0 0 14px var(--glow-primary) !important;
+        }
+        .square-mode-icon-wrap {
+            width: 38px !important;
+            height: 38px !important;
+            border-radius: 12px !important;
+            background: var(--md-sys-color-surface-container-highest) !important;
             display: flex !important;
             align-items: center !important;
-            background: var(--md-sys-color-surface-container-high) !important;
-            border: 1.5px solid var(--md-sys-color-outline-variant) !important;
-            border-radius: 28px !important;
-            padding: 10px 20px !important;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
-            flex-shrink: 0 !important;
-            gap: 10px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            justify-content: center !important;
+            margin-bottom: 2px !important;
+            transition: all 0.2s ease !important;
         }
-        body.material-workspace-layout #material-search-card:focus-within {
-            border-color: var(--md-sys-color-primary) !important;
-            box-shadow: 0 0 16px var(--glow-primary) !important;
+        body.material-workspace-layout .square-mode-card:hover .square-mode-icon-wrap {
+            background: var(--md-sys-color-primary) !important;
         }
-        #material-search-card input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--md-sys-color-on-surface);
-            font-size: 14px;
-            font-weight: 600;
-            width: 100%;
+        body.material-workspace-layout .square-mode-card .square-mode-icon-wrap span.material-symbols-rounded {
+            font-size: 22px !important;
+            color: var(--md-sys-color-primary) !important;
+            transition: transform 0.22s var(--md-sys-motion-bounce) !important;
         }
-        #material-search-card input::placeholder {
-            color: var(--md-sys-color-outline);
-            font-weight: 500;
+        body.material-workspace-layout .square-mode-card:hover .square-mode-icon-wrap span.material-symbols-rounded {
+            color: var(--md-sys-color-on-primary) !important;
+            transform: scale(1.1) !important;
+        }
+        .square-mode-title {
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            letter-spacing: -0.2px !important;
+            line-height: 1.2 !important;
+            color: inherit !important;
+        }
+        .square-mode-subtitle {
+            font-size: 9.5px !important;
+            font-weight: 500 !important;
+            opacity: 0.75 !important;
+            white-space: nowrap !important;
+            color: inherit !important;
         }
 
-        /* Sky blue line border: Choose Media Mode Card */
-        body.material-workspace-layout #mode-panel {
+        /* Top Right: Quick Actions Card (Stream URL + Add Folder) */
+        .modes-quick-actions-card {
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            padding: 8px 14px !important;
+            background: var(--md-sys-color-surface-container-high) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            border-radius: 16px !important;
+            box-sizing: border-box !important;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06) !important;
+        }
+        .modes-quick-actions-row {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            width: 100% !important;
+        }
+
+        /* FULL-SURFACE LIBRARY PANEL */
+        body.material-workspace-layout #library-panel {
             display: flex !important;
             flex-direction: column !important;
             flex: 1 !important;
             background: var(--md-sys-color-surface-container-high) !important;
             border: 1px solid var(--md-sys-color-outline-variant) !important;
-            border-radius: 28px !important;
-            padding: 20px !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
-            overflow-y: auto !important;
+            border-radius: 16px !important;
+            padding: 12px 16px !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+            overflow: hidden !important;
             position: relative !important;
-            gap: 14px !important;
+            gap: 8px !important;
             width: 100% !important;
             max-width: 100% !important;
+            height: 100% !important;
             margin: 0 !important;
             box-sizing: border-box !important;
         }
+
+        /* Left Panel Header */
+        .mode-panel-header-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            flex-shrink: 0 !important;
+            padding-bottom: 8px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        }
         body.material-workspace-layout .mode-panel-heading {
-            font-size: 20px !important;
-            font-weight: 800 !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
             color: var(--md-sys-color-primary) !important;
             display: flex !important;
             align-items: center !important;
-            gap: 10px !important;
+            gap: 6px !important;
             margin: 0 !important;
+            opacity: 0.95 !important;
         }
-        body.material-workspace-layout .upload-options {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            grid-template-rows: repeat(2, 1fr) !important;
-            gap: 12px !important;
+        body.material-workspace-layout .mode-panel-heading span.material-symbols-rounded {
+            font-size: 18px !important;
+            color: var(--md-sys-color-primary) !important;
+        }
+        .mode-panel-header-actions {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        .mode-add-folder-action-btn {
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            border: 1px solid var(--md-sys-color-primary) !important;
+            border-radius: 10px !important;
+            padding: 5px 12px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+        .mode-add-folder-action-btn:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+            filter: brightness(1.08) !important;
+        }
+
+        /* Left Panel Middle Area: Folders Hub */
+        .mode-panel-folders-area {
             flex: 1 !important;
-            width: 100% !important;
             min-height: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            position: relative !important;
+            gap: 8px !important;
+        }
+        .mode-panel-folders-list {
+            flex: 1 !important;
+            min-height: 0 !important;
+            overflow-y: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            padding-right: 4px !important;
+            scrollbar-width: thin !important;
+        }
+
+        /* Folder Item in Mode Panel: Sleek Modern Pill */
+        .mode-folder-item {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 8px 16px !important;
+            min-height: 48px !important;
+            height: auto !important;
+            box-sizing: border-box !important;
+            background: var(--md-sys-color-surface-container) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            border-radius: 24px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            user-select: none !important;
+            gap: 10px !important;
+            flex-shrink: 0 !important;
+        }
+        .mode-folder-item:hover {
+            background: var(--md-sys-color-surface-container-highest) !important;
+            border-color: var(--md-sys-color-primary) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12) !important;
+        }
+        .mode-folder-item.active-folder {
+            background: var(--md-sys-color-primary-container) !important;
+            border-color: var(--md-sys-color-primary) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            box-shadow: 0 0 10px var(--glow-primary) !important;
+        }
+        .mode-folder-item-left {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            min-width: 0 !important;
+            flex: 1 !important;
+        }
+        .mode-folder-item-icon {
+            font-size: 20px !important;
+            color: var(--md-sys-color-primary) !important;
+            flex-shrink: 0 !important;
+        }
+        .mode-folder-item.active-folder .mode-folder-item-icon {
+            color: var(--md-sys-color-on-primary-container) !important;
+        }
+        .mode-folder-item-info {
+            display: flex !important;
+            align-items: center !important;
+            min-width: 0 !important;
+            flex: 1 !important;
+            overflow: visible !important;
+        }
+        .mode-folder-item-name {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            color: var(--md-sys-color-on-surface) !important;
+            line-height: 1.5 !important;
+            padding: 2px 0 !important;
+            display: inline-block !important;
+        }
+        .mode-folder-item.active-folder .mode-folder-item-name {
+            color: var(--md-sys-color-on-primary-container) !important;
+        }
+        .mode-folder-item-sub {
+            display: none !important;
+        }
+        .mode-folder-item-right {
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            flex-shrink: 0 !important;
+        }
+        .mode-folder-item-delete {
+            background: transparent !important;
+            border: none !important;
+            color: var(--md-sys-color-secondary) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 22px !important;
+            height: 22px !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            padding: 0 !important;
+        }
+        .mode-folder-item-delete:hover {
+            background: rgba(255, 68, 68, 0.15) !important;
+            color: #ff5252 !important;
+        }
+
+        /* Add More Folder Item Button */
+        .mode-add-more-folder-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            padding: 8px 12px !important;
+            border-radius: 12px !important;
+            border: 1.5px dashed var(--md-sys-color-outline-variant) !important;
+            background: transparent !important;
+            color: var(--md-sys-color-outline) !important;
+            font-size: 11.5px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            margin-top: 4px !important;
+            flex-shrink: 0 !important;
+        }
+        .mode-add-more-folder-btn:hover {
+            border-color: var(--md-sys-color-primary) !important;
+            color: var(--md-sys-color-primary) !important;
+            background: rgba(var(--md-sys-color-primary-rgb, 0, 255, 102), 0.05) !important;
+        }
+
+        /* Empty State for Folders: Balanced, rich, zero dead space */
+        .mode-panel-folders-empty {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            flex: 1 !important;
+            height: 100% !important;
+            padding: 16px 14px !important;
+            border-radius: 14px !important;
+            border: 1.5px dashed var(--md-sys-color-outline-variant) !important;
+            background: rgba(255, 255, 255, 0.015) !important;
+            gap: 8px !important;
+            box-sizing: border-box !important;
+        }
+        .mode-empty-icon-wrap {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50% !important;
+            background: var(--md-sys-color-surface-container) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .mode-empty-icon {
+            font-size: 24px !important;
+            color: var(--md-sys-color-primary) !important;
+        }
+        .mode-empty-title {
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: var(--md-sys-color-on-surface) !important;
+        }
+        .mode-empty-sub {
+            font-size: 11px !important;
+            color: var(--md-sys-color-outline) !important;
+            max-width: 250px !important;
+            line-height: 1.4 !important;
+        }
+        .mode-empty-btn {
+            margin-top: 4px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 6px 16px !important;
+            border-radius: 10px !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            border: 1px solid var(--md-sys-color-primary) !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+        }
+        .mode-empty-btn:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18) !important;
+        }
+        .mode-empty-formats-row {
+            display: flex !important;
+            gap: 6px !important;
+            margin-top: 2px !important;
+        }
+        .mode-empty-formats-row .format-pill {
+            font-size: 10.5px !important;
+            font-weight: 600 !important;
+            padding: 3px 8px !important;
+            border-radius: 6px !important;
+            background: var(--md-sys-color-surface-container) !important;
+            color: var(--md-sys-color-outline) !important;
+        }
+
+        /* Bottom Section / Modes: Square Rounded Styling */
+        body.material-workspace-layout .upload-options {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 14px !important;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
         }
         body.material-workspace-layout .big-upload-btn {
             display: flex !important;
@@ -1641,29 +2062,154 @@
             align-items: center !important;
             justify-content: center !important;
             text-align: center !important;
-            padding: 16px 10px !important;
+            padding: 10px 8px !important;
             border-radius: 20px !important;
-            height: 100% !important;
-            min-height: 105px !important;
-            width: 100% !important;
+            width: 125px !important;
+            height: 110px !important;
+            min-height: 110px !important;
+            max-height: 110px !important;
             box-sizing: border-box !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+            background: var(--md-sys-color-surface-container-high) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            gap: 4px !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08) !important;
+            transition: transform 0.22s var(--md-sys-motion-bounce), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }
+        body.material-workspace-layout .big-upload-btn:hover {
+            transform: translateY(-3px) scale(1.03) !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            border-color: var(--md-sys-color-primary) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 0 16px var(--glow-primary) !important;
         }
         body.material-workspace-layout .big-upload-btn span.material-symbols-rounded {
-            font-size: 32px !important;
-            margin-bottom: 4px !important;
+            font-size: 24px !important;
+            color: var(--md-sys-color-primary) !important;
+            flex-shrink: 0 !important;
+            transition: transform 0.22s var(--md-sys-motion-bounce) !important;
+        }
+        body.material-workspace-layout .big-upload-btn:hover span.material-symbols-rounded {
+            color: var(--md-sys-color-on-primary) !important;
+            transform: scale(1.12) !important;
         }
         body.material-workspace-layout .btn-mode-title {
-            font-size: 14px !important;
-            font-weight: 800 !important;
-            display: block !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            letter-spacing: -0.2px !important;
+            line-height: 1.2 !important;
         }
         body.material-workspace-layout .btn-mode-desc {
-            font-size: 10px !important;
-            opacity: 0.7 !important;
-            margin-top: 2px !important;
-            display: block !important;
-            line-height: 1.2 !important;
+            display: none !important;
+        }
+
+        /* Stream URL Input in matching rectangular shape */
+        body.material-workspace-layout .floating-input-group {
+            width: 100% !important;
+            margin: 0 !important;
+        }
+        body.material-workspace-layout .url-input-box {
+            display: flex !important;
+            align-items: center !important;
+            background: var(--md-sys-color-surface-container) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            border-radius: 12px !important;
+            height: 42px !important;
+            padding: 0 6px 0 12px !important;
+            box-sizing: border-box !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }
+        body.material-workspace-layout .url-input-box:focus-within {
+            border-color: var(--md-sys-color-primary) !important;
+            box-shadow: 0 0 12px var(--glow-primary) !important;
+        }
+        body.material-workspace-layout .url-input-box input {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            color: var(--md-sys-color-on-surface) !important;
+            font-size: 12px !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+        body.material-workspace-layout .url-input-box button {
+            height: 30px !important;
+            padding: 0 12px !important;
+            border-radius: 8px !important;
+            background: var(--md-sys-color-primary-container) !important;
+            color: var(--md-sys-color-on-primary-container) !important;
+            border: 1px solid var(--md-sys-color-primary) !important;
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            transition: all 0.2s ease !important;
+        }
+
+        /* Right Panel: Media Library & Explorer Header */
+        .library-panel-header-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 12px !important;
+            width: 100% !important;
+            flex-shrink: 0 !important;
+            padding-bottom: 8px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        }
+        .library-header-left {
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            flex-shrink: 0 !important;
+        }
+        .library-view-heading {
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            color: var(--md-sys-color-on-surface) !important;
+            white-space: nowrap !important;
+        }
+        body.material-workspace-layout .library-header-center {
+            flex: 1 !important;
+            max-width: 360px !important;
+        }
+        body.material-workspace-layout #material-search-card {
+            display: flex !important;
+            align-items: center !important;
+            background: var(--md-sys-color-surface-container) !important;
+            border: 1px solid var(--md-sys-color-outline-variant) !important;
+            border-radius: 12px !important;
+            padding: 0 10px !important;
+            height: 36px !important;
+            gap: 8px !important;
+            box-sizing: border-box !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }
+        body.material-workspace-layout #material-search-card:focus-within {
+            border-color: var(--md-sys-color-primary) !important;
+            box-shadow: 0 0 12px var(--glow-primary) !important;
+        }
+        body.material-workspace-layout #material-search-card input {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            color: var(--md-sys-color-on-surface) !important;
+            font-size: 12.5px !important;
+            font-weight: 500 !important;
+            width: 100% !important;
+        }
+        body.material-workspace-layout #material-search-card input::placeholder {
+            color: var(--md-sys-color-outline) !important;
+            font-weight: 500 !important;
+        }
+        body.material-workspace-layout .media-explorer-view {
+            flex: 1 !important;
+            min-height: 0 !important;
+            overflow-y: auto !important;
+            padding: 4px 2px !important;
+            display: grid !important;
+            align-content: start !important;
         }
 
         /* RIGHT COLUMN (Shortcuts Banner + Folders & Explorer) */
@@ -1808,13 +2354,16 @@
                 flex-direction: column !important;
                 overflow-y: auto !important;
             }
-            body.material-workspace-layout #workspace-column-left,
-            body.material-workspace-layout #workspace-column-right {
-                flex: none !important;
-                max-width: 100% !important;
+            .modes-top-section {
+                flex-direction: column !important;
+            }
+            .square-modes-group {
                 width: 100% !important;
-                height: auto !important;
-                overflow: visible !important;
+                justify-content: space-between !important;
+            }
+            body.material-workspace-layout .square-mode-card {
+                flex: 1 !important;
+                min-width: 0 !important;
             }
         }
 
@@ -1890,20 +2439,20 @@
             justify-content: center;
             z-index: 25;
             pointer-events: none;
-            color: var(--md-sys-color-primary);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 24px var(--glow-primary);
             transition: opacity 0.2s ease;
+            overflow: hidden;
         }
         #buffering-spinner.active {
             display: flex;
         }
-        @keyframes spinSmooth {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #buffering-spinner .spin {
-            font-size: 34px;
-            animation: spinSmooth 0.85s linear infinite;
+        #buffering-spinner .loading-anim-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            pointer-events: none;
         }
 
         /* Fluid Aspect Ratios */
@@ -2761,17 +3310,17 @@
             text-align: center;
         }
 
-        /* Continuous Scroll Viewport */
+        /* Continuous Scroll Viewport (Flush Edge-to-Edge Border Fit) */
         #pdf-scroll-viewport {
             flex: 1;
             overflow-y: auto;
-            overflow-x: auto;
-            padding: 14px;
+            overflow-x: hidden;
+            padding: 0px !important;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
-            background: rgba(0, 0, 0, 0.65);
+            gap: 6px;
+            background: #0f1412;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-y;
@@ -2794,7 +3343,7 @@
         #pdf-scroll-viewport.pdf-theme-dark .pdf-page-card {
             filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(1.15);
             background: #FFFFFF;
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
         }
         #pdf-scroll-viewport.pdf-theme-sepia .pdf-page-card {
             filter: sepia(0.4) brightness(0.95) contrast(0.95);
@@ -2807,21 +3356,23 @@
 
         .pdf-page-card {
             position: relative;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.65);
-            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            border-radius: 0px;
             overflow: hidden;
             background: #FFFFFF;
-            max-width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
             display: flex;
             flex-direction: column;
+            margin: 0 !important;
             transition: transform 0.2s, box-shadow 0.2s;
             contain: layout paint;
         }
 
         .pdf-page-canvas {
             display: block;
-            width: 100%;
-            height: auto;
+            width: 100% !important;
+            height: auto !important;
         }
 
         .pdf-page-placeholder {
@@ -3642,6 +4193,30 @@
             font-weight: 700 !important;
         }
 
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .menu-item-left .material-symbols-rounded {
+            font-size: 20px;
+            color: var(--md-sys-color-primary);
+            flex-shrink: 0;
+            transition: color 0.2s ease;
+        }
+        .menu-item:hover .menu-item-left .material-symbols-rounded {
+            color: var(--md-sys-color-on-primary-container);
+        }
+        .menu-item-left span:not(.material-symbols-rounded) {
+            font-weight: 600;
+            font-size: 13.5px;
+            letter-spacing: -0.1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .tool-status-badge {
             font-size: 11px;
             font-weight: 800;
@@ -3718,6 +4293,30 @@
         }
         .m3-select-dialog-overlay.open .m3-select-dialog-card {
             opacity: 1;
+            transform: scale(1) translateY(0) !important;
+        }
+        #folder-mode-dialog-overlay {
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        #folder-mode-dialog-overlay.open {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+        #folder-mode-dialog-card {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            margin: auto !important;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(0);
+        }
+        #folder-mode-dialog-overlay.open #folder-mode-dialog-card {
+            opacity: 1 !important;
             transform: scale(1) translateY(0) !important;
         }
         .m3-dialog-header {
@@ -4481,8 +5080,9 @@
 
         @media (max-width: 768px) {
             .glass-panel { padding: 24px; width: 95%; }
-            .upload-options { grid-template-columns: 1fr 1fr; }
-            .floating-input-group { grid-column: span 2; }
+            .upload-options { grid-template-columns: repeat(2, 1fr) !important; }
+            body.material-workspace-layout .upload-options { grid-template-columns: repeat(2, 1fr) !important; grid-template-rows: auto !important; }
+            .floating-input-group { grid-column: 1 / -1; }
             .controls-container { width: 98%; padding: 14px; bottom: 10px; }
             .buttons-row { flex-wrap: wrap; justify-content: center; gap: 6px; }
             .volume-slider { width: 60px; }
@@ -4567,9 +5167,6 @@
                 <input type="text" id="library-search-input" placeholder="Search library, files or streams...">
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-                <button class="icon-btn" id="shortcuts-toggle-btn" title="Quick Links & Shortcuts">
-                    <span class="material-symbols-rounded">bookmarks</span>
-                </button>
                 <button class="icon-btn" id="open-settings-btn" title="Settings">
                     <span class="material-symbols-rounded">settings</span>
                 </button>
@@ -4590,173 +5187,149 @@
                     </div>
                 </div>
 
-                <!-- Navigation Rail Buttons (Preserved per user instructions) -->
-                <button class="nav-rail-item active" id="nav-rail-home" title="Home">
+                <!-- Settings Button: Positioned Directly Under Clock -->
+                <button class="nav-rail-item" id="nav-rail-settings" title="Engine & Interface Preferences">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">home</span>
+                        <span class="material-symbols-rounded">tune</span>
                     </div>
-                    <span class="nav-rail-label">Home</span>
+                    <span class="nav-rail-label">Preferences</span>
                 </button>
-                <button class="nav-rail-item" id="nav-rail-folders" title="Linked Folders">
+
+                <div class="nav-rail-divider" style="width: 34px; height: 1px; background: var(--md-sys-color-outline-variant); margin: 2px 0; opacity: 0.6;"></div>
+
+                <!-- Navigation Rail Buttons -->
+                <button class="nav-rail-item active" id="nav-rail-home" title="Master Media Workspace">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">folder_special</span>
+                        <span class="material-symbols-rounded">space_dashboard</span>
                     </div>
-                    <span class="nav-rail-label">Folders</span>
+                    <span class="nav-rail-label">Workspace</span>
                 </button>
-                <button class="nav-rail-item" id="nav-rail-shortcuts" title="Quick Links & Shortcuts">
+                <button class="nav-rail-item" id="nav-rail-folders" title="Media Vaults & Directories">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">bookmarks</span>
+                        <span class="material-symbols-rounded">folder_managed</span>
                     </div>
-                    <span class="nav-rail-label">Links</span>
+                    <span class="nav-rail-label">Vaults</span>
                 </button>
-                <button class="nav-rail-item" id="nav-rail-settings" title="Settings">
+                <button class="nav-rail-item" id="nav-rail-history" title="Playback Timeline & History">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">settings</span>
+                        <span class="material-symbols-rounded">history_toggle_off</span>
                     </div>
-                    <span class="nav-rail-label">Settings</span>
+                    <span class="nav-rail-label">Timeline</span>
                 </button>
             </nav>
 
             <!-- Main Content Container for Surfaces -->
             <div class="start-screen-content-wrapper" id="start-screen-content-wrapper">
-                <!-- LEFT COLUMN (Search Bar & Media Modes Grid) -->
-                <div class="workspace-column-left" id="workspace-column-left">
-                    <!-- Blue Line Border: Search Card -->
-                    <div class="material-search-card" id="material-search-card">
-                        <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:22px;">search</span>
-                        <input type="text" id="material-search-input" placeholder="Search library, files or streams..." autocomplete="off">
-                        <button class="icon-btn search-clear-btn" id="material-search-clear" style="display:none; width:28px; height:28px;" title="Clear search">
-                            <span class="material-symbols-rounded" style="font-size:18px;">close</span>
-                        </button>
+                <!-- TOP SECTION: Square Rounded Playback Mode Cards + Quick Actions -->
+                <div class="modes-top-section" id="modes-top-section">
+                    <!-- Square Rounded Mode Cards -->
+                    <div class="upload-options square-modes-group" id="upload-options-grid">
+                        <label for="audio-upload" class="big-upload-btn square-mode-card btn-music" title="Launch Lossless Studio Hi-Fi Mode">
+                            <div class="square-mode-icon-wrap">
+                                <span class="material-symbols-rounded">graphic_eq</span>
+                            </div>
+                            <span class="square-mode-title">Studio Hi-Fi</span>
+                            <span class="square-mode-subtitle">Lossless FLAC • 3D Audio</span>
+                        </label>
+                        <input type="file" id="audio-upload" accept=".mp3,.m4a,.flac,.aac,.wav,.ogg,.alac,.aiff,.opus,.wma,audio/mp3,audio/mpeg,audio/mp4,audio/aac,audio/flac,audio/wav,audio/ogg,audio/x-m4a">
+
+                        <label for="video-upload" class="big-upload-btn square-mode-card btn-video" title="Launch Academic Lecture Pro Mode">
+                            <div class="square-mode-icon-wrap">
+                                <span class="material-symbols-rounded">cast_for_education</span>
+                            </div>
+                            <span class="square-mode-title">Lecture Pro</span>
+                            <span class="square-mode-subtitle">Smart A-B • Split PDF</span>
+                        </label>
+                        <input type="file" id="video-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
+
+                        <label for="theater-upload" class="big-upload-btn square-mode-card btn-theater" title="Launch Cinema Ultra 4K Theater Mode">
+                            <div class="square-mode-icon-wrap">
+                                <span class="material-symbols-rounded">movie_filter</span>
+                            </div>
+                            <span class="square-mode-title">Cinema Ultra 4K</span>
+                            <span class="square-mode-subtitle">HDR10+ • Atmos Ambilight</span>
+                        </label>
+                        <input type="file" id="theater-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
+
+                        <label for="folder-upload" class="big-upload-btn square-mode-card btn-playlist" id="card-folder-upload" title="Open Media Folder or Multi-Episode Playlist">
+                            <div class="square-mode-icon-wrap">
+                                <span class="material-symbols-rounded">folder_open</span>
+                            </div>
+                            <span class="square-mode-title">Media Folder</span>
+                            <span class="square-mode-subtitle">Auto-Sort • Binge Playlist</span>
+                        </label>
                     </div>
 
-                    <!-- Sky Blue Line Border: Choose Media Mode Surface / Panel -->
-                    <div class="glass-panel" id="mode-panel">
-                        <h1 class="mode-panel-heading">
-                            <span class="material-symbols-rounded" style="font-size: 26px;">dashboard_customize</span> Choose Media Mode
-                        </h1>
-
-                        <!-- Upright Grid View (सीधे खड़े-खड़े) -->
-                        <div class="upload-options" id="upload-options-grid">
-                            <label for="audio-upload" class="big-upload-btn btn-music">
-                                <span class="material-symbols-rounded">headphones</span>
-                                <span class="btn-mode-title">Music Mode</span>
-                                <span class="btn-mode-desc">Audio, 8D Orbit & Visualizers</span>
-                            </label>
-                            <input type="file" id="audio-upload" accept=".mp3,.m4a,.flac,.aac,.wav,.ogg,.alac,.aiff,.opus,.wma,audio/mp3,audio/mpeg,audio/mp4,audio/aac,audio/flac,audio/wav,audio/ogg,audio/x-m4a">
-
-                            <label for="video-upload" class="big-upload-btn btn-video">
-                                <span class="material-symbols-rounded">movie</span>
-                                <span class="btn-mode-title">Lecture Mode</span>
-                                <span class="btn-mode-desc">Video & PDF Notes Split</span>
-                            </label>
-                            <input type="file" id="video-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
-
-                            <label for="theater-upload" class="big-upload-btn btn-theater">
-                                <span class="material-symbols-rounded">theaters</span>
-                                <span class="btn-mode-title">Theater Mode</span>
-                                <span class="btn-mode-desc">Cinema Surround & HDR</span>
-                            </label>
-                            <input type="file" id="theater-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
-
-                            <label for="folder-upload" class="big-upload-btn btn-folder">
-                                <span class="material-symbols-rounded">folder_open</span>
-                                <span class="btn-mode-title">Playlist Mode</span>
-                                <span class="btn-mode-desc">Batch Files & Auto-Next</span>
-                            </label>
-                            <input type="file" id="folder-upload" accept="video/*,audio/*" webkitdirectory directory multiple>
-                        </div>
-
-                        <div class="floating-input-group">
-                            <div class="url-input-box">
-                                <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); margin-right: 8px;">link</span>
-                                <input type="text" id="url-input" placeholder="Paste network stream or .m3u8 URL">
-                                <button id="url-play-btn">Play Stream</button>
+                    <!-- Stream URL + Add Media Folder Quick Actions Card -->
+                    <div class="modes-quick-actions-card">
+                        <div class="modes-quick-actions-row">
+                            <div class="url-input-box" style="flex: 1;">
+                                <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); margin-right: 8px;">cast_connected</span>
+                                <input type="text" id="url-input" placeholder="Broadcast URL, HLS (.m3u8), DASH (.mpd), or Live Stream...">
+                                <button id="url-play-btn">Stream Live</button>
                             </div>
+                            <button type="button" class="mode-add-folder-action-btn" id="add-linked-folder-btn" title="Mount Persistent Media Vault Directory" style="height: 42px; padding: 0 16px; border-radius: 21px; font-weight: 700; flex-shrink: 0; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border: none; cursor: pointer;">
+                                <span class="material-symbols-rounded" style="font-size:18px;">folder_managed</span>
+                                <span>Mount Vault</span>
+                                <span class="folders-count-pill" id="linked-folders-count" style="margin-left: 4px;">0 / 10</span>
+                            </button>
+                            <input type="file" id="web-linked-folder-input" webkitdirectory directory multiple style="display:none;">
+                            <input type="file" id="folder-upload" webkitdirectory directory multiple style="display:none;">
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN (Shortcuts Banner + Folders & Media Explorer) -->
-                <div class="workspace-column-right" id="workspace-column-right">
-                    <!-- Yellow Line Border: Quick Links & Shortcuts Banner -->
-                    <div class="material-shortcuts-banner" id="material-shortcuts-banner">
-                        <div class="shortcuts-banner-header">
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-sys-color-primary);">bookmarks</span>
-                                <span style="font-weight:700; font-size:13px; color:var(--md-sys-color-on-surface);">Quick Links & Shortcuts</span>
+                <!-- Main Media Library & Explorer Surface (Full Width) -->
+                <div class="glass-panel" id="library-panel">
+                    <!-- Linked Custom Folders Chips (visible when folders added) -->
+                    <div class="custom-folders-container" id="custom-folders-container">
+                        <div class="custom-folders-scroll-row" id="custom-folders-row">
+                            <!-- Populated dynamically by renderCustomFolderChips -->
+                        </div>
+                    </div>
+                    <div class="recents-scroll-row" id="recents-row" style="display:none;"></div>
+
+                    <!-- Explorer Header Row with Integrated Search & Controls -->
+                    <div class="library-panel-header-row">
+                        <div class="library-header-left">
+                            <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:22px;">auto_awesome_mosaic</span>
+                            <span id="explorer-view-title" class="library-view-heading">Master Media Vault & Explorer</span>
+                        </div>
+                        <!-- Integrated Library Search Bar -->
+                        <div class="library-header-center">
+                            <div class="material-search-card" id="material-search-card">
+                                <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:18px;">search</span>
+                                <input type="text" id="material-search-input" placeholder="Search assets by title, codec, resolution or format..." autocomplete="off">
+                                <button class="icon-btn search-clear-btn" id="material-search-clear" style="display:none; width:26px; height:26px;" title="Clear search">
+                                    <span class="material-symbols-rounded" style="font-size:16px;">close</span>
+                                </button>
                             </div>
-                            <button class="banner-add-shortcut-btn" id="banner-add-shortcut-btn" title="Add New Link / Shortcut">
-                                <span class="material-symbols-rounded" style="font-size:16px;">add</span>
-                                <span>Add Link</span>
+                        </div>
+                        <div class="view-controls">
+                            <select class="m3-select" id="sort-select">
+                                <option value="name-asc">Sort: Asset Title (A → Z)</option>
+                                <option value="name-desc">Sort: Asset Title (Z → A)</option>
+                                <option value="duration">Sort: Duration (Longest First)</option>
+                                <option value="folder">Sort: Aggregate Vault Runtime</option>
+                                <option value="extension">Sort: Media Codec & Format</option>
+                                <option value="path">Sort: Storage Hierarchy</option>
+                                <option value="progress">Sort: Completion Quotient %</option>
+                                <option value="resolution">Sort: Video Resolution (4K / 1080p)</option>
+                                <option value="size-large">Sort: Bitrate & File Size</option>
+                                <option value="thumb">Sort: Poster Keyframe Status</option>
+                                <option value="date-new">Sort: Asset Ingestion Date</option>
+                            </select>
+                            <button class="icon-btn" id="view-toggle-btn" title="Toggle Layout (Grid / Detailed List)" style="width:36px; height:36px;">
+                                <span class="material-symbols-rounded" id="view-toggle-icon">grid_view</span>
+                            </button>
+                            <button class="icon-btn" id="clear-explorer-btn" title="Purge Cached Media Vault Entries" style="width:36px; height:36px; color:var(--md-sys-color-primary);">
+                                <span class="material-symbols-rounded">cleaning_services</span>
                             </button>
                         </div>
-                        <div class="shortcuts-horizontal-row" id="shortcuts-horizontal-row">
-                            <!-- Populated dynamically with shortcut chips -->
-                        </div>
                     </div>
 
-                    <!-- Red Line Border: Media Library & Explorer Section -->
-                    <div class="glass-panel" id="library-panel" style="padding: 24px;">
-                        <div class="library-section">
-                            <!-- 5-Folder Persistent Directory Watcher Section -->
-                            <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                                <div class="section-title">
-                                    <span class="material-symbols-rounded">folder_special</span>
-                                    <span>Linked Media Folders</span>
-                                    <span class="folders-count-pill" id="linked-folders-count">0 / 5</span>
-                                </div>
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <button class="icon-btn" id="add-linked-folder-btn" title="Link Folder (Up to 5 folders max)" style="width:auto; padding:6px 14px; border-radius:var(--md-sys-shape-corner-full); font-size:12.5px; font-weight:700; height:34px; gap:6px; background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container);">
-                                        <span class="material-symbols-rounded" style="font-size:18px;">create_new_folder</span>
-                                        <span>Add Folder</span>
-                                    </button>
-                                    <input type="file" id="web-linked-folder-input" webkitdirectory directory multiple style="display:none;">
-                                </div>
-                            </div>
-
-                            <!-- Custom Folders Container -->
-                            <div class="custom-folders-container" id="custom-folders-container">
-                                <div class="custom-folders-scroll-row" id="custom-folders-row">
-                                    <!-- Populated dynamically -->
-                                </div>
-                            </div>
-
-                            <!-- Preserved invisible recents row for zero-error backwards compatibility -->
-                            <div class="recents-scroll-row" id="recents-row" style="display:none;"></div>
-
-                            <!-- Explorer Section Header -->
-                            <div class="section-header" style="margin-top: 10px;">
-                                <div class="section-title">
-                                    <span class="material-symbols-rounded">video_library</span>
-                                    <span id="explorer-view-title">Media Library & Explorer</span>
-                                </div>
-                                <div class="view-controls">
-                                    <select class="m3-select" id="sort-select">
-                                        <option value="name-asc">Sort: Title (A-Z)</option>
-                                        <option value="name-desc">Sort: Title (Z-A)</option>
-                                        <option value="duration">Sort: Duration</option>
-                                        <option value="folder">Sort: Folder Duration</option>
-                                        <option value="extension">Sort: File Extension</option>
-                                        <option value="path">Sort: File Path</option>
-                                        <option value="progress">Sort: Played Progress %</option>
-                                        <option value="resolution">Sort: Video Resolution</option>
-                                        <option value="size-large">Sort: File Size</option>
-                                        <option value="thumb">Sort: Thumbnail Status</option>
-                                        <option value="date-new">Sort: Date Modified</option>
-                                    </select>
-                                    <button class="icon-btn" id="view-toggle-btn" title="Toggle Grid/List View" style="width:38px; height:38px;">
-                                        <span class="material-symbols-rounded" id="view-toggle-icon">grid_view</span>
-                                    </button>
-                                    <button class="icon-btn" id="clear-explorer-btn" title="Purge & Clear All Library Videos" style="width:38px; height:38px; color:var(--md-sys-color-primary);">
-                                        <span class="material-symbols-rounded">delete_sweep</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="media-explorer-view grid-mode" id="media-explorer-grid"></div>
-                        </div>
-                    </div>
+                    <!-- Full-height Media Explorer View -->
+                    <div class="media-explorer-view grid-mode" id="media-explorer-grid"></div>
                 </div>
             </div>
         </div>
@@ -4844,14 +5417,38 @@
 
             <!-- 8 Top Tabs -->
             <div class="settings-nav-tabs">
-                <button class="settings-tab-btn active" data-tab="tab-appearance">🎨 Appearance</button>
-                <button class="settings-tab-btn" data-tab="tab-library">📁 Media Library</button>
-                <button class="settings-tab-btn" data-tab="tab-player">▶️ Player</button>
-                <button class="settings-tab-btn" data-tab="tab-gestures">👆 Gestures</button>
-                <button class="settings-tab-btn" data-tab="tab-audio">🔊 Audio & Decoder</button>
-                <button class="settings-tab-btn" data-tab="tab-subtitles">💬 Subtitles</button>
-                <button class="settings-tab-btn" data-tab="tab-general">🛠️ General</button>
-                <button class="settings-tab-btn" data-tab="tab-shortcuts">⌨️ Shortcuts</button>
+                <button class="settings-tab-btn active" data-tab="tab-appearance">
+                    <span class="material-symbols-rounded" style="font-size:16px;">palette</span>
+                    <span>Visual Engine</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-library">
+                    <span class="material-symbols-rounded" style="font-size:16px;">folder_managed</span>
+                    <span>Media Vault</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-player">
+                    <span class="material-symbols-rounded" style="font-size:16px;">smart_display</span>
+                    <span>Playback Engine</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-gestures">
+                    <span class="material-symbols-rounded" style="font-size:16px;">touch_app</span>
+                    <span>Touch & Gestures</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-audio">
+                    <span class="material-symbols-rounded" style="font-size:16px;">equalizer</span>
+                    <span>DSP & Hi-Res Audio</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-subtitles">
+                    <span class="material-symbols-rounded" style="font-size:16px;">subtitles</span>
+                    <span>Closed Captions</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-general">
+                    <span class="material-symbols-rounded" style="font-size:16px;">tune</span>
+                    <span>System & Core</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-shortcuts">
+                    <span class="material-symbols-rounded" style="font-size:16px;">keyboard</span>
+                    <span>Keybindings</span>
+                </button>
             </div>
 
             <!-- 1. 🎨 APPEARANCE TAB -->
@@ -5719,37 +6316,52 @@
         <!-- Lecture Notes Sidebar -->
         <div id="notes-sidebar">
             <div class="sidebar-header">
-                <span>📝 Lecture Notes & Sync</span>
-                <button class="icon-btn" id="close-notes-btn" style="width:34px; height:34px;"><span class="material-symbols-rounded">close</span></button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">rate_review</span>
+                    <span style="font-weight:700;">Lecture Notes & Smart Sync</span>
+                </div>
+                <button class="icon-btn" id="close-notes-btn" style="width:34px; height:34px;" title="Close Notes"><span class="material-symbols-rounded">close</span></button>
             </div>
             <div id="notes-list"></div>
             <div class="note-input-area">
-                <textarea id="note-input" placeholder="Type a note at current time..."></textarea>
+                <textarea id="note-input" placeholder="Annotate key concept at current timestamp..."></textarea>
                 <div style="display:flex; justify-content:space-between; gap:8px;">
-                    <button class="icon-btn" id="export-notes-btn" style="width:auto; padding:6px 12px; font-size:12px; font-weight:700; height:34px;">Export JSON</button>
-                    <button class="icon-btn is-morph-rect" id="add-note-btn" style="width:auto; padding:6px 16px; font-size:12px; font-weight:700; height:34px;">Add Note</button>
+                    <button class="icon-btn" id="export-notes-btn" style="width:auto; padding:6px 14px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Export Notes as JSON">
+                        <span class="material-symbols-rounded" style="font-size:16px;">download</span>
+                        <span>Export</span>
+                    </button>
+                    <button class="icon-btn is-morph-rect" id="add-note-btn" style="width:auto; padding:6px 16px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Save Timestamped Note">
+                        <span class="material-symbols-rounded" style="font-size:16px;">add</span>
+                        <span>Save Note</span>
+                    </button>
                 </div>
             </div>
         </div>
 
         <div id="playlist-sidebar">
-            <div class="playlist-header"><span id="playlist-header-text">Playlist</span> <span id="playlist-count">(0)</span></div>
+            <div class="playlist-header">
+                <span id="playlist-header-text" style="display:flex; align-items:center; gap:6px;">
+                    <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-sys-color-primary);">queue_music</span>
+                    <span>Active Queue</span>
+                </span>
+                <span id="playlist-count">(0)</span>
+            </div>
             <div id="playlist-items"></div>
         </div>
 
         <div id="more-videos-overlay">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-                <h2 style="color:var(--md-sys-color-primary); display:flex; align-items:center; gap:8px;">
-                    <span class="material-symbols-rounded">grid_view</span> Media Library
+                <h2 style="color:var(--md-sys-color-primary); display:flex; align-items:center; gap:8px; font-size: 20px; font-weight: 800;">
+                    <span class="material-symbols-rounded" style="font-size: 24px;">auto_awesome_mosaic</span> Master Media Vault
                 </h2>
-                <button class="icon-btn" id="close-grid-btn"><span class="material-symbols-rounded">close</span></button>
+                <button class="icon-btn" id="close-grid-btn" title="Close Vault View"><span class="material-symbols-rounded">close</span></button>
             </div>
             <div class="videos-grid" id="videos-grid"></div>
         </div>
 
         <video id="main-video" class="ar-fit" preload="auto" playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" crossorigin="anonymous"></video>
         <div id="buffering-spinner" title="Buffering & Optimizing Stream">
-            <span class="material-symbols-rounded spin">progress_activity</span>
+            <video id="buffering-video" class="loading-anim-video" src="./am-loading-video.webm" autoplay loop muted playsinline webkit-playsinline></video>
         </div>
 
         <div id="toast">Message</div>
@@ -5860,14 +6472,49 @@
             <div class="menu-item speed-item" data-speed="0.25">0.25x</div>
         </div>
 
-        <div class="popup-menu aspect-menu" id="aspect-menu">
-            <div class="menu-item aspect-item" data-ar="fit">Fit (Standard)</div>
-            <div class="menu-item aspect-item" data-ar="fill">Fill / Stretch</div>
-            <div class="menu-item aspect-item" data-ar="crop">Crop / Zoom</div>
-            <div class="menu-item aspect-item" data-ar="16-9">16:9 Cinema</div>
-            <div class="menu-item aspect-item" data-ar="18-9">18:9 Modern</div>
-            <div class="menu-item aspect-item" data-ar="4-3">4:3 Classic</div>
-            <div class="menu-item aspect-item" data-ar="21-9">21:9 Ultrawide</div>
+        <div class="popup-menu aspect-menu" id="aspect-menu" style="width: 230px;">
+            <div class="menu-item aspect-item" data-ar="fit">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">aspect_ratio</span>
+                    <span>Fit Original (100%)</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="fill">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">fullscreen</span>
+                    <span>Fill Viewport (Stretch)</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="crop">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">crop</span>
+                    <span>Cinema Pan & Scan</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="16-9">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">desktop_windows</span>
+                    <span>16:9 Cinema Widescreen</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="18-9">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">smartphone</span>
+                    <span>18:9 Modern Mobile</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="4-3">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">tv</span>
+                    <span>4:3 Classic Standard</span>
+                </div>
+            </div>
+            <div class="menu-item aspect-item" data-ar="21-9">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">theater_comedy</span>
+                    <span>21:9 Anamorphic Scope</span>
+                </div>
+            </div>
         </div>
 
         <div class="popup-menu sync-menu" id="sync-menu">
@@ -5882,54 +6529,135 @@
             </div>
         </div>
 
-        <div class="popup-menu pomo-menu" id="pomo-menu">
-            <div class="menu-item pomo-item" data-time="60">⏱️ 1 Hour</div>
-            <div class="menu-item pomo-item" data-time="45">⏱️ 45 Mins</div>
-            <div class="menu-item pomo-item" data-time="30">⏱️ 30 Mins</div>
-            <div class="menu-item pomo-item" data-time="15">⏱️ 15 Mins</div>
-            <div class="menu-item pomo-item" data-time="0" style="color:#f28b82">⏹️ Turn Off</div>
+        <div class="popup-menu pomo-menu" id="pomo-menu" style="width: 210px;">
+            <div class="menu-item pomo-item" data-time="60">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">hourglass_full</span>
+                    <span>60 Min Deep Focus</span>
+                </div>
+            </div>
+            <div class="menu-item pomo-item" data-time="45">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">hourglass_top</span>
+                    <span>45 Min Study Block</span>
+                </div>
+            </div>
+            <div class="menu-item pomo-item" data-time="30">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">timer</span>
+                    <span>30 Min Power Session</span>
+                </div>
+            </div>
+            <div class="menu-item pomo-item" data-time="15">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">pace</span>
+                    <span>15 Min Focus Sprint</span>
+                </div>
+            </div>
+            <div class="menu-item pomo-item" data-time="0" style="color: #f28b82;">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded" style="color: #f28b82;">timer_off</span>
+                    <span>Disable Focus Timer</span>
+                </div>
+            </div>
         </div>
 
         <div class="popup-menu more-menu" id="more-menu">
-            <label for="audio-upload" class="menu-item" id="menu-new-music"><span>🎵 New Music File</span></label>
-            <label for="video-upload" class="menu-item" id="menu-new-lecture"><span>📚 New Lecture Video</span></label>
-            <label for="theater-upload" class="menu-item" id="menu-new-theater"><span>🎬 New Theater Video</span></label>
-            <label for="folder-upload" class="menu-item" id="menu-new-playlist" style="display:none;"><span>📂 New Playlist File</span></label>
-            <div class="menu-item" id="more-videos-btn" style="display:none;"><span>📺 More Videos (Grid View)</span></div>
+            <label for="audio-upload" class="menu-item" id="menu-new-music">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">graphic_eq</span>
+                    <span>Import Audio Track</span>
+                </div>
+            </label>
+            <label for="video-upload" class="menu-item" id="menu-new-lecture">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">cast_for_education</span>
+                    <span>Import Lecture Stream</span>
+                </div>
+            </label>
+            <label for="theater-upload" class="menu-item" id="menu-new-theater">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">movie_filter</span>
+                    <span>Import Cinema Film</span>
+                </div>
+            </label>
+            <label for="folder-upload" class="menu-item" id="menu-new-playlist" style="display:none;">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">queue_music</span>
+                    <span>Load Playlist Asset</span>
+                </div>
+            </label>
+            <div class="menu-item" id="more-videos-btn" style="display:none;">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">auto_awesome_mosaic</span>
+                    <span>Browse Media Vault</span>
+                </div>
+            </div>
             
             <label for="sub-upload" class="menu-item" id="menu-upload-sub">
-                <span>📝 Upload Subtitle</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">subtitles</span>
+                    <span>Import Subtitle Track (.srt, .vtt)</span>
+                </div>
                 <span class="tool-status-badge" id="sub-file-status"></span>
             </label>
             <input type="file" id="sub-upload" accept=".srt,.vtt,.ass,.ssa">
             
-            <div class="menu-item" id="sync-btn"><span>⏱️ Audio & Sub Sync</span></div>
+            <div class="menu-item" id="sync-btn">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">av_timer</span>
+                    <span>A/V & Subtitle Precision Sync</span>
+                </div>
+            </div>
             <div class="menu-item" id="spatial-btn">
-                <span>🎧 3D Spatial Audio</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">spatial_audio</span>
+                    <span>3D Spatial Soundstage</span>
+                </div>
                 <span class="tool-status-badge" id="spatial-status">OFF</span>
             </div>
             <div class="menu-item" id="eq-btn">
-                <span>🎛️ Equalizer</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">equalizer</span>
+                    <span>Pro Studio Multi-Band EQ</span>
+                </div>
                 <span class="tool-status-badge" id="eq-status">Normal</span>
             </div>
             <div class="menu-item" id="norm-btn">
-                <span>🔊 Volume Normalizer</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">volume_down_alt</span>
+                    <span>Dynamic Speech Normalizer</span>
+                </div>
                 <span class="tool-status-badge" id="norm-status">OFF</span>
             </div>
             <!-- Auto Skip Silence for Lecture Mode -->
             <div class="menu-item" id="silence-skip-btn" style="display:none;">
-                 <span>⚡ Auto Skip Silence</span>
-                 <span class="tool-status-badge" id="silence-skip-status">OFF</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">motion_photos_paused</span>
+                    <span>Smart Silence Truncation</span>
+                </div>
+                <span class="tool-status-badge" id="silence-skip-status">OFF</span>
             </div>
             <div class="menu-item" id="sharp-btn">
-                <span>✨ AI Quality Enhancer</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">auto_awesome</span>
+                    <span>Neural Clarity & Upscaler</span>
+                </div>
                 <span class="tool-status-badge" id="sharp-status">OFF</span>
             </div>
             <div class="menu-item" id="eyecare-btn">
-                <span>🌙 Eye Care Mode</span>
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">visibility</span>
+                    <span>Circadian Eye Comfort</span>
+                </div>
                 <span class="tool-status-badge" id="eyecare-status">OFF</span>
             </div>
-            <div class="menu-item" id="open-settings-menu-btn"><span>⚙️ Customization & Settings</span></div>
+            <div class="menu-item" id="open-settings-menu-btn">
+                <div class="menu-item-left">
+                    <span class="material-symbols-rounded">tune</span>
+                    <span>Preferences & System Settings</span>
+                </div>
+            </div>
         </div>
 
         <!-- Material 3 Smart Capture & Video Recording Dialog (28dp Corner Radius) -->
@@ -5971,6 +6699,68 @@
                         </div>
                         <span class="material-symbols-rounded" id="record-choice-action-arrow" style="color: var(--md-sys-color-primary); font-size: 20px;">chevron_right</span>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Material 3 Folder Default Mode Selection Dialog (28dp Corner Radius) -->
+        <div class="m3-select-dialog-overlay" id="folder-mode-dialog-overlay" style="display: none;">
+            <div class="m3-select-dialog-backdrop" id="folder-mode-dialog-backdrop"></div>
+            <div class="m3-select-dialog-card" id="folder-mode-dialog-card" style="width: 440px; max-width: calc(100vw - 32px); border-radius: 28px !important; padding: 24px; gap: 16px;">
+                <div class="m3-dialog-header" style="padding: 0; border: none; margin-bottom: 2px;">
+                    <div class="m3-dialog-icon-badge" style="background: var(--md-sys-color-primary-container);">
+                        <span class="material-symbols-rounded">folder_managed</span>
+                    </div>
+                    <div class="m3-dialog-title-box">
+                        <h4 class="m3-dialog-title" id="folder-mode-dialog-title">Mount Vault Playback Profile</h4>
+                        <p class="m3-dialog-subtitle" id="folder-mode-dialog-sub">Configure default engine presets for media in this vault</p>
+                    </div>
+                    <button class="m3-dialog-close-btn" id="folder-mode-dialog-close" title="Close">
+                        <span class="material-symbols-rounded" style="font-size: 18px;">close</span>
+                    </button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+                    <!-- Cinema Ultra 4K Option -->
+                    <div class="folder-mode-option selected" data-mode="theater" id="folder-opt-theater">
+                        <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <span class="material-symbols-rounded" style="font-size: 22px;">movie_filter</span>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Cinema Ultra 4K</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Dolby Atmos, Ambilight & HDR10+ Cinema</div>
+                        </div>
+                        <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-primary); font-size: 22px;">radio_button_checked</span>
+                    </div>
+
+                    <!-- Lecture Pro Option -->
+                    <div class="folder-mode-option" data-mode="lecture" id="folder-opt-lecture">
+                        <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(59, 130, 246, 0.15); color: #3b82f6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <span class="material-symbols-rounded" style="font-size: 22px;">cast_for_education</span>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Lecture Pro</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Split-Screen Notes & PDF Companion</div>
+                        </div>
+                        <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-outline); font-size: 22px;">radio_button_unchecked</span>
+                    </div>
+
+                    <!-- Studio Hi-Fi Option -->
+                    <div class="folder-mode-option" data-mode="music" id="folder-opt-music">
+                        <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(34, 197, 94, 0.15); color: #22c55e; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <span class="material-symbols-rounded" style="font-size: 22px;">graphic_eq</span>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Studio Hi-Fi</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Lossless 96kHz, Spatial 3D & Audio Visualizers</div>
+                        </div>
+                        <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-outline); font-size: 22px;">radio_button_unchecked</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
+                    <button class="m3-dialog-action-btn" id="folder-mode-cancel-btn" style="background: transparent; color: var(--md-sys-color-on-surface-variant); border: 1px solid var(--md-sys-color-outline-variant);">Cancel</button>
+                    <button class="m3-dialog-action-btn" id="folder-mode-confirm-btn" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);">Confirm & Apply</button>
                 </div>
             </div>
         </div>
@@ -6029,29 +6819,29 @@
 
             <div class="buttons-row">
                 <div class="btn-group">
-                    <button class="icon-btn" id="prev-btn" title="Previous Media" style="display:none;"><span class="material-symbols-rounded">skip_previous</span></button>
-                    <button class="icon-btn" id="rewind-btn" title="Rewind 10s"><span class="material-symbols-rounded">replay_10</span></button>
-                    <button class="icon-btn" id="play-pause-btn" title="Play/Pause"><span class="material-symbols-rounded" id="play-icon">play_arrow</span></button>
-                    <button class="icon-btn" id="forward-btn" title="Forward 10s"><span class="material-symbols-rounded">forward_10</span></button>
-                    <button class="icon-btn" id="next-btn" title="Next Media" style="display:none;"><span class="material-symbols-rounded">skip_next</span></button>
-                    <button class="icon-btn" id="mute-btn" title="Mute / Unmute (M)"><span class="material-symbols-rounded" id="volume-icon">volume_up</span></button>
+                    <button class="icon-btn" id="prev-btn" title="Previous Asset (Shift+P)" style="display:none;"><span class="material-symbols-rounded">skip_previous</span></button>
+                    <button class="icon-btn" id="rewind-btn" title="Rewind 10s (Left Arrow)"><span class="material-symbols-rounded">replay_10</span></button>
+                    <button class="icon-btn" id="play-pause-btn" title="Master Playback Toggle (Space)"><span class="material-symbols-rounded" id="play-icon">play_arrow</span></button>
+                    <button class="icon-btn" id="forward-btn" title="Fast-Forward 10s (Right Arrow)"><span class="material-symbols-rounded">forward_10</span></button>
+                    <button class="icon-btn" id="next-btn" title="Next Asset (Shift+N)" style="display:none;"><span class="material-symbols-rounded">skip_next</span></button>
+                    <button class="icon-btn" id="mute-btn" title="Master Audio & Mute (M)"><span class="material-symbols-rounded" id="volume-icon">volume_up</span></button>
                     <input type="range" class="volume-slider" id="volume-slider" min="0" max="2" step="0.05" value="1">
                 </div>
 
                 <div class="btn-group">
-                    <button class="icon-btn" id="ab-btn" title="A-B Loop"><span class="material-symbols-rounded" id="ab-icon">repeat</span></button>
-                    <button class="icon-btn" id="pomo-toggle-btn" title="Pomodoro Timer">
+                    <button class="icon-btn" id="ab-btn" title="Precision A-B Repeat Loop (L)"><span class="material-symbols-rounded" id="ab-icon">repeat</span></button>
+                    <button class="icon-btn" id="pomo-toggle-btn" title="Deep Focus & Study Interval Timer (P)">
                         <span class="material-symbols-rounded" id="pomo-icon">timer</span>
                         <span id="pomo-tab-display"></span>
                     </button>
-                    <button class="icon-btn" id="screenshot-btn" title="Screenshot / Record">
+                    <button class="icon-btn" id="screenshot-btn" title="Smart 4K Frame Grabber & Video Recorder (S)">
                         <span class="material-symbols-rounded" id="screenshot-btn-icon">photo_camera</span>
                         <span id="record-tab-display"></span>
                     </button>
-                    <button class="icon-btn" id="pip-btn" title="Picture in Picture"><span class="material-symbols-rounded">picture_in_picture_alt</span></button>
-                    <button class="icon-btn" id="speed-btn" title="Speed"><span class="material-symbols-rounded">speed</span><span id="speed-text" style="font-size:10px; position:absolute; bottom:4px;">1x</span></button>
-                    <button class="icon-btn" id="fullscreen-btn" title="Fullscreen"><span class="material-symbols-rounded">fullscreen</span></button>
-                    <button class="icon-btn" id="more-toggle-btn" title="More Options"><span class="material-symbols-rounded">more_vert</span></button>
+                    <button class="icon-btn" id="pip-btn" title="Picture-in-Picture Floating Window (I)"><span class="material-symbols-rounded">picture_in_picture_alt</span></button>
+                    <button class="icon-btn" id="speed-btn" title="Variable Playback Velocity (0.25x – 4.0x)"><span class="material-symbols-rounded">speed</span><span id="speed-text" style="font-size:10px; position:absolute; bottom:4px;">1x</span></button>
+                    <button class="icon-btn" id="fullscreen-btn" title="Studio Immersive Fullscreen Mode (F)"><span class="material-symbols-rounded">fullscreen</span></button>
+                    <button class="icon-btn" id="more-toggle-btn" title="Audio DSP, Subtitles & Enhancement Suite"><span class="material-symbols-rounded">more_vert</span></button>
                 </div>
             </div>
         </div>
@@ -6065,11 +6855,11 @@
         <div class="shortcuts-drawer-header">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div style="width:36px; height:36px; border-radius:12px; background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); display:flex; align-items:center; justify-content:center;">
-                    <span class="material-symbols-rounded" style="font-size:22px;">bookmarks</span>
+                    <span class="material-symbols-rounded" style="font-size:22px;">rocket_launch</span>
                 </div>
                 <div>
-                    <div style="font-weight:800; font-size:15px; color:var(--md-sys-color-on-surface);">Quick Links & Shortcuts</div>
-                    <div style="font-size:11px; color:var(--md-sys-color-secondary);">Instant web & app launcher</div>
+                    <div style="font-weight:800; font-size:15px; color:var(--md-sys-color-on-surface);">Command Hub & Quick Launch</div>
+                    <div style="font-size:11px; color:var(--md-sys-color-secondary);">Instant web, stream & app launchpad</div>
                 </div>
             </div>
             <button class="icon-btn" id="close-shortcuts-drawer-btn" title="Close" style="width:34px; height:34px;">
@@ -6079,8 +6869,8 @@
 
         <div class="shortcuts-drawer-actions">
             <button class="icon-btn is-morph-rect" id="open-add-shortcut-modal-btn" style="width:100%; height:40px; justify-content:center; gap:8px; font-weight:700; font-size:13px; border-radius:var(--md-sys-shape-corner-full); background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container);">
-                <span class="material-symbols-rounded" style="font-size:18px;">add_link</span>
-                <span>Add New Shortcut</span>
+                <span class="material-symbols-rounded" style="font-size:18px;">add_circle</span>
+                <span>Create Quick Launch Link</span>
             </button>
         </div>
 
@@ -7593,6 +8383,8 @@
                                 duration: record.duration || 0,
                                 width: record.width || 0,
                                 path: record.path || record.name,
+                                mode: record.mode || record.playedMode || (record.type?.startsWith('audio/') ? 'music' : 'lecture'),
+                                playedMode: record.playedMode || record.mode || (record.type?.startsWith('audio/') ? 'music' : 'lecture'),
                                 timestamp: record.timestamp || Date.now()
                             }));
                         
@@ -7607,7 +8399,7 @@
         initPersistentStorage();
 
         let lastRecentSaveTime = 0;
-        async function saveMediaToRecents(title, src, duration, lastPosition, thumbUrl = null, forceSync = false) {
+        async function saveMediaToRecents(title, src, duration, lastPosition, thumbUrl = null, forceSync = false, explicitMode = null) {
             if (!title) return;
             const now = Date.now();
             if (!forceSync && (now - lastRecentSaveTime < 2000)) return;
@@ -7615,6 +8407,7 @@
 
             const isAudio = (title && title.match(/\.(mp3|m4a|flac|alac|aac|wav|ogg|opus|wma)$/i)) || (video && video.videoWidth === 0 && isMusicMode);
             const fileKey = window.IDBStorage ? window.IDBStorage.generateFileKey(title, 0, 0) : title;
+            const currentActiveMode = explicitMode || (isMusicMode ? 'music' : (isTheaterMode ? 'theater' : 'lecture'));
 
             // Check if thumbnail already exists in mediaLibrary or was passed
             let finalThumb = thumbUrl;
@@ -7638,6 +8431,8 @@
                 thumbUrl: finalThumb,
                 type: isAudio ? 'audio/' : 'video/mp4',
                 isAudio: !!isAudio,
+                mode: currentActiveMode,
+                playedMode: currentActiveMode,
                 timestamp: now
             };
 
@@ -7649,6 +8444,8 @@
             if (libIdx >= 0) {
                 mediaLibrary[libIdx].lastPosition = historyItem.lastPosition;
                 mediaLibrary[libIdx].duration = historyItem.duration || mediaLibrary[libIdx].duration;
+                mediaLibrary[libIdx].mode = currentActiveMode;
+                mediaLibrary[libIdx].playedMode = currentActiveMode;
                 if (finalThumb) mediaLibrary[libIdx].thumb = finalThumb;
                 mediaLibrary[libIdx].timestamp = now;
                 const item = mediaLibrary.splice(libIdx, 1)[0];
@@ -7717,23 +8514,118 @@
         }
 
         /* ==========================================================================
-           FEATURE 1: 5-FOLDER PERSISTENT DIRECTORY WATCHER
+           FEATURE 1: 10-FOLDER PERSISTENT DIRECTORY WATCHER WITH DEFAULT MODES
            ========================================================================== */
         let customFolders = [];
         let activeFolderId = null;
         const webFolderFiles = new Map();
+
+        // Material 3 Dialog for Selecting/Configuring Folder Default Mode
+        function promptFolderDefaultMode(folderName, initialMode = 'theater') {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('folder-mode-dialog-overlay');
+                const title = document.getElementById('folder-mode-dialog-title');
+                const subtitle = document.getElementById('folder-mode-dialog-sub');
+                const confirmBtn = document.getElementById('folder-mode-confirm-btn');
+                const cancelBtn = document.getElementById('folder-mode-cancel-btn');
+                const closeBtn = document.getElementById('folder-mode-dialog-close');
+                const backdrop = document.getElementById('folder-mode-dialog-backdrop');
+                const options = document.querySelectorAll('.folder-mode-option');
+
+                if (!overlay) {
+                    resolve(initialMode || 'theater');
+                    return;
+                }
+
+                let selected = initialMode || 'theater';
+                if (title) title.textContent = `Choose Default Mode`;
+                if (subtitle) subtitle.textContent = `Set playback mode for "${folderName}"`;
+
+                const updateSelectedUI = (mode) => {
+                    selected = mode;
+                    options.forEach(opt => {
+                        const optMode = opt.dataset.mode;
+                        const radio = opt.querySelector('.folder-mode-radio');
+                        if (optMode === mode) {
+                            opt.classList.add('selected');
+                            if (radio) {
+                                radio.textContent = 'radio_button_checked';
+                                radio.style.color = 'var(--md-sys-color-primary)';
+                            }
+                        } else {
+                            opt.classList.remove('selected');
+                            if (radio) {
+                                radio.textContent = 'radio_button_unchecked';
+                                radio.style.color = 'var(--md-sys-color-outline)';
+                            }
+                        }
+                    });
+                };
+
+                updateSelectedUI(selected);
+
+                const cleanup = () => {
+                    overlay.classList.remove('open');
+                    overlay.style.display = 'none';
+                    options.forEach(opt => {
+                        opt.onclick = null;
+                        opt.ondblclick = null;
+                    });
+                    if (confirmBtn) confirmBtn.onclick = null;
+                    if (cancelBtn) cancelBtn.onclick = null;
+                    if (closeBtn) closeBtn.onclick = null;
+                    if (backdrop) backdrop.onclick = null;
+                };
+
+                options.forEach(opt => {
+                    opt.onclick = () => {
+                        triggerHaptic(15);
+                        updateSelectedUI(opt.dataset.mode);
+                    };
+                    opt.ondblclick = () => {
+                        triggerHaptic(25);
+                        updateSelectedUI(opt.dataset.mode);
+                        cleanup();
+                        resolve(selected);
+                    };
+                });
+
+                if (confirmBtn) {
+                    confirmBtn.onclick = () => {
+                        triggerHaptic(20);
+                        cleanup();
+                        resolve(selected);
+                    };
+                }
+
+                const handleCancel = () => {
+                    triggerHaptic(15);
+                    cleanup();
+                    resolve(selected || initialMode || 'theater');
+                };
+
+                if (cancelBtn) cancelBtn.onclick = handleCancel;
+                if (closeBtn) closeBtn.onclick = handleCancel;
+                if (backdrop) backdrop.onclick = handleCancel;
+
+                overlay.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    overlay.classList.add('open');
+                });
+            });
+        }
 
         async function initCustomFolders() {
             try {
                 if (window.electronVLC && window.electronVLC.getCustomFolders) {
                     const loaded = await window.electronVLC.getCustomFolders();
                     if (Array.isArray(loaded)) {
-                        customFolders = loaded.slice(0, 5);
+                        customFolders = loaded.slice(0, 10);
                     }
                 } else {
                     const stored = localStorage.getItem('am_custom_folders');
                     if (stored) {
-                        customFolders = JSON.parse(stored).slice(0, 5);
+                        customFolders = JSON.parse(stored).slice(0, 10);
                     }
                 }
             } catch (e) {
@@ -7756,18 +8648,126 @@
 
         function renderCustomFolderChips() {
             const countPill = document.getElementById('linked-folders-count');
+            const modeCountPill = document.getElementById('mode-panel-folders-count');
             const row = document.getElementById('custom-folders-row');
-            if (countPill) countPill.textContent = `${customFolders.length} / 5`;
+            const modeFolderList = document.getElementById('mode-panel-folders-list');
+
+            const countText = `${customFolders.length} / 10`;
+            if (countPill) countPill.textContent = countText;
+            if (modeCountPill) modeCountPill.textContent = countText;
+
+            // Render to mode-panel-folders-list (Middle area in mode panel)
+            if (modeFolderList) {
+                modeFolderList.innerHTML = '';
+                if (customFolders.length === 0) {
+                    modeFolderList.innerHTML = `
+                        <div class="mode-panel-folders-empty">
+                            <div class="mode-empty-icon-wrap">
+                                <span class="material-symbols-rounded mode-empty-icon">folder_open</span>
+                            </div>
+                            <div class="mode-empty-title">No Media Folders Linked</div>
+                            <div class="mode-empty-sub">Add folders to watch movies, series, audio tracks, and lecture videos with persistent library tracking.</div>
+                            <button type="button" class="mode-empty-btn" id="mode-empty-add-btn">
+                                <span class="material-symbols-rounded" style="font-size:18px;">create_new_folder</span>
+                                <span>Add Media Folder</span>
+                            </button>
+                            <div class="mode-empty-formats-row">
+                                <span class="mode-empty-badge"><span class="material-symbols-rounded" style="font-size:14px;">movie</span> MKV, MP4, WebM</span>
+                                <span class="mode-empty-badge"><span class="material-symbols-rounded" style="font-size:14px;">headphones</span> MP3, FLAC, AAC</span>
+                            </div>
+                        </div>
+                    `;
+                    const emptyAddBtn = modeFolderList.querySelector('#mode-empty-add-btn');
+                    if (emptyAddBtn) {
+                        emptyAddBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const addBtn = document.getElementById('add-linked-folder-btn');
+                            if (addBtn) addBtn.click();
+                        });
+                    }
+                } else {
+                    customFolders.forEach(folder => {
+                        const isSelected = (activeFolderId === folder.id);
+                        const item = document.createElement('div');
+                        item.className = `mode-folder-item ${isSelected ? 'active-folder' : ''}`;
+                        item.dataset.id = folder.id;
+                        item.title = folder.path || folder.name;
+
+                        item.innerHTML = `
+                            <div class="mode-folder-item-left">
+                                <span class="material-symbols-rounded mode-folder-item-icon">${isSelected ? 'folder_open' : 'folder'}</span>
+                                <div class="mode-folder-item-info">
+                                    <span class="mode-folder-item-name">${escapeHtml(folder.name)}</span>
+                                </div>
+                            </div>
+                            <div class="mode-folder-item-right">
+                                <button class="mode-folder-item-delete" title="Remove folder" data-id="${folder.id}">
+                                    <span class="material-symbols-rounded" style="font-size:16px;">close</span>
+                                </button>
+                            </div>
+                        `;
+
+                        // Card click: toggle open / close folder
+                        item.addEventListener('click', async (e) => {
+                            if (e.target.closest('.mode-folder-item-delete')) return;
+                            triggerHaptic(20);
+                            if (activeFolderId === folder.id) {
+                                resetToHistoryView();
+                                showToast(`📁 Folded to Media History`);
+                            } else {
+                                await selectAndBrowseFolder(folder);
+                                const count = currentBrowsedFolderFiles ? currentBrowsedFolderFiles.length : 0;
+                                showToast(`📂 Opened ${folder.name} (${count} files)`);
+                            }
+                        });
+
+                        // Delete button click
+                        const delBtn = item.querySelector('.mode-folder-item-delete');
+                        if (delBtn) {
+                            delBtn.addEventListener('click', async (e) => {
+                                e.stopPropagation();
+                                triggerHaptic(20);
+                                customFolders = customFolders.filter(f => f.id !== folder.id);
+                                if (activeFolderId === folder.id) {
+                                    resetToHistoryView();
+                                }
+                                await persistCustomFolders();
+                                renderCustomFolderChips();
+                                showToast(`Removed folder: ${folder.name}`);
+                            });
+                        }
+
+                        modeFolderList.appendChild(item);
+                    });
+
+                    // If fewer than 10 folders, show an inline "+ Add Another Folder" card to comfortably fill the container
+                    if (customFolders.length < 10) {
+                        const addMoreBtn = document.createElement('button');
+                        addMoreBtn.type = 'button';
+                        addMoreBtn.className = 'mode-add-more-folder-btn';
+                        addMoreBtn.innerHTML = `
+                            <span class="material-symbols-rounded" style="font-size:18px;">add_circle</span>
+                            <span>Add Folder (${10 - customFolders.length} slots free)</span>
+                        `;
+                        addMoreBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const addBtn = document.getElementById('add-linked-folder-btn');
+                            if (addBtn) addBtn.click();
+                        });
+                        modeFolderList.appendChild(addMoreBtn);
+                    }
+                }
+            }
+
             if (!row) return;
+
+            const container = document.getElementById('custom-folders-container');
+            if (container) {
+                container.style.display = customFolders.length > 0 ? 'block' : 'none';
+            }
 
             row.innerHTML = '';
             if (customFolders.length === 0) {
-                row.innerHTML = `
-                    <div class="custom-folders-empty">
-                        <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">folder_open</span>
-                        <span>No linked folders yet. Click <strong>+ Add Folder</strong> to watch up to 5 directories permanently.</span>
-                    </div>
-                `;
                 return;
             }
 
@@ -7776,32 +8776,30 @@
                 const card = document.createElement('div');
                 card.className = `custom-folder-card ${isSelected ? 'active-folder' : ''}`;
                 card.dataset.id = folder.id;
-                card.title = isSelected ? `Click to fold ${folder.name} and view history` : (folder.path || folder.name);
-
-                const subText = isSelected ? 'Open • Tap to fold' : escapeHtml(folder.path ? folder.path.split(/[\\/]/).filter(Boolean).slice(-2).join('/') : 'Folder');
+                card.title = folder.path || folder.name;
 
                 card.innerHTML = `
                     <span class="material-symbols-rounded custom-folder-icon">${isSelected ? 'folder_open' : 'folder'}</span>
                     <div class="custom-folder-details">
                         <span class="custom-folder-name">${escapeHtml(folder.name)}</span>
-                        <span class="custom-folder-sub">${subText}</span>
                     </div>
                     <button class="folder-remove-btn" title="Remove folder" data-id="${folder.id}">
                         <span class="material-symbols-rounded" style="font-size:16px;">close</span>
                     </button>
                 `;
 
-                // Select and browse folder or fold if already active
-                card.addEventListener('click', (e) => {
+                // Select and browse folder with toggle open/close support
+                card.addEventListener('click', async (e) => {
                     if (e.target.closest('.folder-remove-btn')) return;
+                    triggerHaptic(20);
                     if (activeFolderId === folder.id) {
-                        // Clicked on already-open folder -> FOLD IT & SHOW HISTORY!
-                        triggerHaptic(20);
                         resetToHistoryView();
-                        showToast(`Folded: ${folder.name} (Showing Media History)`);
-                        return;
+                        showToast(`📁 Folded to Media History`);
+                    } else {
+                        await selectAndBrowseFolder(folder);
+                        const count = currentBrowsedFolderFiles ? currentBrowsedFolderFiles.length : 0;
+                        showToast(`📂 Opened ${folder.name} (${count} files)`);
                     }
-                    selectAndBrowseFolder(folder);
                 });
 
                 // Remove folder
@@ -7856,11 +8854,13 @@
                                 duration: 0,
                                 isAudio: isAudio,
                                 type: isAudio ? 'audio/' + ext.replace('.', '') : 'video/mp4',
+                                mode: folder.defaultMode || (isAudio ? 'music' : 'theater'),
+                                playedMode: folder.defaultMode || (isAudio ? 'music' : 'theater'),
                                 thumb: null
                             };
                         });
                         currentBrowsedFolderFiles = items;
-                        if (titleEl) titleEl.textContent = `${folder.name} (${items.length} items)`;
+                        if (titleEl) titleEl.textContent = `${folder.name} (${items.length} items • ${folder.defaultMode ? folder.defaultMode.toUpperCase() : 'THEATER'})`;
 
                         // Instant batch thumbnail pre-check from IDB and physical disk cache
                         if (window.IDBStorage) {
@@ -7882,7 +8882,11 @@
 
             // Web fallback
             if (webFolderFiles.has(folder.id)) {
-                const files = webFolderFiles.get(folder.id);
+                const rawFiles = webFolderFiles.get(folder.id) || [];
+                const files = rawFiles.filter(f => {
+                    const ext = (f.name.slice(f.name.lastIndexOf('.')) || '').toLowerCase();
+                    return videoExts.has(ext) || audioExts.has(ext) || (f.type && (f.type.startsWith('video/') || f.type.startsWith('audio/')));
+                });
                 const items = files.map(file => {
                     const ext = (file.name.slice(file.name.lastIndexOf('.')) || '').toLowerCase();
                     const isAudio = (file.type && file.type.startsWith('audio/')) || audioExts.has(ext);
@@ -7895,11 +8899,13 @@
                         duration: (found && found.duration) ? found.duration : (file.duration || 0),
                         thumb: (found && found.thumb) ? found.thumb : (file.thumb || null),
                         type: file.type || (isAudio ? 'audio/' + ext.replace('.', '') : 'video/mp4'),
+                        mode: folder.defaultMode || (isAudio ? 'music' : 'theater'),
+                        playedMode: folder.defaultMode || (isAudio ? 'music' : 'theater'),
                         isAudio: isAudio
                     };
                 });
                 currentBrowsedFolderFiles = items;
-                if (titleEl) titleEl.textContent = `${folder.name} (${items.length} items)`;
+                if (titleEl) titleEl.textContent = `${folder.name} (${items.length} items • ${folder.defaultMode ? folder.defaultMode.toUpperCase() : 'THEATER'})`;
                 renderLibraryItems(items);
             } else {
                 currentBrowsedFolderFiles = [];
@@ -7915,8 +8921,8 @@
         if (addLinkedFolderBtn) {
             addLinkedFolderBtn.addEventListener('click', async () => {
                 triggerHaptic(25);
-                if (customFolders.length >= 5) {
-                    showToast("Maximum 5 custom folders limit reached. Remove one to add a new folder.");
+                if (customFolders.length >= 10) {
+                    showToast("Maximum 10 custom folders limit reached. Remove one to add a new folder.");
                     return;
                 }
 
@@ -7933,16 +8939,19 @@
                         }
 
                         const folderName = folderPath.replace(/\\/g, '/').split('/').filter(Boolean).pop() || folderPath;
+                        const chosenMode = (await promptFolderDefaultMode(folderName, 'theater')) || 'theater';
+
                         const newFolder = {
                             id: 'f_' + Date.now(),
                             name: folderName,
-                            path: folderPath
+                            path: folderPath,
+                            defaultMode: chosenMode
                         };
                         customFolders.push(newFolder);
                         await persistCustomFolders();
                         renderCustomFolderChips();
                         selectAndBrowseFolder(newFolder);
-                        showToast(`Linked folder: ${folderName}`);
+                        showToast(`Linked folder: ${folderName} (${chosenMode.toUpperCase()} Mode)`);
                     } catch (e) {
                         console.error('[AM Custom Folders] Open folder error:', e);
                         showToast("Failed to open folder picker.");
@@ -7952,26 +8961,57 @@
                     webLinkedFolderInput.click();
                 }
             });
+
+            // Mode panel Add Folder button trigger
+            const modePanelAddFolderBtn = document.getElementById('mode-panel-add-folder-btn');
+            if (modePanelAddFolderBtn) {
+                modePanelAddFolderBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addLinkedFolderBtn.click();
+                });
+            }
         }
 
         if (webLinkedFolderInput) {
             webLinkedFolderInput.addEventListener('change', async (e) => {
-                const files = Array.from(e.target.files || []);
-                if (files.length === 0) return;
-                const samplePath = files[0].webkitRelativePath || '';
+                const rawFiles = Array.from(e.target.files || []);
+                if (rawFiles.length === 0) return;
+                const samplePath = rawFiles[0].webkitRelativePath || '';
                 const folderName = samplePath.split('/')[0] || 'Selected Folder';
+
+                const videoExts = new Set(['.mp4', '.mkv', '.webm', '.avi', '.flv', '.mov', '.ts', '.m2ts', '.wmv', '.m4v', '.3gp', '.vob', '.ogv']);
+                const audioExts = new Set(['.mp3', '.wav', '.flac', '.aac', '.m4a', '.ogg', '.opus', '.wma']);
+                const files = rawFiles.filter(f => {
+                    const ext = (f.name.slice(f.name.lastIndexOf('.')) || '').toLowerCase();
+                    return videoExts.has(ext) || audioExts.has(ext) || (f.type && (f.type.startsWith('video/') || f.type.startsWith('audio/')));
+                });
+
+                if (files.length === 0) {
+                    showToast("No playable audio or video files found in this folder.");
+                    webLinkedFolderInput.value = '';
+                    return;
+                }
+
+                const hasVideo = files.some(f => {
+                    const ext = (f.name.slice(f.name.lastIndexOf('.')) || '').toLowerCase();
+                    return videoExts.has(ext) || (f.type && f.type.startsWith('video/'));
+                });
+                const defaultMode = hasVideo ? 'theater' : 'music';
+
+                const chosenMode = (await promptFolderDefaultMode(folderName, defaultMode)) || defaultMode;
 
                 const newFolder = {
                     id: 'f_' + Date.now(),
                     name: folderName,
-                    path: folderName
+                    path: folderName,
+                    defaultMode: chosenMode
                 };
                 webFolderFiles.set(newFolder.id, files);
                 customFolders.push(newFolder);
                 await persistCustomFolders();
                 renderCustomFolderChips();
                 selectAndBrowseFolder(newFolder);
-                showToast(`Linked folder: ${folderName}`);
+                showToast(`📁 Linked folder: ${folderName} (${files.length} items • ${chosenMode.toUpperCase()})`);
                 webLinkedFolderInput.value = '';
             });
         }
@@ -8083,7 +9123,7 @@
                             } else {
                                 try {
                                     const domain = new URL(sc.url.startsWith('http') ? sc.url : ('https://' + sc.url)).hostname;
-                                    iconHtml = `<img src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" alt="" onerror="this.outerHTML='<span class=\\'material-symbols-rounded\\' style=\\'font-size:16px;\\'>public</span>'">`;
+                                    iconHtml = `<img src="https://www.google.com/s2/favicons?domain=${domain}&sz=32" alt="" class="shortcut-favicon-img">`;
                                 } catch(err) {
                                     iconHtml = `<span class="material-symbols-rounded" style="font-size:16px;">public</span>`;
                                 }
@@ -8099,6 +9139,13 @@
                                 <span class="material-symbols-rounded" style="font-size:12px;">close</span>
                             </button>
                         `;
+
+                        const favImg = chip.querySelector('.shortcut-favicon-img');
+                        if (favImg) {
+                            favImg.onerror = () => {
+                                favImg.outerHTML = '<span class="material-symbols-rounded" style="font-size:16px;">public</span>';
+                            };
+                        }
 
                         chip.addEventListener('click', (e) => {
                             if (e.target.closest('.shortcut-chip-del')) return;
@@ -8156,7 +9203,7 @@
                     } else {
                         try {
                             const domain = new URL(sc.url.startsWith('http') ? sc.url : ('https://' + sc.url)).hostname;
-                            iconHtml = `<img src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="icon" onerror="this.outerHTML='<span class=\\'material-symbols-rounded\\'>public</span>'">`;
+                            iconHtml = `<img src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="icon" class="drawer-shortcut-favicon-img">`;
                         } catch(err) {
                             iconHtml = `<span class="material-symbols-rounded">public</span>`;
                         }
@@ -8181,6 +9228,13 @@
                         </button>
                     </div>
                 `;
+
+                const drawerFavImg = card.querySelector('.drawer-shortcut-favicon-img');
+                if (drawerFavImg) {
+                    drawerFavImg.onerror = () => {
+                        drawerFavImg.outerHTML = '<span class="material-symbols-rounded">public</span>';
+                    };
+                }
 
                 // One-click launch
                 card.addEventListener('click', (e) => {
@@ -8409,6 +9463,19 @@
             }
         });
 
+        document.getElementById('nav-rail-history')?.addEventListener('click', () => {
+            triggerHaptic(15);
+            document.querySelectorAll('.nav-rail-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('nav-rail-history')?.classList.add('active');
+            resetToHistoryView();
+            const libPanel = document.getElementById('library-panel');
+            if (libPanel) {
+                const historyHeader = document.getElementById('explorer-view-title');
+                if (historyHeader) libPanel.scrollTo({ top: historyHeader.offsetTop - 40, behavior: 'smooth' });
+            }
+            showToast("Showing Media History & Recents");
+        });
+
         document.getElementById('nav-rail-settings')?.addEventListener('click', () => {
             triggerHaptic(15);
             toggleSettings(true);
@@ -8448,8 +9515,27 @@
         setWorkspaceLayoutView(savedLayout);
 
         // ==========================================================================
-        // MINI PLAYER SYNCHRONIZATION & CONCURRENT THUMBNAIL ENGINE
+        // MINI PLAYER & NOW-PLAYING TITLE SYNCHRONIZATION ENGINE
         // ==========================================================================
+        function updateNowPlayingDisplay(overrideThumb = null) {
+            const isAudio = isMusicMode || (currentFilename && currentFilename.match(/\.(mp3|m4a|flac|alac|aac|wav|ogg|opus|wma)$/i));
+            const cleanTitle = currentFilename ? currentFilename.replace(/\.[^/.]+$/, "") : "No Media Playing";
+
+            // Top Video Badge
+            const badgeEl = document.getElementById('badge-text');
+            if (badgeEl) badgeEl.textContent = cleanTitle;
+            const badgeIcon = document.getElementById('video-badge-icon');
+            if (badgeIcon) badgeIcon.textContent = isAudio ? 'music_note' : 'movie';
+
+            // Update Mini Player
+            syncMiniPlayer(overrideThumb);
+
+            // Update Document Title
+            if (currentFilename) {
+                document.title = `${cleanTitle} - AM Player`;
+            }
+        }
+
         function syncMiniPlayer(overrideThumb = null) {
             const miniThumb = document.getElementById('mini-thumb');
             const miniTitle = document.getElementById('mini-title');
@@ -8779,34 +9865,47 @@
                 canvas.width = 240;
                 canvas.height = 135;
                 const ctx = canvas.getContext('2d');
+                
+                // Material 3 dark cinematic surface gradient
                 const grad = ctx.createLinearGradient(0, 0, 240, 135);
-                grad.addColorStop(0, '#101713');
-                grad.addColorStop(1, '#1a2e22');
+                grad.addColorStop(0, '#131b17');
+                grad.addColorStop(0.5, '#1e2823');
+                grad.addColorStop(1, '#0e1511');
                 ctx.fillStyle = grad;
                 ctx.fillRect(0, 0, 240, 135);
                 
-                ctx.strokeStyle = 'rgba(0, 255, 102, 0.25)';
+                // Subtle border
+                ctx.strokeStyle = 'rgba(0, 255, 102, 0.22)';
                 ctx.lineWidth = 1.5;
                 ctx.strokeRect(1, 1, 238, 133);
                 
-                ctx.fillStyle = 'rgba(0, 255, 102, 0.12)';
+                // Play disc glow
+                ctx.fillStyle = 'rgba(0, 255, 102, 0.15)';
                 ctx.beginPath();
-                ctx.arc(120, 56, 26, 0, Math.PI * 2);
+                ctx.arc(120, 52, 24, 0, Math.PI * 2);
                 ctx.fill();
                 
+                // Play arrow
                 ctx.fillStyle = '#00FF66';
                 ctx.beginPath();
-                ctx.moveTo(113, 43);
-                ctx.lineTo(131, 56);
-                ctx.lineTo(113, 69);
+                ctx.moveTo(114, 41);
+                ctx.lineTo(130, 52);
+                ctx.lineTo(114, 63);
                 ctx.closePath();
                 ctx.fill();
                 
+                // Title
                 ctx.fillStyle = '#E1E3DF';
-                ctx.font = '600 11.5px system-ui, sans-serif';
+                ctx.font = '600 11px system-ui, -apple-system, sans-serif';
                 ctx.textAlign = 'center';
-                const text = (title || 'Video Media').slice(0, 24);
-                ctx.fillText(text, 120, 106);
+                const text = (title || 'Video Media').slice(0, 26);
+                ctx.fillText(text, 120, 98);
+
+                // Small badge
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+                ctx.font = '500 9.5px system-ui, sans-serif';
+                ctx.fillText('VIDEO', 120, 114);
+
                 return canvas.toDataURL('image/jpeg', 0.85);
             } catch(e) {
                 return null;
@@ -8945,6 +10044,7 @@
                     let isCleanedUp = false;
                     let hasCaptured = false;
                     let hasRetried33 = false;
+                    const strategy = (typeof AppState !== 'undefined' && AppState.thumbStrategy) ? AppState.thumbStrategy : 'hybrid';
 
                     const cleanup = () => {
                         if (!isCleanedUp) {
@@ -8967,30 +10067,32 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.drawImage(tempVid, 0, 0, 240, 135);
 
-                                // Real-time Black Frame Detection (Sample across canvas)
-                                let isBlack = true;
-                                try {
-                                    const imgData = ctx.getImageData(0, 0, 240, 135);
-                                    const data = imgData.data;
-                                    let brightCount = 0;
-                                    for (let i = 0; i < data.length; i += 64) {
-                                        if (data[i] > 18 || data[i + 1] > 18 || data[i + 2] > 18) {
-                                            brightCount++;
-                                            if (brightCount >= 4) {
-                                                isBlack = false;
-                                                break;
+                                // Option C: Hybrid Smart Frame (Black Frame Avoidance)
+                                if (strategy === 'hybrid') {
+                                    let isBlack = true;
+                                    try {
+                                        const imgData = ctx.getImageData(0, 0, 240, 135);
+                                        const data = imgData.data;
+                                        let brightCount = 0;
+                                        for (let i = 0; i < data.length; i += 64) {
+                                            if (data[i] > 18 || data[i + 1] > 18 || data[i + 2] > 18) {
+                                                brightCount++;
+                                                if (brightCount >= 4) {
+                                                    isBlack = false;
+                                                    break;
+                                                }
                                             }
                                         }
+                                    } catch(e) {
+                                        isBlack = false;
                                     }
-                                } catch(e) {
-                                    isBlack = false;
-                                }
 
-                                // If 1-second mark gave a solid black frame, seek to 33% timestamp
-                                if (isBlack && !hasRetried33 && tempVid.duration && tempVid.duration > 2.0) {
-                                    hasRetried33 = true;
-                                    tempVid.currentTime = tempVid.duration * 0.33;
-                                    return; // Wait for onseeked to recapture at 33%!
+                                    // If 1-second mark gave a solid black frame, seek to 33% timestamp
+                                    if (isBlack && !hasRetried33 && tempVid.duration && tempVid.duration > 2.0) {
+                                        hasRetried33 = true;
+                                        tempVid.currentTime = tempVid.duration * 0.33;
+                                        return; // Recapture at 33% on next onseeked!
+                                    }
                                 }
 
                                 hasCaptured = true;
@@ -9041,19 +10143,24 @@
                             callback(fallback, { duration: 0, width: 240, height: 135 });
                             cleanup();
                         }
-                    }, 4000);
+                    }, 2500);
 
                     tempVid.onloadedmetadata = () => {
                         let targetSec = 1.0;
-                        if (tempVid.duration && tempVid.duration <= 1.2) {
-                            targetSec = Math.max(0.1, tempVid.duration * 0.4);
+                        if (strategy === 'percentage') {
+                            targetSec = (tempVid.duration && tempVid.duration > 0) ? Math.max(0.2, tempVid.duration * 0.33) : 1.0;
+                        } else if (strategy === 'first_frame') {
+                            targetSec = (tempVid.duration && tempVid.duration <= 1.2) ? Math.max(0.1, tempVid.duration * 0.4) : 1.0;
+                        } else {
+                            // Hybrid: start at 1.0s, will test black frame and jump to 33% if black
+                            targetSec = (tempVid.duration && tempVid.duration <= 1.2) ? Math.max(0.1, tempVid.duration * 0.4) : 1.0;
                         }
                         tempVid.currentTime = targetSec;
                     };
 
                     tempVid.onseeked = tryCaptureFrame;
                     tempVid.onloadeddata = () => {
-                        if (tempVid.currentTime >= 0.8) tryCaptureFrame();
+                        if (tempVid.currentTime >= 0.2) tryCaptureFrame();
                     };
 
                     tempVid.onerror = () => {
@@ -9145,8 +10252,10 @@
                 list.forEach((item) => {
                     const el = document.createElement('div');
                     el.className = 'explorer-item';
-                    const safeName = (item.name || 'Media').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                    const isAudio = (item.type && item.type.startsWith('audio/')) || (item.name && item.name.match(/\.(mp3|m4a|flac|aac|wav|ogg)$/i));
+                    const safeName = (item.name || 'Media').replace(/</g, '&amp;').replace(/>/g, '&gt;');
+                    const isAudio = (item.type && item.type.startsWith('audio/')) || (item.name && item.name.match(/\.(mp3|m4a|flac|aac|wav|ogg|opus|wma)$/i)) || item.isAudio;
+                    const itemMode = item.playedMode || item.mode || (isAudio ? 'music' : 'theater');
+                    const itemModeTag = `<span class="explorer-item-mode-tag ${itemMode}">${itemMode === 'theater' ? '🎬 Theater' : (itemMode === 'music' ? '🎵 Music' : '📚 Lecture')}</span>`;
 
                     el.innerHTML = `
                         <div class="explorer-item-thumb">
@@ -9154,7 +10263,7 @@
                         </div>
                         <div class="explorer-item-details">
                             <div class="explorer-item-title" title="${safeName}">${safeName}</div>
-                            <div class="explorer-item-meta">${item.sizeStr || ''} ${item.duration ? `• ${formatTime(item.duration)}` : ''} • ${item.type || (isAudio ? 'Audio' : 'Media')}</div>
+                            <div class="explorer-item-meta">${item.sizeStr || ''} ${item.duration ? `• ${formatTime(item.duration)}` : ''} • ${item.type || (isAudio ? 'Audio' : 'Media')} ${itemModeTag}</div>
                         </div>
                     `;
 
@@ -9171,7 +10280,7 @@
                                 if (meta && meta.duration && !item.duration) {
                                     item.duration = meta.duration;
                                     const metaEl = el.querySelector('.explorer-item-meta');
-                                    if (metaEl) metaEl.textContent = `${item.sizeStr || ''} • ${formatTime(meta.duration)} • ${item.type || (isAudio ? 'Audio' : 'Media')}`;
+                                    if (metaEl) metaEl.innerHTML = `${item.sizeStr || ''} • ${formatTime(meta.duration)} • ${item.type || (isAudio ? 'Audio' : 'Media')} ${itemModeTag}`;
                                 }
                             }
                         };
@@ -9203,25 +10312,47 @@
                     }
 
                     el.onclick = () => {
-                        if(item.file) {
+                        let targetMode = null;
+                        if (activeFolderId) {
+                            const folder = customFolders.find(f => f.id === activeFolderId);
+                            if (folder && folder.defaultMode) {
+                                targetMode = folder.defaultMode;
+                            }
+                        }
+                        if (!targetMode) {
+                            targetMode = item.playedMode || item.mode;
+                        }
+                        // If no specific mode saved or video played previously, default video to theater mode
+                        if (!targetMode) {
+                            targetMode = isAudio ? 'music' : 'theater';
+                        }
+                        if (isAudio && targetMode === 'lecture') {
+                            targetMode = 'music';
+                        }
+
+                        if (item.file) {
                             currentFilename = item.name;
+                            currentLoadedFilePath = item.file.path || '';
                             currentMediaSrc = getSafeURL(item.file);
-                            checkAndSetMusicMode(item.file);
-                            video.src = currentMediaSrc;
+                            setPlayerMode(targetMode, item.file);
+                            if (video) video.src = currentMediaSrc;
                             loadPlayer();
-                            saveMediaToRecents(item.name, currentMediaSrc, item.duration, 0, item.thumb);
+                            saveMediaToRecents(item.name, currentMediaSrc, item.duration, item.lastPosition || 0, item.thumb, true, targetMode);
+                            if (window.VLCEngine && item.file.path) window.VLCEngine.checkAndAutoLoadSubtitles(item.file.path);
+                            checkAndAutoLoadSameNameSubtitle(item.file);
+                            updateAdjacentEpisodesState(item.file.path || "", item.name);
                         } else if (item.streamUrl || item.path) {
                             currentFilename = item.name;
                             currentLoadedFilePath = item.path || '';
                             currentMediaSrc = item.streamUrl || item.path;
-                            if (item.isAudio || (item.type && item.type.startsWith('audio/'))) {
-                                checkAndSetMusicMode({ name: item.name, type: 'audio/' });
-                            } else {
-                                isMusicMode = false;
-                            }
-                            video.src = currentMediaSrc;
+                            const mediaObj = { name: item.name, path: item.path, type: isAudio ? 'audio/' : 'video/mp4', isAudio };
+                            setPlayerMode(targetMode, mediaObj);
+                            if (video) video.src = currentMediaSrc;
                             loadPlayer();
-                            saveMediaToRecents(item.name, currentMediaSrc, item.duration, 0, item.thumb);
+                            saveMediaToRecents(item.name, currentMediaSrc, item.duration, item.lastPosition || 0, item.thumb, true, targetMode);
+                            if (window.VLCEngine && item.path) window.VLCEngine.checkAndAutoLoadSubtitles(item.path);
+                            checkAndAutoLoadSameNameSubtitle(mediaObj);
+                            updateAdjacentEpisodesState(item.path || "", item.name);
                         }
                     };
                     mediaExplorerGrid.appendChild(el);
@@ -9348,17 +10479,28 @@
 
         /* --- SMART ANTI-LAG & BUFFER RECOVERY ENGINE --- */
         const bufferingSpinner = document.getElementById('buffering-spinner');
+        const bufferingVideo = document.getElementById('buffering-video');
         let bufferStallNudgeTimer = null;
 
         function showBufferingIndicator() {
-            if (bufferingSpinner && !video.paused && !video.ended) {
+            if (bufferingSpinner && video && !video.ended) {
                 bufferingSpinner.classList.add('active');
+                if (bufferingVideo) {
+                    try {
+                        bufferingVideo.play().catch(() => {});
+                    } catch(e) {}
+                }
             }
         }
 
         function hideBufferingIndicator() {
             if (bufferingSpinner) {
                 bufferingSpinner.classList.remove('active');
+                if (bufferingVideo) {
+                    try {
+                        bufferingVideo.pause();
+                    } catch(e) {}
+                }
             }
             if (bufferStallNudgeTimer) {
                 clearTimeout(bufferStallNudgeTimer);
@@ -9366,6 +10508,7 @@
             }
         }
 
+        video?.addEventListener('loadstart', showBufferingIndicator);
         video?.addEventListener('waiting', () => {
             showBufferingIndicator();
             if (bufferStallNudgeTimer) clearTimeout(bufferStallNudgeTimer);
@@ -10072,10 +11215,17 @@
                             <span class="note-timestamp" style="cursor:pointer; font-weight:700; color:var(--md-sys-color-primary);">⏱️ ${formatTime(n.time)}</span>
                             ${pdfBadgeHtml}
                         </div>
-                        <span class="material-symbols-rounded" style="cursor:pointer; font-size:18px; color:var(--md-sys-color-secondary);" onclick="deleteNote(${n.id})" title="Delete Note">delete</span>
+                        <span class="material-symbols-rounded note-del-btn" style="cursor:pointer; font-size:18px; color:var(--md-sys-color-secondary);" title="Delete Note">delete</span>
                     </div>
-                    <div class="note-text" style="font-size:13px; color:var(--md-sys-color-on-surface); line-height:1.4;">${n.text}</div>
+                    <div class="note-text" style="font-size:13px; color:var(--md-sys-color-on-surface); line-height:1.4;">${escapeHtml(n.text || '')}</div>
                 `;
+                const delBtn = card.querySelector('.note-del-btn');
+                if (delBtn) {
+                    delBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        window.deleteNote(n.id);
+                    };
+                }
                 const stamp = card.querySelector('.note-timestamp');
                 if (stamp) {
                     stamp.onclick = () => { fastSeekTo(n.time); if (video) safePlay(video); };
@@ -10180,7 +11330,7 @@
 
             if (showNotification) {
                 const activeItem = document.querySelector(`.aspect-item[data-ar="${ar}"]`);
-                const label = activeItem ? activeItem.textContent : ar;
+                const label = activeItem ? (activeItem.querySelector('span:not(.material-symbols-rounded)')?.textContent || activeItem.textContent).trim() : ar;
                 showToast(`Aspect Ratio: ${label}`);
             }
         }
@@ -10763,7 +11913,7 @@
         let audioCtx, source, gainNode, bassNode, vocalNode, trebleNode, compressor, audioInited = false;
         let convolverNode, dryGain, wetGain, makeupGain, spatialBass, surroundPanner, effectNode, bassPanner = null;
         let pinnaElevationFilter, behindFilter, delayL, delayR, gainL, gainR = null;
-        let panner = null, convolver = null;
+        let panner = null, convolver = null, audioDestinationNode = null;
         let isOrbiting = false;
         let angle = 0;
         let animationFrameId;
@@ -10923,7 +12073,7 @@
 
             const badgeIcon = document.getElementById('video-badge-icon');
             if (badgeIcon) badgeIcon.textContent = (effectiveMode === 'music') ? 'music_note' : 'movie';
-            syncMiniPlayer();
+            updateNowPlayingDisplay();
 
             resetSubtitlesPosition();
             updateContextMenus();
@@ -11053,6 +12203,14 @@
 
                     gainNode.connect(analyserNode);
                     analyserNode.connect(audioCtx.destination);
+
+                    // Media stream destination for lag-free recording with system audio
+                    try {
+                        audioDestinationNode = audioCtx.createMediaStreamDestination();
+                        gainNode.connect(audioDestinationNode);
+                    } catch(destErr) {
+                        console.warn("Audio destination node notice:", destErr);
+                    }
 
                     audioInited = true;
                     panner = surroundPanner;
@@ -11184,6 +12342,13 @@
 
             dryGain.connect(audioCtx.destination);
             wetGain.connect(audioCtx.destination);
+
+            try {
+                if (audioDestinationNode) {
+                    dryGain.connect(audioDestinationNode);
+                    wetGain.connect(audioDestinationNode);
+                }
+            } catch(e) {}
 
             surroundPanner = panner;
             convolverNode = convolver;
@@ -12205,11 +13370,7 @@
             updateTimeDisplay();
             updateDurationDisplay();
             checkAndLoadEmbeddedSubtitles();
-            const badgeEl = document.getElementById('badge-text');
-            if (badgeEl) badgeEl.textContent = currentFilename;
-            const badgeIcon = document.getElementById('video-badge-icon');
-            if (badgeIcon) badgeIcon.textContent = isMusicMode ? 'music_note' : 'movie';
-            syncMiniPlayer();
+            updateNowPlayingDisplay();
             updateButtonMorphStates();
             if (video) saveMediaToRecents(currentFilename, currentMediaSrc, video.duration, video.currentTime);
 
@@ -12350,8 +13511,15 @@
         });
 
         document.getElementById('folder-upload')?.addEventListener('change', (e) => {
-            const files = Array.from(e.target.files).filter(f => (f.type && (f.type.startsWith('video/') || f.type.startsWith('audio/'))) || f.name.match(/\.(mp4|mkv|webm|mp3|wav|flac|m4a|aac|ogg)$/i));
-            if(files.length > 0) {
+            const rawFiles = Array.from(e.target.files || []);
+            const videoExts = new Set(['.mp4', '.mkv', '.webm', '.avi', '.flv', '.mov', '.ts', '.m2ts', '.wmv', '.m4v', '.3gp', '.vob', '.ogv']);
+            const audioExts = new Set(['.mp3', '.wav', '.flac', '.aac', '.m4a', '.ogg', '.opus', '.wma']);
+            const files = rawFiles.filter(f => {
+                const ext = (f.name.slice(f.name.lastIndexOf('.')) || '').toLowerCase();
+                return videoExts.has(ext) || audioExts.has(ext) || (f.type && (f.type.startsWith('video/') || f.type.startsWith('audio/')));
+            });
+
+            if (files.length > 0) {
                 // Naturally sort files by name (e.g. 100.mp4 <-> 101.mp4 <-> 102.mp4)
                 files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
                 playlistFiles = files; 
@@ -12376,7 +13544,11 @@
                 }
                 isPlaylistMode = true;
                 playPlaylistItem(0); 
+                showToast(`📁 Loaded Folder (${files.length} items)`);
+            } else if (rawFiles.length > 0) {
+                showToast("⚠️ No playable video or audio files found in selected folder.");
             }
+            e.target.value = '';
             document.getElementById('more-menu')?.classList.remove('open');
         });
 
@@ -12390,6 +13562,7 @@
             checkAndSetMusicMode(file); 
             if (video) {
                 video.src = currentMediaSrc; 
+                safePlay(video);
             }
             loadPlayer();
             document.querySelectorAll('.playlist-item').forEach((el, i) => el.classList.toggle('active', i === index));
@@ -12836,7 +14009,8 @@
         });
         document.querySelectorAll('.pomo-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                let m = parseInt(e.target.dataset.time);
+                const pomoTarget = e.currentTarget || e.target.closest('.pomo-item') || item;
+                let m = parseInt(pomoTarget.dataset.time);
                 clearInterval(pomoInterval);
                 if(m === 0) {
                     if (pomoToggleBtn) pomoToggleBtn.classList.remove('active-icon');
@@ -13120,9 +14294,7 @@
                     safePlay(video);
                 }
                 
-                const bText = document.getElementById('badge-text');
-                if (bText) bText.textContent = currentFilename;
-                document.title = `${currentFilename} - AM Player`;
+                updateNowPlayingDisplay();
                 
                 // Trigger auto subtitle detection and update adjacent index
                 if (window.VLCEngine) {
@@ -13138,9 +14310,7 @@
                     video.src = currentMediaSrc;
                     safePlay(video);
                 }
-                const bText = document.getElementById('badge-text');
-                if (bText) bText.textContent = currentFilename;
-                document.title = `${currentFilename} - AM Player`;
+                updateNowPlayingDisplay();
                 await updateAdjacentEpisodesState("", currentFilename);
                 showToast(`▶️ Now Playing: ${currentFilename}`);
             } else if (typeof fileObj === 'number') {
@@ -13255,37 +14425,30 @@
             renderLibraryItems();
             renderRecentMedia();
             renderLectureNotes();
-            showToast(`🗑️ "${targetTitle}" permanently deleted from hard drive`);
 
-            // 5. Check if next or prev episode is available to auto-advance
-            const nextEp = (adjacentEpisodes.hasNext && adjacentEpisodes.next) ? adjacentEpisodes.next : null;
-            const prevEp = (adjacentEpisodes.hasPrev && adjacentEpisodes.prev) ? adjacentEpisodes.prev : null;
-
+            // 5. Immediately return to Home Screen
             hidePlaybackCompletionHud();
-
-            if (nextEp) {
-                if (isPlaylistMode && currentPlaylistIndex < playlistFiles.length) {
-                    playPlaylistItem(currentPlaylistIndex);
-                } else {
-                    playAdjacentMediaFile(nextEp);
-                }
-            } else if (prevEp) {
-                if (isPlaylistMode && currentPlaylistIndex > 0) {
-                    playPlaylistItem(currentPlaylistIndex - 1);
-                } else {
-                    playAdjacentMediaFile(prevEp);
-                }
-            } else {
-                // No more episodes: return to clean home / explorer state
-                if (video) {
-                    video.pause();
-                    video.removeAttribute('src');
-                    video.load();
-                }
-                if (playerWrapper) playerWrapper.style.display = 'none';
-                if (startScreen) startScreen.style.display = 'flex';
-                document.title = "Adarsh's Media Player (AM Player)";
+            if (video) {
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
             }
+            if (playerWrapper) playerWrapper.style.display = 'none';
+            if (startScreen) startScreen.style.display = 'flex';
+            if (miniPlayerPill) miniPlayerPill.classList.remove('visible');
+            if (typeof syncMiniPlayer === 'function') syncMiniPlayer();
+            document.title = "Adarsh's Media Player (AM Player)";
+
+            // Close any open side panels / PDF split view
+            const pdfPanel = document.getElementById('pdf-split-panel');
+            if (pdfPanel) pdfPanel.classList.remove('open');
+            const notesSidebar = document.getElementById('notes-sidebar');
+            if (notesSidebar) notesSidebar.classList.remove('open');
+            const playlistSidebar = document.getElementById('playlist-sidebar');
+            if (playlistSidebar) playlistSidebar.style.display = 'none';
+
+            // 6. Show clear notification popup
+            showToast(`🗑️ "${targetTitle}" deleted`);
         });
 
         subUpload?.addEventListener('change', (e) => {
@@ -13293,11 +14456,60 @@
             moreMenu?.classList.remove('open');
         });
 
-        // Global Drag & Drop Handler for Audio, Video, and Subtitles
+        async function getFilesFromDataTransfer(dataTransfer) {
+            const files = [];
+            const items = dataTransfer.items;
+            if (items && items.length > 0 && (items[0].webkitGetAsEntry || items[0].getAsEntry)) {
+                const entries = [];
+                for (let i = 0; i < items.length; i++) {
+                    const entry = items[i].webkitGetAsEntry ? items[i].webkitGetAsEntry() : (items[i].getAsEntry ? items[i].getAsEntry() : null);
+                    if (entry) entries.push(entry);
+                }
+                async function readDirectoryEntry(dirEntry) {
+                    return new Promise((resolve) => {
+                        const reader = dirEntry.createReader();
+                        const readNext = () => {
+                            reader.readEntries(async (subEntries) => {
+                                if (!subEntries || subEntries.length === 0) {
+                                    resolve();
+                                } else {
+                                    for (const sub of subEntries) {
+                                        if (sub.isFile) {
+                                            await new Promise((resFile) => {
+                                                sub.file(f => { files.push(f); resFile(); }, () => resFile());
+                                            });
+                                        } else if (sub.isDirectory) {
+                                            await readDirectoryEntry(sub);
+                                        }
+                                    }
+                                    readNext();
+                                }
+                            }, () => resolve());
+                        };
+                        readNext();
+                    });
+                }
+                for (const entry of entries) {
+                    if (entry.isFile) {
+                        await new Promise((resFile) => {
+                            entry.file(f => { files.push(f); resFile(); }, () => resFile());
+                        });
+                    } else if (entry.isDirectory) {
+                        await readDirectoryEntry(entry);
+                    }
+                }
+            }
+            if (files.length === 0) {
+                return Array.from(dataTransfer.files || []);
+            }
+            return files;
+        }
+
+        // Global Drag & Drop Handler for Audio, Video, Folders, and Subtitles
         window.addEventListener('dragover', (e) => e.preventDefault());
-        window.addEventListener('drop', (e) => {
+        window.addEventListener('drop', async (e) => {
             e.preventDefault();
-            const droppedFiles = Array.from(e.dataTransfer.files || []);
+            const droppedFiles = await getFilesFromDataTransfer(e.dataTransfer);
             if (droppedFiles.length === 0) return;
 
             // Separate subtitle files and media files
@@ -13319,16 +14531,41 @@
             });
 
             if (mediaFiles.length > 0) {
-                // If multiple files, add to playlistFiles pool
-                if (mediaFiles.length > 1 || subFiles.length > 0) {
+                // If multiple files or folder dropped, naturally sort and build playlist
+                if (mediaFiles.length > 1) {
+                    mediaFiles.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+                    playlistFiles = mediaFiles;
+                    if (playerWrapper) playerWrapper.classList.add('has-playlist');
+                    const moreVidBtn = document.getElementById('more-videos-btn');
+                    if (moreVidBtn) moreVidBtn.style.display = 'flex';
+                    const prevBtnEl = document.getElementById('prev-btn');
+                    if (prevBtnEl) prevBtnEl.style.display = 'flex';
+                    const nextBtnEl = document.getElementById('next-btn');
+                    if (nextBtnEl) nextBtnEl.style.display = 'flex';
+                    const list = document.getElementById('playlist-items'); 
+                    if (list) {
+                        list.innerHTML = '';
+                        mediaFiles.forEach((f, i) => {
+                            addFileToMediaLibrary(f);
+                            const item = document.createElement('div');
+                            item.className = 'playlist-item';
+                            item.innerHTML = '<span class="material-symbols-rounded">' + ((f.type && f.type.startsWith('audio/')) ? 'music_note' : 'play_circle') + '</span><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + f.name + '</div>';
+                            item.onclick = () => playPlaylistItem(i);
+                            list.appendChild(item);
+                        });
+                    }
+                    isPlaylistMode = true;
+                } else {
                     playlistFiles = [...droppedFiles];
                 }
+
                 const primaryMedia = mediaFiles[0];
                 currentFilename = primaryMedia.name;
                 currentMediaSrc = getSafeURL(primaryMedia);
                 checkAndSetMusicMode(primaryMedia);
                 if (video) {
                     video.src = currentMediaSrc;
+                    safePlay(video);
                 }
                 loadPlayer();
                 addFileToMediaLibrary(primaryMedia);
@@ -13348,7 +14585,7 @@
                 }
 
                 updateAdjacentEpisodesState(primaryMedia.path || "", primaryMedia.name);
-                showToast(`▶️ Loaded: ${primaryMedia.name}`);
+                showToast(mediaFiles.length > 1 ? `📁 Loaded Folder (${mediaFiles.length} items)` : `▶️ Loaded: ${primaryMedia.name}`);
             } else if (subFiles.length > 0) {
                 // Only subtitle dropped
                 handleSubtitleFile(subFiles[0]);
@@ -13410,35 +14647,37 @@
                 }
             });
 
-            document.querySelector('.btn-folder')?.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const folderRes = await window.VLCEngine.openNativeFolderPicker();
-                if (folderRes && folderRes.files && folderRes.files.length > 0) {
-                    const files = folderRes.files;
-                    files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
-                    playlistFiles = files;
-                    if (playerWrapper) playerWrapper.classList.add('has-playlist');
-                    const moreVidBtn = document.getElementById('more-videos-btn');
-                    if (moreVidBtn) moreVidBtn.style.display = 'flex';
-                    const prevBtnEl = document.getElementById('prev-btn');
-                    if (prevBtnEl) prevBtnEl.style.display = 'flex';
-                    const nextBtnEl = document.getElementById('next-btn');
-                    if (nextBtnEl) nextBtnEl.style.display = 'flex';
-                    const list = document.getElementById('playlist-items'); 
-                    if (list) {
-                        list.innerHTML = '';
-                        files.forEach((f, i) => {
-                            addFileToMediaLibrary(f);
-                            const item = document.createElement('div');
-                            item.className = 'playlist-item';
-                            item.innerHTML = '<span class="material-symbols-rounded">' + (f.isAudio ? 'music_note' : 'play_circle') + '</span><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + f.name + '</div>';
-                            item.onclick = () => playPlaylistItem(i);
-                            list.appendChild(item);
-                        });
+            document.querySelectorAll('.btn-folder, .btn-playlist').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const folderRes = await window.VLCEngine.openNativeFolderPicker();
+                    if (folderRes && folderRes.files && folderRes.files.length > 0) {
+                        const files = folderRes.files;
+                        files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+                        playlistFiles = files;
+                        if (playerWrapper) playerWrapper.classList.add('has-playlist');
+                        const moreVidBtn = document.getElementById('more-videos-btn');
+                        if (moreVidBtn) moreVidBtn.style.display = 'flex';
+                        const prevBtnEl = document.getElementById('prev-btn');
+                        if (prevBtnEl) prevBtnEl.style.display = 'flex';
+                        const nextBtnEl = document.getElementById('next-btn');
+                        if (nextBtnEl) nextBtnEl.style.display = 'flex';
+                        const list = document.getElementById('playlist-items'); 
+                        if (list) {
+                            list.innerHTML = '';
+                            files.forEach((f, i) => {
+                                addFileToMediaLibrary(f);
+                                const item = document.createElement('div');
+                                item.className = 'playlist-item';
+                                item.innerHTML = '<span class="material-symbols-rounded">' + (f.isAudio ? 'music_note' : 'play_circle') + '</span><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + f.name + '</div>';
+                                item.onclick = () => playPlaylistItem(i);
+                                list.appendChild(item);
+                            });
+                        }
+                        isPlaylistMode = true;
+                        playPlaylistItem(0); 
                     }
-                    isPlaylistMode = true;
-                    playPlaylistItem(0); 
-                }
+                });
             });
         }
 
@@ -13776,23 +15015,35 @@
             });
         }
 
-        // Zoom Controls
+        // Zoom Controls & Responsive Edge-to-Edge Border Fit
         function recomputeFitToWidthAndRender() {
             if (!pdfScrollViewport || (!currentPdfDoc && !sampleSlidesData)) return;
-            const availableWidth = Math.max(260, pdfScrollViewport.clientWidth - 40);
+            const availableWidth = Math.max(200, pdfScrollViewport.clientWidth || 320);
             
             if (currentPdfDoc) {
                 currentPdfDoc.getPage(1).then(page => {
                     const unscaled = page.getViewport({ scale: 1.0, rotation: pdfRotation });
-                    pdfScale = Math.max(0.3, Math.min(4.0, availableWidth / unscaled.width));
+                    pdfScale = Math.max(0.25, Math.min(5.0, availableWidth / unscaled.width));
                     updateZoomDisplay();
                     renderAllPagesSkeleton();
                 }).catch(() => {});
             } else if (sampleSlidesData) {
-                pdfScale = Math.max(0.4, Math.min(2.5, availableWidth / 640));
+                pdfScale = Math.max(0.3, Math.min(4.0, availableWidth / 640));
                 updateZoomDisplay();
                 renderAllPagesSkeleton();
             }
+        }
+
+        if (window.ResizeObserver && pdfScrollViewport) {
+            let resizeDebounce = null;
+            const pdfViewportObserver = new ResizeObserver(() => {
+                if (!pdfFitToWidth || (!currentPdfDoc && !sampleSlidesData)) return;
+                clearTimeout(resizeDebounce);
+                resizeDebounce = setTimeout(() => {
+                    recomputeFitToWidthAndRender();
+                }, 60);
+            });
+            pdfViewportObserver.observe(pdfScrollViewport);
         }
 
         if (pdfZoomInBtn) {
@@ -14082,7 +15333,11 @@
                     cardHeight = Math.floor(460 * pdfScale);
                 }
 
-                card.style.width = cardWidth + 'px';
+                if (pdfFitToWidth) {
+                    card.style.width = '100%';
+                } else {
+                    card.style.width = cardWidth + 'px';
+                }
                 card.style.height = cardHeight + 'px';
 
                 // Placeholder loading indicator
@@ -14146,7 +15401,11 @@
                 const viewport = page.getViewport({ scale: pdfScale, rotation: pdfRotation });
 
                 // Update card dimensions
-                card.style.width = Math.floor(viewport.width) + 'px';
+                if (pdfFitToWidth) {
+                    card.style.width = '100%';
+                } else {
+                    card.style.width = Math.floor(viewport.width) + 'px';
+                }
                 card.style.height = Math.floor(viewport.height) + 'px';
 
                 let canvas = card.querySelector('canvas.pdf-page-canvas');
@@ -14160,7 +15419,11 @@
 
                 canvas.width = Math.floor(viewport.width * dpr);
                 canvas.height = Math.floor(viewport.height * dpr);
-                canvas.style.width = Math.floor(viewport.width) + 'px';
+                if (pdfFitToWidth) {
+                    canvas.style.width = '100%';
+                } else {
+                    canvas.style.width = Math.floor(viewport.width) + 'px';
+                }
                 canvas.style.height = Math.floor(viewport.height) + 'px';
 
                 const ctx = canvas.getContext('2d');
@@ -14201,7 +15464,11 @@
             const cardWidth = Math.floor(640 * pdfScale);
             const cardHeight = Math.floor(460 * pdfScale);
 
-            card.style.width = cardWidth + 'px';
+            if (pdfFitToWidth) {
+                card.style.width = '100%';
+            } else {
+                card.style.width = cardWidth + 'px';
+            }
             card.style.height = cardHeight + 'px';
 
             let canvas = card.querySelector('canvas.pdf-page-canvas');
@@ -14215,7 +15482,11 @@
 
             canvas.width = Math.floor(cardWidth * dpr);
             canvas.height = Math.floor(cardHeight * dpr);
-            canvas.style.width = cardWidth + 'px';
+            if (pdfFitToWidth) {
+                canvas.style.width = '100%';
+            } else {
+                canvas.style.width = cardWidth + 'px';
+            }
             canvas.style.height = cardHeight + 'px';
 
             const ctx = canvas.getContext('2d');
@@ -14737,11 +16008,24 @@
                     showToast(`Speed: 1.0x (Normal)`);
                 }
             },
-            toggleSubtitles: () => document.getElementById('subtitles-btn')?.click(),
+            toggleSubtitles: () => {
+                const customSubRender = document.getElementById('custom-subtitle-render');
+                if (customSubRender) {
+                    const isHidden = customSubRender.style.display === 'none';
+                    customSubRender.style.display = isHidden ? 'block' : 'none';
+                    showToast(isHidden ? "💬 Subtitles Display Enabled" : "💬 Subtitles Display Hidden");
+                } else {
+                    document.getElementById('sub-upload')?.click();
+                }
+            },
             toggleEq: () => eqBtn?.click(),
             toggleNorm: () => normBtn?.click(),
             togglePip: () => document.getElementById('pip-btn')?.click(),
-            toggleTheater: () => document.getElementById('theater-mode-btn')?.click(),
+            toggleTheater: () => {
+                if (typeof setPlayerMode === 'function') {
+                    setPlayerMode(isTheaterMode ? 'lecture' : 'theater');
+                }
+            },
             toggleMusic: () => {
                 if (isMusicMode) setPlayerMode('lecture');
                 else setPlayerMode('music');
@@ -14899,6 +16183,13 @@
 
         // High-Performance Zero-Latency Global Keydown Dispatcher
         document.addEventListener('keydown', (e) => {
+            // Tab-style App Refresh shortcut (Ctrl+R / Cmd+R / F5) without full app restart
+            if (((e.ctrlKey || e.metaKey) && (e.key === 'r' || e.key === 'R' || e.code === 'KeyR')) || e.key === 'F5') {
+                e.preventDefault();
+                window.location.reload();
+                return;
+            }
+
             // When recording a shortcut in settings
             if (recordingShortcutAction) {
                 e.preventDefault();
@@ -15290,40 +16581,87 @@
             }
 
             try {
-                let stream = null;
-                // Capture at a steady 30fps to avoid zero-framerate / corrupt frame glitches
-                if (typeof video.captureStream === 'function') {
-                    stream = video.captureStream(30);
-                } else if (typeof video.mozCaptureStream === 'function') {
-                    stream = video.mozCaptureStream(30);
+                // 1. Ensure Web Audio subsystem is active and running for system audio capture
+                if (!audioInited || !audioCtx) {
+                    try { initAudio(); } catch(e) {}
+                }
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume().catch(() => {});
+                }
+                if (audioCtx && !audioDestinationNode) {
+                    try {
+                        audioDestinationNode = audioCtx.createMediaStreamDestination();
+                        if (gainNode) gainNode.connect(audioDestinationNode);
+                        else if (analyserNode) analyserNode.connect(audioDestinationNode);
+                    } catch(e) {}
                 }
 
-                if (!stream) {
+                // 2. High performance video stream capture (smooth frame pacing, zero lag)
+                let rawVideoStream = null;
+                if (typeof video.captureStream === 'function') {
+                    rawVideoStream = video.captureStream();
+                } else if (typeof video.mozCaptureStream === 'function') {
+                    rawVideoStream = video.mozCaptureStream();
+                }
+
+                if (!rawVideoStream) {
                     showToast("Video recording stream not supported by browser");
                     return;
                 }
 
-                // If Web Audio is active, check and mix in destination audio track
-                try {
-                    if (typeof audioCtx !== 'undefined' && audioCtx && audioCtx.state === 'running') {
-                        if (typeof audioDestinationNode !== 'undefined' && audioDestinationNode && audioDestinationNode.stream) {
-                            const audioTracks = audioDestinationNode.stream.getAudioTracks();
-                            if (audioTracks.length > 0 && stream.getAudioTracks().length === 0) {
-                                stream.addTrack(audioTracks[0].clone());
-                            }
-                        }
+                // 3. Compose combined stream with synchronized video & system audio tracks
+                const combinedStream = new MediaStream();
+
+                // Add video track
+                const videoTracks = rawVideoStream.getVideoTracks();
+                if (videoTracks && videoTracks.length > 0) {
+                    combinedStream.addTrack(videoTracks[0]);
+                }
+
+                // Add system/lecture audio track from Web Audio engine
+                let audioTrackAdded = false;
+                if (audioDestinationNode && audioDestinationNode.stream) {
+                    const destAudioTracks = audioDestinationNode.stream.getAudioTracks();
+                    if (destAudioTracks && destAudioTracks.length > 0) {
+                        combinedStream.addTrack(destAudioTracks[0]);
+                        audioTrackAdded = true;
                     }
-                } catch(e) {}
+                }
+                if (!audioTrackAdded) {
+                    const rawAudioTracks = rawVideoStream.getAudioTracks();
+                    if (rawAudioTracks && rawAudioTracks.length > 0) {
+                        combinedStream.addTrack(rawAudioTracks[0]);
+                        audioTrackAdded = true;
+                    }
+                }
 
                 recordedChunks = [];
-                // Test best supported codec for high quality & robust headers
-                let mimeType = 'video/webm;codecs=vp9,opus';
-                if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm;codecs=vp8,opus';
-                if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
-                if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/mp4';
+                
+                // 4. Hardware accelerated & smooth codec selection
+                const codecPreferences = [
+                    'video/webm;codecs=h264,opus',
+                    'video/webm;codecs=avc1,opus',
+                    'video/mp4;codecs=avc1,mp4a.40.2',
+                    'video/mp4;codecs=avc1,opus',
+                    'video/mp4',
+                    'video/webm;codecs=vp8,opus',
+                    'video/webm;codecs=vp9,opus',
+                    'video/webm'
+                ];
+                let mimeType = 'video/webm';
+                for (const candidate of codecPreferences) {
+                    if (MediaRecorder.isTypeSupported(candidate)) {
+                        mimeType = candidate;
+                        break;
+                    }
+                }
 
-                const options = { mimeType, videoBitsPerSecond: 6000000 };
-                mediaRecorder = new MediaRecorder(stream, options);
+                const options = {
+                    mimeType,
+                    videoBitsPerSecond: 8000000,
+                    audioBitsPerSecond: 192000
+                };
+                mediaRecorder = new MediaRecorder(combinedStream, options);
                 
                 mediaRecorder.ondataavailable = (e) => {
                     if (e.data && e.data.size > 0) {
@@ -15351,12 +16689,13 @@
                         const blob = new Blob(recordedChunks, { type: mimeType });
                         if (blob.size > 1024) {
                             const cleanTitle = (currentFilename || 'Video_Clip').replace(/\.[^/.]+$/, "");
+                            const ext = (mimeType && mimeType.includes('mp4')) ? 'mp4' : 'webm';
                             const a = document.createElement('a');
-                            a.download = `${cleanTitle}_Clip_${Date.now()}.webm`;
+                            a.download = `${cleanTitle}_Clip_${Date.now()}.${ext}`;
                             a.href = URL.createObjectURL(blob);
                             a.click();
                             setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-                            showToast("🎬 Video Clip Saved Successfully!");
+                            showToast("🎬 Video Clip Saved with Audio!");
                         } else {
                             showToast("⚠️ Recording too short or empty");
                         }
@@ -15396,7 +16735,7 @@
                     }
                 }, 1000);
 
-                showToast("🔴 Recording Started (Clean Frame)");
+                showToast("🔴 Recording Started (Smooth 60fps & Audio)");
                 updateRecordDialogState();
             } catch(err) {
                 console.error("Smart record failed:", err);
@@ -15538,9 +16877,14 @@
                 }
             });
 
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                window.location.reload();
-            });
+            if (typeof navigator.serviceWorker.addEventListener === 'function') {
+                let refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshing) return;
+                    refreshing = true;
+                    window.location.reload();
+                });
+            }
         }
 
         /* 2. SCREEN WAKE LOCK MANAGER */
@@ -15570,37 +16914,46 @@
         }
 
         /* 3. MULTI-TAB BROADCAST CHANNEL SYNCHRONIZATION WITH IDB */
-        const multiTabSync = new BroadcastChannel('AM-player-multi-tab-sync');
-        multiTabSync.onmessage = async (event) => {
-            const { type, data } = event.data || {};
-            switch (type) {
-                case 'RECENTS_UPDATED':
-                    if (window.IDBStorage) {
-                        recentHistory = await window.IDBStorage.getRecents();
-                        renderRecents();
+        let multiTabSync = null;
+        try {
+            if (typeof BroadcastChannel !== 'undefined') {
+                multiTabSync = new BroadcastChannel('AM-player-multi-tab-sync');
+                multiTabSync.onmessage = async (event) => {
+                    const { type, data } = event.data || {};
+                    switch (type) {
+                        case 'RECENTS_UPDATED':
+                            if (window.IDBStorage) {
+                                recentHistory = await window.IDBStorage.getRecents();
+                                renderRecents();
+                            }
+                            break;
+                        case 'NOTES_UPDATED':
+                            if (typeof renderLectureNotes === 'function') {
+                                lectureNotes = data || lectureNotes;
+                                renderLectureNotes();
+                            }
+                            break;
+                        case 'MEDIA_PLAYING':
+                            if (mainVideo && !mainVideo.paused && data !== currentMediaSrc) {
+                                mainVideo.pause();
+                                showToast("⏸️ Paused: Media active in another tab");
+                            }
+                            break;
                     }
-                    break;
-                case 'NOTES_UPDATED':
-                    if (typeof renderLectureNotes === 'function') {
-                        lectureNotes = data || lectureNotes;
-                        renderLectureNotes();
-                    }
-                    break;
-                case 'MEDIA_PLAYING':
-                    if (mainVideo && !mainVideo.paused && data !== currentMediaSrc) {
-                        mainVideo.pause();
-                        showToast("⏸️ Paused: Media active in another tab");
-                    }
-                    break;
+                };
             }
-        };
+        } catch (e) {
+            console.warn('[AM Player] BroadcastChannel not supported or restricted in this environment:', e);
+        }
 
         if (mainVideo) {
             mainVideo.addEventListener('play', () => {
-                multiTabSync.postMessage({
-                    type: 'MEDIA_PLAYING',
-                    data: currentMediaSrc || ''
-                });
+                try {
+                    multiTabSync?.postMessage({
+                        type: 'MEDIA_PLAYING',
+                        data: currentMediaSrc || ''
+                    });
+                } catch (e) {}
             });
         }
 

@@ -196,6 +196,8 @@ class PlayerStorageEngine {
         width: extraMeta.width || 0,
         height: extraMeta.height || 0,
         path: file.webkitRelativePath || file.name,
+        mode: extraMeta.mode || extraMeta.playedMode || (file.isAudio ? 'music' : 'lecture'),
+        playedMode: extraMeta.playedMode || extraMeta.mode || (file.isAudio ? 'music' : 'lecture'),
         timestamp: Date.now()
       };
 
@@ -279,6 +281,8 @@ class PlayerStorageEngine {
         thumbUrl: item.thumbUrl || null,
         size: item.size || 0,
         lastModified: item.lastModified || 0,
+        mode: item.mode || item.playedMode || (item.isAudio ? 'music' : 'lecture'),
+        playedMode: item.playedMode || item.mode || (item.isAudio ? 'music' : 'lecture'),
         timestamp: Date.now()
       };
 

@@ -1069,16 +1069,16 @@ function setupIpcHandlers() {
     }
   });
 
-  // Persistent Custom Folders Management (Up to 5 Folders)
+  // Persistent Custom Folders Management (Up to 10 Folders)
   ipcMain.handle('app:getCustomFolders', async () => {
     const cfg = loadAppConfig();
-    return Array.isArray(cfg.customFolders) ? cfg.customFolders.slice(0, 5) : [];
+    return Array.isArray(cfg.customFolders) ? cfg.customFolders.slice(0, 10) : [];
   });
 
   ipcMain.handle('app:saveCustomFolders', async (event, folders) => {
     try {
       const cfg = loadAppConfig();
-      const cleanFolders = Array.isArray(folders) ? folders.slice(0, 5) : [];
+      const cleanFolders = Array.isArray(folders) ? folders.slice(0, 10) : [];
       cfg.customFolders = cleanFolders;
       saveAppConfig(cfg);
       return true;
