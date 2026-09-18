@@ -1,7 +1,7 @@
-# 🎬 Adarsh's Media Player (AM Player) v2.0.0
+# 🎬 Adarsh's Media Player (AM Player) v2.1.0
 > **Industrial-grade, high-performance multimedia workstation built with Native LibVLC, Direct3D11/DXVA2 hardware decoding, 16D Cinematic Spatial Audio DSP, Split-View Lecture Workstation with KaTeX Math Subtitles, Universal Smart Thumbnail Generation, and Google Material 3 Expressive design.**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](package.json)
+[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Electron](https://img.shields.io/badge/Electron-33.2.1-47848F.svg)](https://www.electronjs.org/)
 [![Material Design](https://img.shields.io/badge/Material_Design-M3_Expressive-6750A4.svg)](https://m3.material.io/)
@@ -151,7 +151,7 @@ AM Player Google ke latest **Material Design 3 (Material You)** design guideline
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 🎬 AM PLAYER v2.0 - Material 3 Expressive Workstation                       │
+│ 🎬 AM PLAYER v2.1 - Material 3 Expressive Workstation                       │
 ├───────────────────────────────┬─────────────────────────────────────────────┤
 │ 🔍 Quick Search Bar           │ 📌 Quick Links & Bookmarks (Add Shortcut)   │
 │ 📁 Choose Media Mode:         ├─────────────────────────────────────────────┤
