@@ -1,0 +1,31 @@
+[package]
+name = "am_player_core"
+version = "2.1.0"
+edition = "2021"
+authors = ["Adarsh <theadarshvish6510@gmail.com>"]
+description = "Adarsh's Media Player Native High-Performance Rust DSP, Zero-Copy Metadata Parser & LibVLC HW Bridge"
+license = "MIT"
+
+[lib]
+name = "am_player_core"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+byteorder = "1.5"
+wasm-bindgen = { version = "0.2", optional = true }
+
+[features]
+default = ["std"]
+std = []
+wasm = ["wasm-bindgen"]
+vulkan = []
+d3d11 = []
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

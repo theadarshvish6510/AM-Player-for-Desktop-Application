@@ -1,14 +1,14 @@
 /**
- * Adarsh's Media Player - Service Worker (v2)
+ * Adarsh's Media Player - Service Worker (v2.1.1)
  * Architecture: 3-Tier Cache Isolation, Chunked Blob-Streaming 206 Synthesizer (Zero-OOM),
  * Direct CDN Precache Resolution & Web Share Target POST Interceptor.
  */
 
 'use strict';
 
-const CACHE_APP_SHELL = 'media-app-shell-v2';
-const CACHE_THUMBNAILS = 'media-thumbnails-v2';
-const CACHE_OFFLINE_SUBS = 'media-offline-subs-v2';
+const CACHE_APP_SHELL = 'media-app-shell-v2.1.1';
+const CACHE_THUMBNAILS = 'media-thumbnails-v2.1.1';
+const CACHE_OFFLINE_SUBS = 'media-offline-subs-v2.1.1';
 
 const ALL_CACHES = [CACHE_APP_SHELL, CACHE_THUMBNAILS, CACHE_OFFLINE_SUBS];
 
@@ -19,6 +19,12 @@ const PRECACHE_ASSETS = [
   './idb-storage.js',
   './vlc-engine.js',
   './am-icon.ico',
+  './am-icon.png',
+  './am-icon-192.png',
+  './am-icon-512.png',
+  './am-icon-180.png',
+  './favicon.ico',
+  './am-loading-video.webm',
   'https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',

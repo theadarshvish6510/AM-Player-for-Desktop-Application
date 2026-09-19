@@ -1,7 +1,7 @@
-# 🎬 Adarsh's Media Player (AM Player) v2.1.0
+# 🎬 Adarsh's Media Player (AM Player) v2.1.1
 > **Industrial-grade, high-performance multimedia workstation built with Native LibVLC, Direct3D11/DXVA2 hardware decoding, 16D Cinematic Spatial Audio DSP, Split-View Lecture Workstation with KaTeX Math Subtitles, Universal Smart Thumbnail Generation, and Google Material 3 Expressive design.**
 
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](package.json)
+[![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](package.json)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Electron](https://img.shields.io/badge/Electron-33.2.1-47848F.svg)](https://www.electronjs.org/)
 [![Material Design](https://img.shields.io/badge/Material_Design-M3_Expressive-6750A4.svg)](https://m3.material.io/)
@@ -44,7 +44,8 @@
 11. [⌨️ Complete Keyboard Shortcuts Cheat Sheet](#️-complete-keyboard-shortcuts-cheat-sheet)
 12. [📦 Supported Formats & Codecs](#-supported-formats--codecs)
 13. [🛠️ Installation, Development & Standalone Builds](#️-installation-development--standalone-builds)
-14. [📄 License & Author](#-license--author)
+14. [📋 Changelog & Release Notes](#-changelog--release-notes)
+15. [📄 License & Author](#-license--author)
 
 ---
 
@@ -364,6 +365,25 @@ npm run dist:win
 npm run dist:portable
 ```
 Sabhi generated release packages `dist-electron/` folder ke andar save honge.
+
+---
+
+## 📋 Changelog & Release Notes
+
+### 🚀 v2.1.1 (Current Stable Release)
+* **Full Version Alignment:** Bumped version to `v2.1.1` across `package.json`, `metadata.json`, `manifest.json`, and Service Worker cache manifests.
+* **Service Worker Invalidation (`media-app-shell-v2.1.1`):** Upgraded 3-Tier cache namespace so existing PWA and web installs receive prompt auto-refresh and instant asset synchronization.
+* **Term Renaming ("Lecture Mode"):** Standardized the playback mode naming by converting all remaining "Video" mode instances to "Lecture" / "Lecture Mode" across the home screen, quick upload cards, and folder mode switchers.
+* **Material 3 "About" Developer Tab:** Added a new dedicated "About" section in Settings featuring:
+  - **Developer:** Tillu Sarkar
+  - **GitHub:** [@theadarshvish6510](https://github.com/theadarshvish6510)
+  - **Email:** thetilludoggy6510@gmail.com
+  - **Release:** `v2.1.1` badge
+  - **Action:** Clickable "View GitHub Profile" action button.
+
+### 🌟 v2.1.0
+* **Playback Completion Modal Dialog:** Material 3 finished watching end screen with Next, Current Replay, Previous episode cards, and Complete & Delete workflow with prompt confirmation.
+* **LibVLC Engine & GPU Decoders:** Direct3D11/DXVA2 hardware accelerated pipelines.
 
 ---
 

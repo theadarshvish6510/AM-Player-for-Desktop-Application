@@ -2,6 +2,7 @@
   "id": "/?source=pwa",
   "name": "Adarsh's Media Player",
   "short_name": "AM Player",
+  "version": "2.1.1",
   "description": "Industrial-strength high-performance workstation media player with 3D Spatial Audio, Multi-band EQ, Lecture Notes, Subtitle Engine, and Theater Ambilight.",
   "start_url": "./index.html",
   "scope": "./",
@@ -27,52 +28,40 @@
   ],
   "icons": [
     {
-      "src": "./am-icon.ico",
+      "src": "./am-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./am-icon.ico",
+      "src": "./am-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./am-icon.ico",
+      "src": "./am-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./am-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./am-icon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
       "src": "./am-icon.ico",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./am-icon.ico",
-      "sizes": "192x192",
-      "type": "image/png",
+      "sizes": "16x16 32x32 48x48 256x256",
+      "type": "image/x-icon",
       "purpose": "any"
-    },
-    {
-      "src": "./am-icon.ico",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./am-icon.ico",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./am-icon.ico",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ],
   "shortcuts": [
@@ -83,12 +72,12 @@
       "url": "./index.html?mode=music",
       "icons": [
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         },
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-512.png",
           "sizes": "512x512",
           "type": "image/png"
         }
@@ -101,12 +90,12 @@
       "url": "./index.html?mode=lecture",
       "icons": [
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         },
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-512.png",
           "sizes": "512x512",
           "type": "image/png"
         }
@@ -119,12 +108,12 @@
       "url": "./index.html?mode=theater",
       "icons": [
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         },
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-512.png",
           "sizes": "512x512",
           "type": "image/png"
         }
@@ -137,12 +126,12 @@
       "url": "./index.html?mode=playlist",
       "icons": [
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-192.png",
           "sizes": "192x192",
           "type": "image/png"
         },
         {
-          "src": "./am-icon.ico",
+          "src": "./am-icon-512.png",
           "sizes": "512x512",
           "type": "image/png"
         }

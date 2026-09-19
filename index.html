@@ -25,6 +25,14 @@
     <!-- PWA Primary Web App Manifest -->
     <link rel="manifest" href="./manifest.json" />
 
+    <!-- Application Icons & Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="./am-icon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./am-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./am-icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./am-icon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./am-icon-180.png" />
+    <link rel="shortcut icon" href="./am-icon.ico" />
+
     <!-- Standard Mobile Web App Meta Directives -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -976,25 +984,30 @@
         .recent-progress-bar { position: absolute; bottom: 0; left: 0; height: 4px; background: var(--md-sys-color-primary); }
         .recent-info { padding: 8px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .media-explorer-view { display: grid; gap: 14px; width: 100%; max-width: 100%; box-sizing: border-box; }
-        .media-explorer-view.grid-mode { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
-        .media-explorer-view.list-mode { grid-template-columns: 1fr; }
+        #library-panel {
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            box-sizing: border-box !important;
+        }
+        .media-explorer-view { display: grid; gap: 16px; width: 100%; max-width: 100%; box-sizing: border-box; align-content: start; }
+        .media-explorer-view.grid-mode { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important; gap: 16px !important; align-content: start !important; width: 100%; }
+        .media-explorer-view.list-mode { grid-template-columns: 1fr; gap: 10px; align-content: start; }
         .explorer-item {
             background: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant);
             border-radius: 18px; padding: 12px; display: flex; gap: 12px; align-items: center; cursor: pointer; transition: 0.25s var(--md-sys-motion-bounce);
-            min-width: 0; width: 100%; max-width: 100%; overflow: hidden; box-sizing: border-box;
+            min-width: 0; width: 100%; max-width: 100%; overflow: hidden; box-sizing: border-box; flex-shrink: 0;
         }
-        .media-explorer-view.grid-mode .explorer-item { flex-direction: column; align-items: stretch; width: 100%; max-width: 100%; overflow: hidden; }
+        .media-explorer-view.grid-mode .explorer-item { flex-direction: column; align-items: stretch; width: 100%; max-width: 100%; min-height: 195px; height: auto; overflow: hidden; flex-shrink: 0; box-sizing: border-box; }
         .explorer-item:hover { background: var(--md-sys-color-surface-container-high); border-color: var(--md-sys-color-primary); transform: translateY(-2px); }
         .explorer-item-thumb {
             width: 48px; height: 48px; border-radius: 12px; background: var(--md-sys-color-primary-container);
             color: var(--md-sys-color-primary); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
         }
-        .media-explorer-view.grid-mode .explorer-item-thumb { width: 100%; height: 110px; border-radius: 12px; }
+        .media-explorer-view.grid-mode .explorer-item-thumb { width: 100%; height: 120px; min-height: 120px; max-height: 120px; border-radius: 12px; flex-shrink: 0; position: relative; overflow: hidden; }
         .explorer-item-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
-        .explorer-item-details { flex: 1; min-width: 0; width: 100%; max-width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+        .explorer-item-details { flex: 1; min-width: 0; width: 100%; max-width: 100%; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; }
         .explorer-item-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; max-width: 100%; display: block; box-sizing: border-box; line-height: 1.3; }
-        .explorer-item-meta { font-size: 11px; color: var(--md-sys-color-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; max-width: 100%; display: block; box-sizing: border-box; }
+        .explorer-item-meta { font-size: 11px; color: var(--md-sys-color-secondary); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; max-width: 100%; display: block; box-sizing: border-box; }
 
         /* ==========================================================================
            5-FOLDER PERSISTENT DIRECTORY WATCHER STYLES
@@ -1771,7 +1784,8 @@
             border-radius: 16px !important;
             padding: 12px 16px !important;
             box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
-            overflow: hidden !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
             position: relative !important;
             gap: 8px !important;
             width: 100% !important;
@@ -2204,12 +2218,13 @@
             font-weight: 500 !important;
         }
         body.material-workspace-layout .media-explorer-view {
-            flex: 1 !important;
-            min-height: 0 !important;
-            overflow-y: auto !important;
+            flex: 1 1 auto !important;
+            min-height: min-content !important;
+            overflow-y: visible !important;
             padding: 4px 2px !important;
             display: grid !important;
             align-content: start !important;
+            gap: 16px !important;
         }
 
         /* RIGHT COLUMN (Shortcuts Banner + Folders & Explorer) */
@@ -2336,6 +2351,7 @@
             padding: 20px !important;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
             overflow-y: auto !important;
+            overflow-x: hidden !important;
             position: relative !important;
             gap: 14px !important;
             width: 100% !important;
@@ -4904,15 +4920,37 @@
             transform: translateY(-1px);
         }
 
-        /* Secondary Confirmation Panel */
+        /* Playback Completion Backdrop */
+        .playback-completion-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1004;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .playback-completion-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Secondary Confirmation Panel: Clean & Polished Complete & Delete Dialog */
         .m3-delete-confirm-panel {
             width: 100%;
             margin-top: 14px;
-            padding: 14px 16px;
-            background: rgba(96, 20, 20, 0.3);
-            border: 1px solid rgba(255, 82, 82, 0.4);
-            border-radius: 16px;
-            animation: fadeInDialog 0.25s ease;
+            padding: 18px 20px;
+            background: var(--md-sys-color-surface-container-highest, #202D24);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+            animation: fadeInDialog 0.25s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
         }
 
         @keyframes fadeInDialog {
@@ -4920,19 +4958,96 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .m3-confirm-warning {
+        .m3-delete-dialog-header {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .m3-delete-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            flex-shrink: 0;
+        }
+
+        .m3-delete-title-box {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .m3-delete-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.25;
+        }
+
+        .m3-delete-subtitle {
+            font-size: 11.5px;
+            color: var(--md-sys-color-secondary);
+            margin-top: 2px;
+        }
+
+        .m3-delete-target-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--md-sys-color-outline-variant, rgba(255, 255, 255, 0.08));
+            border-radius: 14px;
+        }
+
+        .m3-delete-target-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .m3-delete-target-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .m3-delete-target-badge {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--md-sys-color-primary, #A6F5B0);
+            margin-top: 2px;
+        }
+
+        .m3-confirm-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
             text-align: left;
-            margin-bottom: 12px;
+            padding: 10px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: 12px;
+            margin: 0;
         }
 
         .m3-confirm-warning p {
             font-size: 12px;
-            color: #FFD8D6;
+            color: #FECDD3;
             margin: 0;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .m3-confirm-actions {
@@ -4940,33 +5055,73 @@
             align-items: center;
             justify-content: flex-end;
             gap: 10px;
+            margin-top: 4px;
         }
 
         .hud-action-btn.text-btn {
             background: transparent;
-            border: 1px solid transparent;
-            color: var(--md-sys-color-secondary, #A0B2A6);
+            border: 1px solid var(--md-sys-color-outline-variant, rgba(255, 255, 255, 0.15));
+            color: var(--md-sys-color-on-surface);
             width: auto;
-            padding: 6px 14px;
+            padding: 8px 18px;
+            font-size: 12.5px;
+            border-radius: var(--md-sys-shape-corner-full);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .hud-action-btn.text-btn:hover {
             background: rgba(255, 255, 255, 0.08);
-            color: #FFF;
+            border-color: var(--md-sys-color-outline);
+            color: #FFFFFF;
         }
 
         .hud-action-btn.danger-btn {
-            background: #B3261E;
-            color: #FFF;
-            border: 1px solid #FF5252;
-            box-shadow: 0 0 14px rgba(255, 82, 82, 0.4);
+            background: #DC2626;
+            color: #FFFFFF;
+            border: 1px solid #EF4444;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
             width: auto;
-            padding: 6px 14px;
+            padding: 8px 20px;
+            font-size: 12.5px;
+            font-weight: 700;
+            border-radius: var(--md-sys-shape-corner-full);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .hud-action-btn.danger-btn:hover {
-            background: #DC3545;
-            filter: brightness(1.1);
+            background: #B91C1C;
+            box-shadow: 0 6px 18px rgba(220, 38, 38, 0.5);
+            transform: translateY(-1px);
+        }
+
+        [data-mode="light"] .m3-delete-confirm-panel {
+            background: #FFF5F5 !important;
+            border-color: rgba(239, 68, 68, 0.3) !important;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+        }
+        [data-mode="light"] .m3-delete-target-card {
+            background: #FFFFFF !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        [data-mode="light"] .m3-confirm-warning {
+            background: #FEE2E2 !important;
+            border-color: rgba(239, 68, 68, 0.25) !important;
+        }
+        [data-mode="light"] .m3-confirm-warning p {
+            color: #991B1B !important;
+        }
+        [data-mode="light"] .hud-action-btn.text-btn {
+            border-color: rgba(0, 0, 0, 0.15) !important;
+            color: #111814 !important;
+        }
+        [data-mode="light"] .hud-action-btn.text-btn:hover {
+            background: rgba(0, 0, 0, 0.05) !important;
         }
 
         .hud-close-btn {
@@ -5137,6 +5292,25 @@
     <div class="ambient-mesh"></div>
     <div id="custom-bg-layer"></div>
 
+    <!-- Initial App Startup Splash Screen with am-loading-video.webm & am-icon.png -->
+    <div id="app-launch-splash" style="position:fixed; inset:0; z-index:99999; background:#050A07; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; transition:opacity 0.4s ease, visibility 0.4s ease;">
+        <div style="position:relative; width:92px; height:92px; border-radius:50%; overflow:hidden; border:2px solid var(--md-sys-color-primary, #00FF66); box-shadow:0 0 35px var(--glow-primary, rgba(0,255,102,0.4)); background:#000;">
+            <video id="splash-loading-video" src="./am-loading-video.webm" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                <source src="./am-loading-video.webm" type="video/webm">
+            </video>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="./am-icon.png" alt="AM Player" style="width:28px; height:28px; border-radius:7px; object-fit:cover;" onerror="this.style.display='none'">
+                <span style="font-size:20px; font-weight:800; color:#F4FBF5; letter-spacing:-0.2px; font-family:'Plus Jakarta Sans', sans-serif;">Adarsh's Media Player</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+                <span style="font-size:11.5px; font-weight:800; padding:3px 10px; border-radius:12px; background:rgba(0,255,102,0.14); color:var(--md-sys-color-primary, #00FF66); border:1px solid rgba(0,255,102,0.3);">v2.1.1 Production Stable</span>
+                <span style="font-size:11px; color:rgba(255,255,255,0.6); font-weight:600;">Engine v2.1.0</span>
+            </div>
+        </div>
+    </div>
+
     <!-- AI Enhanced Convolution Filters (Text Crisp & 4K Modes) -->
     <svg width="0" height="0" style="position: absolute;">
         <filter id="ai-enhance-lecture">
@@ -5156,7 +5330,8 @@
         <!-- Default Home Top Bar (visible only in Default View) -->
         <div class="home-top-bar">
             <div class="brand-badge">
-                <svg class="brand-logo-icon" viewBox="0 0 100 100">
+                <img src="./am-icon.png" class="brand-logo-icon" alt="AM Player" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';" style="object-fit:cover;" />
+                <svg class="brand-logo-icon" viewBox="0 0 100 100" style="display:none;">
                     <rect width="100" height="100" rx="28" fill="#1f2425"/>
                     <path d="M38 27 C38 24.2 41.1 22.5 43.5 23.9 L75.5 46.9 C77.8 48.3 77.8 51.7 75.5 53.1 L43.5 76.1 C41.1 77.5 38 75.8 38 73 Z" fill="var(--md-sys-color-primary, #00FF66)" stroke="var(--md-sys-color-primary, #00FF66)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
                 </svg>
@@ -5188,33 +5363,33 @@
                 </div>
 
                 <!-- Settings Button: Positioned Directly Under Clock -->
-                <button class="nav-rail-item" id="nav-rail-settings" title="Engine & Interface Preferences">
+                <button class="nav-rail-item" id="nav-rail-settings" title="Settings">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">tune</span>
+                        <span class="material-symbols-rounded">settings</span>
                     </div>
-                    <span class="nav-rail-label">Preferences</span>
+                    <span class="nav-rail-label">Settings</span>
                 </button>
 
                 <div class="nav-rail-divider" style="width: 34px; height: 1px; background: var(--md-sys-color-outline-variant); margin: 2px 0; opacity: 0.6;"></div>
 
                 <!-- Navigation Rail Buttons -->
-                <button class="nav-rail-item active" id="nav-rail-home" title="Master Media Workspace">
+                <button class="nav-rail-item active" id="nav-rail-home" title="Home">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">space_dashboard</span>
+                        <span class="material-symbols-rounded">home</span>
                     </div>
-                    <span class="nav-rail-label">Workspace</span>
+                    <span class="nav-rail-label">Home</span>
                 </button>
-                <button class="nav-rail-item" id="nav-rail-folders" title="Media Vaults & Directories">
+                <button class="nav-rail-item" id="nav-rail-folders" title="Folders">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">folder_managed</span>
+                        <span class="material-symbols-rounded">folder</span>
                     </div>
-                    <span class="nav-rail-label">Vaults</span>
+                    <span class="nav-rail-label">Folders</span>
                 </button>
-                <button class="nav-rail-item" id="nav-rail-history" title="Playback Timeline & History">
+                <button class="nav-rail-item" id="nav-rail-history" title="History">
                     <div class="nav-rail-pill">
-                        <span class="material-symbols-rounded">history_toggle_off</span>
+                        <span class="material-symbols-rounded">history</span>
                     </div>
-                    <span class="nav-rail-label">Timeline</span>
+                    <span class="nav-rail-label">History</span>
                 </button>
             </nav>
 
@@ -5224,39 +5399,39 @@
                 <div class="modes-top-section" id="modes-top-section">
                     <!-- Square Rounded Mode Cards -->
                     <div class="upload-options square-modes-group" id="upload-options-grid">
-                        <label for="audio-upload" class="big-upload-btn square-mode-card btn-music" title="Launch Lossless Studio Hi-Fi Mode">
+                        <label for="audio-upload" class="big-upload-btn square-mode-card btn-music" title="Play Audio">
                             <div class="square-mode-icon-wrap">
-                                <span class="material-symbols-rounded">graphic_eq</span>
+                                <span class="material-symbols-rounded">music_note</span>
                             </div>
-                            <span class="square-mode-title">Studio Hi-Fi</span>
-                            <span class="square-mode-subtitle">Lossless FLAC • 3D Audio</span>
+                            <span class="square-mode-title">Audio</span>
+                            <span class="square-mode-subtitle">Play audio</span>
                         </label>
                         <input type="file" id="audio-upload" accept=".mp3,.m4a,.flac,.aac,.wav,.ogg,.alac,.aiff,.opus,.wma,audio/mp3,audio/mpeg,audio/mp4,audio/aac,audio/flac,audio/wav,audio/ogg,audio/x-m4a">
 
-                        <label for="video-upload" class="big-upload-btn square-mode-card btn-video" title="Launch Academic Lecture Pro Mode">
+                        <label for="video-upload" class="big-upload-btn square-mode-card btn-video" title="Lecture Mode">
                             <div class="square-mode-icon-wrap">
-                                <span class="material-symbols-rounded">cast_for_education</span>
+                                <span class="material-symbols-rounded">school</span>
                             </div>
-                            <span class="square-mode-title">Lecture Pro</span>
-                            <span class="square-mode-subtitle">Smart A-B • Split PDF</span>
+                            <span class="square-mode-title">Lecture</span>
+                            <span class="square-mode-subtitle">Lecture mode</span>
                         </label>
                         <input type="file" id="video-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
 
-                        <label for="theater-upload" class="big-upload-btn square-mode-card btn-theater" title="Launch Cinema Ultra 4K Theater Mode">
+                        <label for="theater-upload" class="big-upload-btn square-mode-card btn-theater" title="Cinema Mode">
                             <div class="square-mode-icon-wrap">
-                                <span class="material-symbols-rounded">movie_filter</span>
+                                <span class="material-symbols-rounded">movie</span>
                             </div>
-                            <span class="square-mode-title">Cinema Ultra 4K</span>
-                            <span class="square-mode-subtitle">HDR10+ • Atmos Ambilight</span>
+                            <span class="square-mode-title">Cinema</span>
+                            <span class="square-mode-subtitle">Cinema mode</span>
                         </label>
                         <input type="file" id="theater-upload" accept="video/mp4, video/x-matroska, video/webm, video/hevc, video/*">
 
-                        <label for="folder-upload" class="big-upload-btn square-mode-card btn-playlist" id="card-folder-upload" title="Open Media Folder or Multi-Episode Playlist">
+                        <label for="folder-upload" class="big-upload-btn square-mode-card btn-playlist" id="card-folder-upload" title="Open Folder">
                             <div class="square-mode-icon-wrap">
                                 <span class="material-symbols-rounded">folder_open</span>
                             </div>
-                            <span class="square-mode-title">Media Folder</span>
-                            <span class="square-mode-subtitle">Auto-Sort • Binge Playlist</span>
+                            <span class="square-mode-title">Folder</span>
+                            <span class="square-mode-subtitle">Open folder</span>
                         </label>
                     </div>
 
@@ -5264,13 +5439,13 @@
                     <div class="modes-quick-actions-card">
                         <div class="modes-quick-actions-row">
                             <div class="url-input-box" style="flex: 1;">
-                                <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); margin-right: 8px;">cast_connected</span>
-                                <input type="text" id="url-input" placeholder="Broadcast URL, HLS (.m3u8), DASH (.mpd), or Live Stream...">
-                                <button id="url-play-btn">Stream Live</button>
+                                <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); margin-right: 8px;">link</span>
+                                <input type="text" id="url-input" placeholder="Enter stream or video URL...">
+                                <button id="url-play-btn">Play</button>
                             </div>
-                            <button type="button" class="mode-add-folder-action-btn" id="add-linked-folder-btn" title="Mount Persistent Media Vault Directory" style="height: 42px; padding: 0 16px; border-radius: 21px; font-weight: 700; flex-shrink: 0; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border: none; cursor: pointer;">
-                                <span class="material-symbols-rounded" style="font-size:18px;">folder_managed</span>
-                                <span>Mount Vault</span>
+                            <button type="button" class="mode-add-folder-action-btn" id="add-linked-folder-btn" title="Add Folder" style="height: 42px; padding: 0 16px; border-radius: 21px; font-weight: 700; flex-shrink: 0; background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); border: none; cursor: pointer;">
+                                <span class="material-symbols-rounded" style="font-size:18px;">create_new_folder</span>
+                                <span>Add Folder</span>
                                 <span class="folders-count-pill" id="linked-folders-count" style="margin-left: 4px;">0 / 10</span>
                             </button>
                             <input type="file" id="web-linked-folder-input" webkitdirectory directory multiple style="display:none;">
@@ -5292,14 +5467,14 @@
                     <!-- Explorer Header Row with Integrated Search & Controls -->
                     <div class="library-panel-header-row">
                         <div class="library-header-left">
-                            <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:22px;">auto_awesome_mosaic</span>
-                            <span id="explorer-view-title" class="library-view-heading">Master Media Vault & Explorer</span>
+                            <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:22px;">video_library</span>
+                            <span id="explorer-view-title" class="library-view-heading">Media Library</span>
                         </div>
                         <!-- Integrated Library Search Bar -->
                         <div class="library-header-center">
                             <div class="material-search-card" id="material-search-card">
                                 <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:18px;">search</span>
-                                <input type="text" id="material-search-input" placeholder="Search assets by title, codec, resolution or format..." autocomplete="off">
+                                <input type="text" id="material-search-input" placeholder="Search media files..." autocomplete="off">
                                 <button class="icon-btn search-clear-btn" id="material-search-clear" style="display:none; width:26px; height:26px;" title="Clear search">
                                     <span class="material-symbols-rounded" style="font-size:16px;">close</span>
                                 </button>
@@ -5307,23 +5482,23 @@
                         </div>
                         <div class="view-controls">
                             <select class="m3-select" id="sort-select">
-                                <option value="name-asc">Sort: Asset Title (A → Z)</option>
-                                <option value="name-desc">Sort: Asset Title (Z → A)</option>
-                                <option value="duration">Sort: Duration (Longest First)</option>
-                                <option value="folder">Sort: Aggregate Vault Runtime</option>
-                                <option value="extension">Sort: Media Codec & Format</option>
-                                <option value="path">Sort: Storage Hierarchy</option>
-                                <option value="progress">Sort: Completion Quotient %</option>
-                                <option value="resolution">Sort: Video Resolution (4K / 1080p)</option>
-                                <option value="size-large">Sort: Bitrate & File Size</option>
-                                <option value="thumb">Sort: Poster Keyframe Status</option>
-                                <option value="date-new">Sort: Asset Ingestion Date</option>
+                                <option value="name-asc">Sort: Name (A to Z)</option>
+                                <option value="name-desc">Sort: Name (Z to A)</option>
+                                <option value="duration">Sort: Duration</option>
+                                <option value="folder">Sort: Total Duration</option>
+                                <option value="extension">Sort: Format</option>
+                                <option value="path">Sort: Path</option>
+                                <option value="progress">Sort: Progress</option>
+                                <option value="resolution">Sort: Resolution</option>
+                                <option value="size-large">Sort: File Size</option>
+                                <option value="thumb">Sort: Thumbnail</option>
+                                <option value="date-new">Sort: Date Added</option>
                             </select>
-                            <button class="icon-btn" id="view-toggle-btn" title="Toggle Layout (Grid / Detailed List)" style="width:36px; height:36px;">
+                            <button class="icon-btn" id="view-toggle-btn" title="Toggle View" style="width:36px; height:36px;">
                                 <span class="material-symbols-rounded" id="view-toggle-icon">grid_view</span>
                             </button>
-                            <button class="icon-btn" id="clear-explorer-btn" title="Purge Cached Media Vault Entries" style="width:36px; height:36px; color:var(--md-sys-color-primary);">
-                                <span class="material-symbols-rounded">cleaning_services</span>
+                            <button class="icon-btn" id="clear-explorer-btn" title="Clear Library" style="width:36px; height:36px; color:var(--md-sys-color-primary);">
+                                <span class="material-symbols-rounded">delete_sweep</span>
                             </button>
                         </div>
                     </div>
@@ -5392,8 +5567,8 @@
             <div class="sheet-drag-handle"></div>
             <div class="sheet-header">
                 <div class="sheet-title">
-                    <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary)">palette</span>
-                    <span id="settings-sheet-title">Customization & Settings</span>
+                    <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary)">settings</span>
+                    <span id="settings-sheet-title">Settings</span>
                 </div>
                 <button class="icon-btn" id="close-settings-btn" style="width:40px; height:40px;">
                     <span class="material-symbols-rounded">close</span>
@@ -5403,7 +5578,7 @@
             <!-- Settings Global Search Bar -->
             <div class="settings-search-box">
                 <span class="material-symbols-rounded" style="font-size:20px; color:var(--md-sys-color-primary); flex-shrink:0;">search</span>
-                <input type="text" id="settings-search-input" placeholder="Search settings (e.g. visualizer, color, speed, subtitle, gesture)..." autocomplete="off" spellcheck="false">
+                <input type="text" id="settings-search-input" placeholder="Search settings..." autocomplete="off" spellcheck="false">
                 <button class="search-clear-btn" id="settings-search-clear" title="Clear search">
                     <span class="material-symbols-rounded" style="font-size:18px;">close</span>
                 </button>
@@ -5419,35 +5594,39 @@
             <div class="settings-nav-tabs">
                 <button class="settings-tab-btn active" data-tab="tab-appearance">
                     <span class="material-symbols-rounded" style="font-size:16px;">palette</span>
-                    <span>Visual Engine</span>
+                    <span>Appearance</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-library">
-                    <span class="material-symbols-rounded" style="font-size:16px;">folder_managed</span>
-                    <span>Media Vault</span>
+                    <span class="material-symbols-rounded" style="font-size:16px;">folder</span>
+                    <span>Library</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-player">
-                    <span class="material-symbols-rounded" style="font-size:16px;">smart_display</span>
-                    <span>Playback Engine</span>
+                    <span class="material-symbols-rounded" style="font-size:16px;">play_circle</span>
+                    <span>Playback</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-gestures">
                     <span class="material-symbols-rounded" style="font-size:16px;">touch_app</span>
-                    <span>Touch & Gestures</span>
+                    <span>Gestures</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-audio">
-                    <span class="material-symbols-rounded" style="font-size:16px;">equalizer</span>
-                    <span>DSP & Hi-Res Audio</span>
+                    <span class="material-symbols-rounded" style="font-size:16px;">volume_up</span>
+                    <span>Audio</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-subtitles">
                     <span class="material-symbols-rounded" style="font-size:16px;">subtitles</span>
-                    <span>Closed Captions</span>
+                    <span>Subtitles</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-general">
                     <span class="material-symbols-rounded" style="font-size:16px;">tune</span>
-                    <span>System & Core</span>
+                    <span>General</span>
                 </button>
                 <button class="settings-tab-btn" data-tab="tab-shortcuts">
                     <span class="material-symbols-rounded" style="font-size:16px;">keyboard</span>
-                    <span>Keybindings</span>
+                    <span>Shortcuts</span>
+                </button>
+                <button class="settings-tab-btn" data-tab="tab-about">
+                    <span class="material-symbols-rounded" style="font-size:16px;">info</span>
+                    <span>About</span>
                 </button>
             </div>
 
@@ -6170,6 +6349,128 @@
                     <!-- Dynamically populated shortcut rows -->
                 </div>
             </div>
+
+            <!-- 9. ℹ️ ABOUT & DEVELOPER TAB -->
+            <div class="settings-tab-content" id="tab-about">
+                <!-- Developer Profile Card -->
+                <div class="settings-row" id="setting-row-about-dev" style="background:var(--md-sys-color-surface-container); border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--md-sys-shape-corner-medium); padding:20px; flex-direction:column; align-items:stretch; gap:16px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;">
+                        <div style="display:flex; align-items:center; gap:14px;">
+                            <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, var(--md-sys-color-primary), #00E5FF); display:flex; align-items:center; justify-content:center; color:#050A07; font-size:24px; font-weight:800; box-shadow:0 4px 20px var(--glow-primary); flex-shrink:0;">
+                                TS
+                            </div>
+                            <div style="display:flex; flex-direction:column;">
+                                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                    <span style="font-size:19px; font-weight:800; color:var(--md-sys-color-on-surface); letter-spacing:-0.3px;">Tillu Sarkar</span>
+                                    <span style="padding:2px 10px; border-radius:12px; font-size:11px; font-weight:700; background:rgba(0, 255, 102, 0.15); color:var(--md-sys-color-primary); border:1px solid rgba(0, 255, 102, 0.3);">Developer</span>
+                                </div>
+                                <span style="font-size:13px; color:var(--md-sys-color-secondary); margin-top:2px;">Lead Architect &amp; Core Maintainer</span>
+                            </div>
+                        </div>
+
+                        <!-- App Version Badge -->
+                        <div style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:24px; background:var(--md-sys-color-surface-container-high); border:1px solid var(--md-sys-color-primary); font-size:12.5px; font-weight:800; color:var(--md-sys-color-primary); box-shadow:0 2px 10px rgba(0,255,102,0.15);">
+                            <span class="material-symbols-rounded" style="font-size:17px;">verified</span>
+                            <span>v2.1.1</span>
+                        </div>
+                    </div>
+
+                    <!-- Details Grid -->
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                        <!-- GitHub Handle Card -->
+                        <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:12px; background:rgba(0,0,0,0.25); border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="width:36px; height:36px; border-radius:10px; background:rgba(0,255,102,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span class="material-symbols-rounded" style="font-size:20px; color:var(--md-sys-color-primary);">terminal</span>
+                            </div>
+                            <div style="display:flex; flex-direction:column; min-width:0;">
+                                <span style="font-size:10.5px; color:var(--md-sys-color-secondary); text-transform:uppercase; letter-spacing:0.6px; font-weight:700;">GitHub</span>
+                                <a href="https://github.com/theadarshvish6510" target="_blank" rel="noopener noreferrer" style="font-size:13.5px; font-weight:700; color:var(--md-sys-color-on-surface); text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="Open GitHub Profile">
+                                    @theadarshvish6510
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Email Contact Card -->
+                        <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:12px; background:rgba(0,0,0,0.25); border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="width:36px; height:36px; border-radius:10px; background:rgba(0,229,255,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                <span class="material-symbols-rounded" style="font-size:20px; color:#00E5FF;">mail</span>
+                            </div>
+                            <div style="display:flex; flex-direction:column; min-width:0;">
+                                <span style="font-size:10.5px; color:var(--md-sys-color-secondary); text-transform:uppercase; letter-spacing:0.6px; font-weight:700;">Email</span>
+                                <a href="mailto:thetilludoggy6510@gmail.com" style="font-size:13.5px; font-weight:700; color:var(--md-sys-color-on-surface); text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="Send Email">
+                                    thetilludoggy6510@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Action: View GitHub Profile Button -->
+                    <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:6px;">
+                        <a href="https://github.com/theadarshvish6510" target="_blank" rel="noopener noreferrer" id="view-github-profile-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; padding:10px 22px; font-size:13.5px; font-weight:700; border-radius:var(--md-sys-shape-corner-full); background:var(--md-sys-color-primary); color:#050A07; cursor:pointer; box-shadow:0 4px 16px var(--glow-primary); transition:transform 0.2s ease, box-shadow 0.2s ease;">
+                            <span class="material-symbols-rounded" style="font-size:19px;">open_in_new</span>
+                            <span>View GitHub Profile</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- App Information & Release Notes Card -->
+                <div class="settings-row" id="setting-row-about-specs" style="background:var(--md-sys-color-surface-container); border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--md-sys-shape-corner-medium); padding:16px 20px; flex-direction:column; align-items:stretch; gap:12px;">
+                    <div style="font-size:14px; font-weight:700; color:var(--md-sys-color-on-surface); display:flex; align-items:center; gap:8px;">
+                        <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">info</span>
+                        <span>Application Specifications</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+                        <div style="padding:10px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="font-size:11px; color:var(--md-sys-color-secondary);">Application</div>
+                            <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-on-surface); margin-top:2px;">AM Player (Adarsh's Media Player)</div>
+                        </div>
+                        <div style="padding:10px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="font-size:11px; color:var(--md-sys-color-secondary);">Build Version</div>
+                            <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-primary); margin-top:2px;">v2.1.1 (Engine v2.1.0)</div>
+                        </div>
+                        <div style="padding:10px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="font-size:11px; color:var(--md-sys-color-secondary);">License</div>
+                            <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-on-surface); margin-top:2px;">MIT Permissive Open Source</div>
+                        </div>
+                        <div style="padding:10px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="font-size:11px; color:var(--md-sys-color-secondary);">Architecture</div>
+                            <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-on-surface); margin-top:2px;">Native LibVLC + Direct3D11 GPU</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Production Assets Showcase -->
+                <div class="settings-row" id="setting-row-about-assets" style="background:var(--md-sys-color-surface-container); border:1px solid var(--md-sys-color-outline-variant); border-radius:var(--md-sys-shape-corner-medium); padding:16px 20px; flex-direction:column; align-items:stretch; gap:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div style="font-size:14px; font-weight:700; color:var(--md-sys-color-on-surface); display:flex; align-items:center; gap:8px;">
+                            <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">verified</span>
+                            <span>Verified Production Assets</span>
+                        </div>
+                        <button id="test-loading-anim-btn" type="button" class="icon-btn is-morph-rect" style="width:auto; height:32px; padding:0 14px; font-size:12px; font-weight:700; gap:6px; background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); border:1px solid var(--md-sys-color-outline);">
+                            <span class="material-symbols-rounded" style="font-size:16px;">motion_photos_on</span>
+                            <span>Test Loading Animation</span>
+                        </button>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
+                        <div style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <img src="./am-icon.png" alt="AM Player Icon" style="width:40px; height:40px; border-radius:10px; object-fit:cover; border:1px solid var(--md-sys-color-outline);" />
+                            <div>
+                                <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-on-surface);">am-icon.ico / png</div>
+                                <div style="font-size:11px; color:var(--md-sys-color-secondary);">Cross-Platform App Icon & Favicon</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px; padding:12px 14px; background:rgba(0,0,0,0.18); border-radius:10px; border:1px solid var(--md-sys-color-outline-variant);">
+                            <div style="width:40px; height:40px; border-radius:50%; overflow:hidden; border:2px solid var(--md-sys-color-primary); background:#000; flex-shrink:0;">
+                                <video src="./am-loading-video.webm" autoplay loop muted playsinline webkit-playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                            </div>
+                            <div>
+                                <div style="font-size:13px; font-weight:700; color:var(--md-sys-color-on-surface);">am-loading-video.webm</div>
+                                <div style="font-size:11px; color:var(--md-sys-color-secondary);">Zero-Lag Stream Buffering Video</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -6218,7 +6519,7 @@
         <button class="icon-btn" id="lock-btn" title="Lock Screen"><span class="material-symbols-rounded" id="lock-icon">lock_open</span></button>
 
         <div id="home-btn-container">
-            <div class="icon-btn" id="home-btn-standalone" title="Go to Home Screen">
+            <div class="icon-btn" id="home-btn-standalone" title="Home">
                 <span class="material-symbols-rounded">home</span>
             </div>
         </div>
@@ -6231,9 +6532,9 @@
         </div>
 
         <div id="top-right-controls">
-            <button class="icon-btn" id="top-pdf-btn" title="Split-View PDF Viewer" style="display:none;"><span class="material-symbols-rounded">picture_as_pdf</span></button>
+            <button class="icon-btn" id="top-pdf-btn" title="PDF Viewer" style="display:none;"><span class="material-symbols-rounded">picture_as_pdf</span></button>
             <button class="icon-btn" id="aspect-btn" title="Aspect Ratio"><span class="material-symbols-rounded">aspect_ratio</span></button>
-            <button class="icon-btn" id="notes-btn" title="Lecture Notes & Bookmarks"><span class="material-symbols-rounded">edit_note</span></button>
+            <button class="icon-btn" id="notes-btn" title="Notes"><span class="material-symbols-rounded">edit_note</span></button>
         </div>
 
         <div id="eye-care-overlay"></div>
@@ -6253,8 +6554,8 @@
                     <img id="music-cover-fg" src="" alt="Album Cover Art">
                 </div>
                 <div class="default-music-wrap" id="default-music-wrap">
-                    <span class="material-symbols-rounded default-music-icon" id="default-music-icon">graphic_eq</span>
-                    <span class="default-music-label" id="default-music-label">Music Mode</span>
+                    <span class="material-symbols-rounded default-music-icon" id="default-music-icon">music_note</span>
+                    <span class="default-music-label" id="default-music-label">Audio</span>
                 </div>
             </div>
         </div>
@@ -6262,16 +6563,16 @@
 
         <!-- Split-View PDF Viewer Side Panel (Lecture Mode) -->
         <div id="pdf-split-panel">
-            <div id="pdf-resize-handle" title="Drag to resize PDF / Video split view"></div>
+            <div id="pdf-resize-handle" title="Drag to resize split view"></div>
             
             <div class="pdf-panel-header">
                 <div class="pdf-header-title-group">
                     <span class="material-symbols-rounded" style="font-size:18px;">picture_as_pdf</span>
-                    <span id="pdf-header-filename" title="Lecture PDF Notes">Lecture PDF Notes</span>
+                    <span id="pdf-header-filename" title="PDF Notes">PDF Notes</span>
                 </div>
                 <div class="pdf-header-controls">
                     <!-- Open PDF Document -->
-                    <label for="pdf-file-upload" class="pdf-tool-btn" title="Open PDF Document" style="margin:0;">
+                    <label for="pdf-file-upload" class="pdf-tool-btn" title="Open PDF" style="margin:0;">
                         <span class="material-symbols-rounded" style="font-size:16px;">upload_file</span>
                         <span>Open</span>
                     </label>
@@ -6281,13 +6582,13 @@
                     <button class="pdf-tool-btn" id="pdf-zoom-out-btn" title="Zoom Out"><span class="material-symbols-rounded" style="font-size:16px;">zoom_out</span></button>
                     <span class="pdf-tool-btn" id="pdf-zoom-level-text" style="cursor:default; min-width:38px; font-weight:700;" title="Current Zoom">100%</span>
                     <button class="pdf-tool-btn" id="pdf-zoom-in-btn" title="Zoom In"><span class="material-symbols-rounded" style="font-size:16px;">zoom_in</span></button>
-                    <button class="pdf-tool-btn" id="pdf-zoom-auto-fit-btn" title="Toggle Auto-Fit (Width / Page)"><span class="material-symbols-rounded" style="font-size:16px;">fit_screen</span></button>
+                    <button class="pdf-tool-btn" id="pdf-zoom-auto-fit-btn" title="Fit Screen"><span class="material-symbols-rounded" style="font-size:16px;">fit_screen</span></button>
 
                     <!-- Theme Toggler (Dark/Light/Sepia) -->
-                    <button class="pdf-tool-btn" id="pdf-theme-btn" title="Toggle Reading Theme (Light / Dark / Sepia / High Contrast)"><span class="material-symbols-rounded" style="font-size:16px;">palette</span></button>
+                    <button class="pdf-tool-btn" id="pdf-theme-btn" title="Theme"><span class="material-symbols-rounded" style="font-size:16px;">palette</span></button>
 
                     <!-- Minimize Panel Button -->
-                    <button class="pdf-tool-btn" id="pdf-toggle-hide-btn" title="Hide/Minimize Panel"><span class="material-symbols-rounded" style="font-size:16px;">dock_to_right</span></button>
+                    <button class="pdf-tool-btn" id="pdf-toggle-hide-btn" title="Close"><span class="material-symbols-rounded" style="font-size:16px;">close</span></button>
                 </div>
             </div>
 
@@ -6297,15 +6598,15 @@
                 <div id="pdf-scroll-viewport" class="pdf-theme-normal">
                     <div class="pdf-empty-placeholder" id="pdf-empty-placeholder">
                         <span class="material-symbols-rounded" style="font-size:48px; color:var(--md-sys-color-primary);">description</span>
-                        <div style="font-weight:700; font-size:15px;">No PDF Document Loaded</div>
-                        <div style="font-size:12px; color:var(--md-sys-color-secondary); max-width:260px;">Upload a lecture slide deck or PDF book to study alongside the video.</div>
+                        <div style="font-weight:700; font-size:15px;">No PDF Loaded</div>
+                        <div style="font-size:12px; color:var(--md-sys-color-secondary); max-width:260px;">Open a PDF document to view alongside video.</div>
                         <label for="pdf-file-upload" class="icon-btn is-morph-rect" style="width:auto; padding:8px 18px; margin-top:8px; cursor:pointer;">
                             <span class="material-symbols-rounded" style="font-size:18px;">upload_file</span>
-                            <span>Select PDF File</span>
+                            <span>Select PDF</span>
                         </label>
                         <button class="pdf-tool-btn" id="pdf-load-sample-btn" style="margin-top:6px; padding:6px 14px; height:32px;">
                             <span class="material-symbols-rounded" style="font-size:16px;">auto_stories</span>
-                            <span>Load Sample Lecture Slides</span>
+                            <span>Sample PDF</span>
                         </button>
                     </div>
                     <div id="pdf-pages-container" style="display:flex; flex-direction:column; align-items:center; gap:16px; width:100%;"></div>
@@ -6317,20 +6618,20 @@
         <div id="notes-sidebar">
             <div class="sidebar-header">
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">rate_review</span>
-                    <span style="font-weight:700;">Lecture Notes & Smart Sync</span>
+                    <span class="material-symbols-rounded" style="color:var(--md-sys-color-primary); font-size:20px;">edit_note</span>
+                    <span style="font-weight:700;">Notes</span>
                 </div>
-                <button class="icon-btn" id="close-notes-btn" style="width:34px; height:34px;" title="Close Notes"><span class="material-symbols-rounded">close</span></button>
+                <button class="icon-btn" id="close-notes-btn" style="width:34px; height:34px;" title="Close"><span class="material-symbols-rounded">close</span></button>
             </div>
             <div id="notes-list"></div>
             <div class="note-input-area">
-                <textarea id="note-input" placeholder="Annotate key concept at current timestamp..."></textarea>
+                <textarea id="note-input" placeholder="Type a note at current time..."></textarea>
                 <div style="display:flex; justify-content:space-between; gap:8px;">
-                    <button class="icon-btn" id="export-notes-btn" style="width:auto; padding:6px 14px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Export Notes as JSON">
+                    <button class="icon-btn" id="export-notes-btn" style="width:auto; padding:6px 14px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Export Notes">
                         <span class="material-symbols-rounded" style="font-size:16px;">download</span>
                         <span>Export</span>
                     </button>
-                    <button class="icon-btn is-morph-rect" id="add-note-btn" style="width:auto; padding:6px 16px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Save Timestamped Note">
+                    <button class="icon-btn is-morph-rect" id="add-note-btn" style="width:auto; padding:6px 16px; font-size:12px; font-weight:700; height:34px; gap:6px;" title="Save Note">
                         <span class="material-symbols-rounded" style="font-size:16px;">add</span>
                         <span>Save Note</span>
                     </button>
@@ -6341,8 +6642,8 @@
         <div id="playlist-sidebar">
             <div class="playlist-header">
                 <span id="playlist-header-text" style="display:flex; align-items:center; gap:6px;">
-                    <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-sys-color-primary);">queue_music</span>
-                    <span>Active Queue</span>
+                    <span class="material-symbols-rounded" style="font-size:18px; color:var(--md-sys-color-primary);">playlist_play</span>
+                    <span>Playlist</span>
                 </span>
                 <span id="playlist-count">(0)</span>
             </div>
@@ -6352,16 +6653,19 @@
         <div id="more-videos-overlay">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
                 <h2 style="color:var(--md-sys-color-primary); display:flex; align-items:center; gap:8px; font-size: 20px; font-weight: 800;">
-                    <span class="material-symbols-rounded" style="font-size: 24px;">auto_awesome_mosaic</span> Master Media Vault
+                    <span class="material-symbols-rounded" style="font-size: 24px;">video_library</span> Media Library
                 </h2>
-                <button class="icon-btn" id="close-grid-btn" title="Close Vault View"><span class="material-symbols-rounded">close</span></button>
+                <button class="icon-btn" id="close-grid-btn" title="Close"><span class="material-symbols-rounded">close</span></button>
             </div>
             <div class="videos-grid" id="videos-grid"></div>
         </div>
 
         <video id="main-video" class="ar-fit" preload="auto" playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" crossorigin="anonymous"></video>
         <div id="buffering-spinner" title="Buffering & Optimizing Stream">
-            <video id="buffering-video" class="loading-anim-video" src="./am-loading-video.webm" autoplay loop muted playsinline webkit-playsinline></video>
+            <video id="buffering-video" class="loading-anim-video" src="./am-loading-video.webm" autoplay loop muted playsinline webkit-playsinline preload="auto">
+                <source src="./am-loading-video.webm" type="video/webm">
+                <source src="am-loading-video.webm" type="video/webm">
+            </video>
         </div>
 
         <div id="toast">Message</div>
@@ -6381,6 +6685,7 @@
         <!-- ==========================================================================
            FEATURE 1: MATERIAL 3 PLAYBACK COMPLETION MODAL DIALOG (<md-dialog>)
            ========================================================================== -->
+        <div id="playback-completion-backdrop" class="playback-completion-backdrop"></div>
         <div id="playback-completion-hud" class="playback-completion-hud" role="dialog" aria-modal="true" aria-labelledby="hud-video-title">
             <button class="hud-close-btn" id="hud-close-btn" title="Dismiss Dialog">
                 <span class="material-symbols-rounded">close</span>
@@ -6402,7 +6707,7 @@
                         <span class="m3-stacked-label">Next Video</span>
                         <span class="m3-stacked-title" id="hud-next-title">None</span>
                     </div>
-                    <button class="hud-action-btn primary m3-stacked-btn" id="hud-next-episode-btn" title="Play Next Episode">
+                    <button class="hud-action-btn primary m3-stacked-btn" id="hud-next-episode-btn" title="Play Next">
                         <span id="hud-next-label">Play Next</span>
                         <span class="material-symbols-rounded" style="font-size:16px;">skip_next</span>
                     </button>
@@ -6414,7 +6719,7 @@
                         <span class="m3-stacked-label">Current Video</span>
                         <span class="m3-stacked-title" id="hud-current-title">Current</span>
                     </div>
-                    <button class="hud-action-btn m3-stacked-btn" id="hud-replay-btn" title="Replay Video from Start">
+                    <button class="hud-action-btn m3-stacked-btn" id="hud-replay-btn" title="Replay Video">
                         <span class="material-symbols-rounded" style="font-size:16px;">replay</span>
                         <span>Replay</span>
                     </button>
@@ -6426,7 +6731,7 @@
                         <span class="m3-stacked-label">Previous Video</span>
                         <span class="m3-stacked-title" id="hud-prev-title">None</span>
                     </div>
-                    <button class="hud-action-btn m3-stacked-btn" id="hud-prev-episode-btn" title="Play Previous Episode">
+                    <button class="hud-action-btn m3-stacked-btn" id="hud-prev-episode-btn" title="Play Previous">
                         <span class="material-symbols-rounded" style="font-size:16px;">skip_previous</span>
                         <span id="hud-prev-label">Play Prev</span>
                     </button>
@@ -6436,22 +6741,46 @@
             <!-- Complete & Delete Workflow -->
             <div class="m3-delete-section" id="hud-delete-section">
                 <span class="m3-delete-text">Finished watching this video?</span>
-                <button class="m3-delete-btn" id="hud-delete-video-btn" title="Permanently delete this file and IDB records">
-                    <span class="material-symbols-rounded" style="font-size:15px;">delete_forever</span>
+                <button class="m3-delete-btn" id="hud-delete-video-btn" title="Complete & Delete">
+                    <span class="material-symbols-rounded" style="font-size:15px;">delete</span>
                     <span>Complete & Delete</span>
                 </button>
             </div>
 
-            <!-- Secondary Confirmation Prompt -->
-            <div class="m3-delete-confirm-panel" id="hud-delete-confirm-panel" style="display:none;">
+            <!-- Secondary Confirmation Prompt: Clean & Polished Complete & Delete Dialog -->
+            <div class="m3-delete-confirm-panel" id="hud-delete-confirm-panel" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="hud-delete-dialog-title">
+                <div class="m3-delete-dialog-header">
+                    <div class="m3-delete-badge">
+                        <span class="material-symbols-rounded">delete_forever</span>
+                    </div>
+                    <div class="m3-delete-title-box">
+                        <div class="m3-delete-title" id="hud-delete-dialog-title">Delete Video?</div>
+                        <div class="m3-delete-subtitle">Permanent action • Cannot be undone</div>
+                    </div>
+                </div>
+
+                <!-- Video Target File Info Card -->
+                <div class="m3-delete-target-card">
+                    <span class="material-symbols-rounded" style="font-size:22px; color:#EF4444; flex-shrink:0;">movie</span>
+                    <div class="m3-delete-target-info">
+                        <span class="m3-delete-target-title" id="hud-delete-target-filename">Current Video</span>
+                        <span class="m3-delete-target-badge">Finished Watching • 100%</span>
+                    </div>
+                </div>
+
+                <!-- Warning Notice Box -->
                 <div class="m3-confirm-warning">
-                    <span class="material-symbols-rounded" style="font-size:24px; color:#FF5252; flex-shrink:0;">warning</span>
+                    <span class="material-symbols-rounded" style="font-size:18px; color:#EF4444; flex-shrink:0; margin-top:1px;">warning</span>
                     <p>Permanently delete this file from disk and wipe all history, notes & thumbnail records? This cannot be undone.</p>
                 </div>
+
+                <!-- Dialog Action Controls -->
                 <div class="m3-confirm-actions">
-                    <button class="hud-action-btn text-btn" id="hud-cancel-delete-btn">Cancel</button>
-                    <button class="hud-action-btn danger-btn" id="hud-confirm-delete-btn">
-                        <span class="material-symbols-rounded" style="font-size:15px;">delete_forever</span>
+                    <button type="button" class="hud-action-btn text-btn" id="hud-cancel-delete-btn">
+                        <span>Cancel</span>
+                    </button>
+                    <button type="button" class="hud-action-btn danger-btn" id="hud-confirm-delete-btn">
+                        <span class="material-symbols-rounded" style="font-size:16px;">delete</span>
                         <span>Delete Permanently</span>
                     </button>
                 </div>
@@ -6532,32 +6861,32 @@
         <div class="popup-menu pomo-menu" id="pomo-menu" style="width: 210px;">
             <div class="menu-item pomo-item" data-time="60">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">hourglass_full</span>
-                    <span>60 Min Deep Focus</span>
+                    <span class="material-symbols-rounded">timer</span>
+                    <span>60 Minutes</span>
                 </div>
             </div>
             <div class="menu-item pomo-item" data-time="45">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">hourglass_top</span>
-                    <span>45 Min Study Block</span>
+                    <span class="material-symbols-rounded">timer</span>
+                    <span>45 Minutes</span>
                 </div>
             </div>
             <div class="menu-item pomo-item" data-time="30">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded">timer</span>
-                    <span>30 Min Power Session</span>
+                    <span>30 Minutes</span>
                 </div>
             </div>
             <div class="menu-item pomo-item" data-time="15">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">pace</span>
-                    <span>15 Min Focus Sprint</span>
+                    <span class="material-symbols-rounded">timer</span>
+                    <span>15 Minutes</span>
                 </div>
             </div>
             <div class="menu-item pomo-item" data-time="0" style="color: #f28b82;">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded" style="color: #f28b82;">timer_off</span>
-                    <span>Disable Focus Timer</span>
+                    <span>Turn Off Timer</span>
                 </div>
             </div>
         </div>
@@ -6565,39 +6894,39 @@
         <div class="popup-menu more-menu" id="more-menu">
             <label for="audio-upload" class="menu-item" id="menu-new-music">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">graphic_eq</span>
-                    <span>Import Audio Track</span>
+                    <span class="material-symbols-rounded">music_note</span>
+                    <span>Open Audio</span>
                 </div>
             </label>
             <label for="video-upload" class="menu-item" id="menu-new-lecture">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">cast_for_education</span>
-                    <span>Import Lecture Stream</span>
+                    <span class="material-symbols-rounded">school</span>
+                    <span>Open Lecture</span>
                 </div>
             </label>
             <label for="theater-upload" class="menu-item" id="menu-new-theater">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">movie_filter</span>
-                    <span>Import Cinema Film</span>
+                    <span class="material-symbols-rounded">movie</span>
+                    <span>Cinema Mode</span>
                 </div>
             </label>
             <label for="folder-upload" class="menu-item" id="menu-new-playlist" style="display:none;">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">queue_music</span>
-                    <span>Load Playlist Asset</span>
+                    <span class="material-symbols-rounded">folder_open</span>
+                    <span>Open Folder</span>
                 </div>
             </label>
             <div class="menu-item" id="more-videos-btn" style="display:none;">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">auto_awesome_mosaic</span>
-                    <span>Browse Media Vault</span>
+                    <span class="material-symbols-rounded">video_library</span>
+                    <span>Media Library</span>
                 </div>
             </div>
             
             <label for="sub-upload" class="menu-item" id="menu-upload-sub">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded">subtitles</span>
-                    <span>Import Subtitle Track (.srt, .vtt)</span>
+                    <span>Load Subtitles</span>
                 </div>
                 <span class="tool-status-badge" id="sub-file-status"></span>
             </label>
@@ -6605,57 +6934,57 @@
             
             <div class="menu-item" id="sync-btn">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">av_timer</span>
-                    <span>A/V & Subtitle Precision Sync</span>
+                    <span class="material-symbols-rounded">sync</span>
+                    <span>Audio / Sub Sync</span>
                 </div>
             </div>
             <div class="menu-item" id="spatial-btn">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded">spatial_audio</span>
-                    <span>3D Spatial Soundstage</span>
+                    <span>3D Audio</span>
                 </div>
                 <span class="tool-status-badge" id="spatial-status">OFF</span>
             </div>
             <div class="menu-item" id="eq-btn">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded">equalizer</span>
-                    <span>Pro Studio Multi-Band EQ</span>
+                    <span>Equalizer</span>
                 </div>
                 <span class="tool-status-badge" id="eq-status">Normal</span>
             </div>
             <div class="menu-item" id="norm-btn">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">volume_down_alt</span>
-                    <span>Dynamic Speech Normalizer</span>
+                    <span class="material-symbols-rounded">volume_down</span>
+                    <span>Volume Normalizer</span>
                 </div>
                 <span class="tool-status-badge" id="norm-status">OFF</span>
             </div>
             <!-- Auto Skip Silence for Lecture Mode -->
             <div class="menu-item" id="silence-skip-btn" style="display:none;">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">motion_photos_paused</span>
-                    <span>Smart Silence Truncation</span>
+                    <span class="material-symbols-rounded">fast_forward</span>
+                    <span>Skip Silence</span>
                 </div>
                 <span class="tool-status-badge" id="silence-skip-status">OFF</span>
             </div>
             <div class="menu-item" id="sharp-btn">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">auto_awesome</span>
-                    <span>Neural Clarity & Upscaler</span>
+                    <span class="material-symbols-rounded">tune</span>
+                    <span>Video Sharpness</span>
                 </div>
                 <span class="tool-status-badge" id="sharp-status">OFF</span>
             </div>
             <div class="menu-item" id="eyecare-btn">
                 <div class="menu-item-left">
                     <span class="material-symbols-rounded">visibility</span>
-                    <span>Circadian Eye Comfort</span>
+                    <span>Night Mode</span>
                 </div>
                 <span class="tool-status-badge" id="eyecare-status">OFF</span>
             </div>
             <div class="menu-item" id="open-settings-menu-btn">
                 <div class="menu-item-left">
-                    <span class="material-symbols-rounded">tune</span>
-                    <span>Preferences & System Settings</span>
+                    <span class="material-symbols-rounded">settings</span>
+                    <span>Settings</span>
                 </div>
             </div>
         </div>
@@ -6666,11 +6995,11 @@
             <div class="m3-select-dialog-card" id="capture-dialog-card" style="width: 360px; max-width: calc(100vw - 32px); border-radius: 28px !important; padding: 20px; gap: 14px;">
                 <div class="m3-dialog-header" style="padding: 0; border: none; margin-bottom: 2px;">
                     <div class="m3-dialog-icon-badge" style="background: var(--md-sys-color-primary-container);">
-                        <span class="material-symbols-rounded">video_camera_front</span>
+                        <span class="material-symbols-rounded">photo_camera</span>
                     </div>
                     <div class="m3-dialog-title-box">
-                        <h4 class="m3-dialog-title">Smart Capture & Record</h4>
-                        <p class="m3-dialog-subtitle">Clean frame snapshot or video recording</p>
+                        <h4 class="m3-dialog-title">Capture & Record</h4>
+                        <p class="m3-dialog-subtitle">Screenshot or video recording</p>
                     </div>
                     <button class="m3-dialog-close-btn" id="capture-dialog-close-btn" title="Close">
                         <span class="material-symbols-rounded" style="font-size: 18px;">close</span>
@@ -6683,8 +7012,8 @@
                             <span class="material-symbols-rounded">photo_camera</span>
                         </div>
                         <div class="capture-choice-texts">
-                            <span class="capture-choice-title">Capture Screenshot</span>
-                            <span class="capture-choice-sub">Pristine full-resolution video frame (no UI)</span>
+                            <span class="capture-choice-title">Screenshot</span>
+                            <span class="capture-choice-sub">Save current video frame</span>
                         </div>
                         <span class="material-symbols-rounded" style="color: var(--md-sys-color-primary); font-size: 20px;">chevron_right</span>
                     </div>
@@ -6694,8 +7023,8 @@
                             <span class="material-symbols-rounded" id="record-choice-icon-symbol">fiber_manual_record</span>
                         </div>
                         <div class="capture-choice-texts">
-                            <span class="capture-choice-title" id="record-choice-title">Record Video Clip</span>
-                            <span class="capture-choice-sub" id="record-choice-sub">Sync with player, saves clean clip on stop</span>
+                            <span class="capture-choice-title" id="record-choice-title">Screen Recording</span>
+                            <span class="capture-choice-sub" id="record-choice-sub">Record video clip with audio</span>
                         </div>
                         <span class="material-symbols-rounded" id="record-choice-action-arrow" style="color: var(--md-sys-color-primary); font-size: 20px;">chevron_right</span>
                     </div>
@@ -6709,11 +7038,11 @@
             <div class="m3-select-dialog-card" id="folder-mode-dialog-card" style="width: 440px; max-width: calc(100vw - 32px); border-radius: 28px !important; padding: 24px; gap: 16px;">
                 <div class="m3-dialog-header" style="padding: 0; border: none; margin-bottom: 2px;">
                     <div class="m3-dialog-icon-badge" style="background: var(--md-sys-color-primary-container);">
-                        <span class="material-symbols-rounded">folder_managed</span>
+                        <span class="material-symbols-rounded">folder</span>
                     </div>
                     <div class="m3-dialog-title-box">
-                        <h4 class="m3-dialog-title" id="folder-mode-dialog-title">Mount Vault Playback Profile</h4>
-                        <p class="m3-dialog-subtitle" id="folder-mode-dialog-sub">Configure default engine presets for media in this vault</p>
+                        <h4 class="m3-dialog-title" id="folder-mode-dialog-title">Folder Mode</h4>
+                        <p class="m3-dialog-subtitle" id="folder-mode-dialog-sub">Choose default playback mode for this folder</p>
                     </div>
                     <button class="m3-dialog-close-btn" id="folder-mode-dialog-close" title="Close">
                         <span class="material-symbols-rounded" style="font-size: 18px;">close</span>
@@ -6724,11 +7053,11 @@
                     <!-- Cinema Ultra 4K Option -->
                     <div class="folder-mode-option selected" data-mode="theater" id="folder-opt-theater">
                         <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <span class="material-symbols-rounded" style="font-size: 22px;">movie_filter</span>
+                            <span class="material-symbols-rounded" style="font-size: 22px;">movie</span>
                         </div>
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Cinema Ultra 4K</div>
-                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Dolby Atmos, Ambilight & HDR10+ Cinema</div>
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Cinema</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Theater cinema mode with ambilight</div>
                         </div>
                         <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-primary); font-size: 22px;">radio_button_checked</span>
                     </div>
@@ -6736,11 +7065,11 @@
                     <!-- Lecture Pro Option -->
                     <div class="folder-mode-option" data-mode="lecture" id="folder-opt-lecture">
                         <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(59, 130, 246, 0.15); color: #3b82f6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <span class="material-symbols-rounded" style="font-size: 22px;">cast_for_education</span>
+                            <span class="material-symbols-rounded" style="font-size: 22px;">school</span>
                         </div>
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Lecture Pro</div>
-                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Split-Screen Notes & PDF Companion</div>
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Lecture</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Lecture mode with notes and PDF viewer</div>
                         </div>
                         <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-outline); font-size: 22px;">radio_button_unchecked</span>
                     </div>
@@ -6748,11 +7077,11 @@
                     <!-- Studio Hi-Fi Option -->
                     <div class="folder-mode-option" data-mode="music" id="folder-opt-music">
                         <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(34, 197, 94, 0.15); color: #22c55e; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <span class="material-symbols-rounded" style="font-size: 22px;">graphic_eq</span>
+                            <span class="material-symbols-rounded" style="font-size: 22px;">music_note</span>
                         </div>
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Studio Hi-Fi</div>
-                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Lossless 96kHz, Spatial 3D & Audio Visualizers</div>
+                            <div style="font-weight: 700; font-size: 14px; color: var(--md-sys-color-on-surface);">Audio</div>
+                            <div class="folder-mode-opt-desc" style="font-size: 11.5px; color: var(--md-sys-color-secondary);">Audio playback with music visualizer</div>
                         </div>
                         <span class="material-symbols-rounded folder-mode-radio" style="color: var(--md-sys-color-outline); font-size: 22px;">radio_button_unchecked</span>
                     </div>
@@ -6760,7 +7089,7 @@
 
                 <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
                     <button class="m3-dialog-action-btn" id="folder-mode-cancel-btn" style="background: transparent; color: var(--md-sys-color-on-surface-variant); border: 1px solid var(--md-sys-color-outline-variant);">Cancel</button>
-                    <button class="m3-dialog-action-btn" id="folder-mode-confirm-btn" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);">Confirm & Apply</button>
+                    <button class="m3-dialog-action-btn" id="folder-mode-confirm-btn" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);">Apply</button>
                 </div>
             </div>
         </div>
@@ -6805,7 +7134,7 @@
         <!-- Controls Container -->
         <div class="controls-container" id="controls-container">
             <div class="progress-wrapper">
-                <span class="time-text" id="current-time" title="Click to toggle Time Mode">0:00</span>
+                <span class="time-text" id="current-time" title="Toggle time format">0:00</span>
                 <div class="progress-bar-container" id="progress-bar-container">
                     <div class="progress-track-bg">
                         <div id="simple-fill"></div>
@@ -6814,34 +7143,34 @@
                     <canvas id="squiggly-canvas"></canvas>
                     <div class="teardrop-bubble" id="teardrop-bubble">0:00</div>
                 </div>
-                <span class="time-text" id="duration" title="Click to toggle Duration Mode">0:00</span>
+                <span class="time-text" id="duration" title="Toggle duration format">0:00</span>
             </div>
 
             <div class="buttons-row">
                 <div class="btn-group">
-                    <button class="icon-btn" id="prev-btn" title="Previous Asset (Shift+P)" style="display:none;"><span class="material-symbols-rounded">skip_previous</span></button>
-                    <button class="icon-btn" id="rewind-btn" title="Rewind 10s (Left Arrow)"><span class="material-symbols-rounded">replay_10</span></button>
-                    <button class="icon-btn" id="play-pause-btn" title="Master Playback Toggle (Space)"><span class="material-symbols-rounded" id="play-icon">play_arrow</span></button>
-                    <button class="icon-btn" id="forward-btn" title="Fast-Forward 10s (Right Arrow)"><span class="material-symbols-rounded">forward_10</span></button>
-                    <button class="icon-btn" id="next-btn" title="Next Asset (Shift+N)" style="display:none;"><span class="material-symbols-rounded">skip_next</span></button>
-                    <button class="icon-btn" id="mute-btn" title="Master Audio & Mute (M)"><span class="material-symbols-rounded" id="volume-icon">volume_up</span></button>
+                    <button class="icon-btn" id="prev-btn" title="Previous" style="display:none;"><span class="material-symbols-rounded">skip_previous</span></button>
+                    <button class="icon-btn" id="rewind-btn" title="Rewind 10s"><span class="material-symbols-rounded">replay_10</span></button>
+                    <button class="icon-btn" id="play-pause-btn" title="Play / Pause"><span class="material-symbols-rounded" id="play-icon">play_arrow</span></button>
+                    <button class="icon-btn" id="forward-btn" title="Forward 10s"><span class="material-symbols-rounded">forward_10</span></button>
+                    <button class="icon-btn" id="next-btn" title="Next" style="display:none;"><span class="material-symbols-rounded">skip_next</span></button>
+                    <button class="icon-btn" id="mute-btn" title="Mute / Unmute"><span class="material-symbols-rounded" id="volume-icon">volume_up</span></button>
                     <input type="range" class="volume-slider" id="volume-slider" min="0" max="2" step="0.05" value="1">
                 </div>
 
                 <div class="btn-group">
-                    <button class="icon-btn" id="ab-btn" title="Precision A-B Repeat Loop (L)"><span class="material-symbols-rounded" id="ab-icon">repeat</span></button>
-                    <button class="icon-btn" id="pomo-toggle-btn" title="Deep Focus & Study Interval Timer (P)">
+                    <button class="icon-btn" id="ab-btn" title="A-B Loop"><span class="material-symbols-rounded" id="ab-icon">repeat</span></button>
+                    <button class="icon-btn" id="pomo-toggle-btn" title="Timer">
                         <span class="material-symbols-rounded" id="pomo-icon">timer</span>
                         <span id="pomo-tab-display"></span>
                     </button>
-                    <button class="icon-btn" id="screenshot-btn" title="Smart 4K Frame Grabber & Video Recorder (S)">
+                    <button class="icon-btn" id="screenshot-btn" title="Capture & Record">
                         <span class="material-symbols-rounded" id="screenshot-btn-icon">photo_camera</span>
                         <span id="record-tab-display"></span>
                     </button>
-                    <button class="icon-btn" id="pip-btn" title="Picture-in-Picture Floating Window (I)"><span class="material-symbols-rounded">picture_in_picture_alt</span></button>
-                    <button class="icon-btn" id="speed-btn" title="Variable Playback Velocity (0.25x – 4.0x)"><span class="material-symbols-rounded">speed</span><span id="speed-text" style="font-size:10px; position:absolute; bottom:4px;">1x</span></button>
-                    <button class="icon-btn" id="fullscreen-btn" title="Studio Immersive Fullscreen Mode (F)"><span class="material-symbols-rounded">fullscreen</span></button>
-                    <button class="icon-btn" id="more-toggle-btn" title="Audio DSP, Subtitles & Enhancement Suite"><span class="material-symbols-rounded">more_vert</span></button>
+                    <button class="icon-btn" id="pip-btn" title="Picture in Picture"><span class="material-symbols-rounded">picture_in_picture_alt</span></button>
+                    <button class="icon-btn" id="speed-btn" title="Playback Speed"><span class="material-symbols-rounded">speed</span><span id="speed-text" style="font-size:10px; position:absolute; bottom:4px;">1x</span></button>
+                    <button class="icon-btn" id="fullscreen-btn" title="Fullscreen"><span class="material-symbols-rounded">fullscreen</span></button>
+                    <button class="icon-btn" id="more-toggle-btn" title="More Options"><span class="material-symbols-rounded">more_vert</span></button>
                 </div>
             </div>
         </div>
@@ -6855,11 +7184,11 @@
         <div class="shortcuts-drawer-header">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div style="width:36px; height:36px; border-radius:12px; background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); display:flex; align-items:center; justify-content:center;">
-                    <span class="material-symbols-rounded" style="font-size:22px;">rocket_launch</span>
+                    <span class="material-symbols-rounded" style="font-size:22px;">apps</span>
                 </div>
                 <div>
-                    <div style="font-weight:800; font-size:15px; color:var(--md-sys-color-on-surface);">Command Hub & Quick Launch</div>
-                    <div style="font-size:11px; color:var(--md-sys-color-secondary);">Instant web, stream & app launchpad</div>
+                    <div style="font-weight:800; font-size:15px; color:var(--md-sys-color-on-surface);">Quick Links</div>
+                    <div style="font-size:11px; color:var(--md-sys-color-secondary);">Shortcuts & apps</div>
                 </div>
             </div>
             <button class="icon-btn" id="close-shortcuts-drawer-btn" title="Close" style="width:34px; height:34px;">
@@ -6869,8 +7198,8 @@
 
         <div class="shortcuts-drawer-actions">
             <button class="icon-btn is-morph-rect" id="open-add-shortcut-modal-btn" style="width:100%; height:40px; justify-content:center; gap:8px; font-weight:700; font-size:13px; border-radius:var(--md-sys-shape-corner-full); background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container);">
-                <span class="material-symbols-rounded" style="font-size:18px;">add_circle</span>
-                <span>Create Quick Launch Link</span>
+                <span class="material-symbols-rounded" style="font-size:18px;">add</span>
+                <span>Add Shortcut</span>
             </button>
         </div>
 
@@ -6884,15 +7213,15 @@
         <div class="shortcut-modal-card">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 24px 14px 24px; border-bottom:1px solid var(--md-sys-color-outline-variant);">
                 <div style="font-weight:800; font-size:17px; color:var(--md-sys-color-primary); display:flex; align-items:center; gap:8px;">
-                    <span class="material-symbols-rounded">add_link</span> Add New Shortcut
+                    <span class="material-symbols-rounded">add</span> Add Shortcut
                 </div>
-                <button class="icon-btn" id="close-add-shortcut-modal-btn" style="width:32px; height:32px;">
+                <button class="icon-btn" id="close-add-shortcut-modal-btn" style="width:32px; height:32px;" title="Close">
                     <span class="material-symbols-rounded">close</span>
                 </button>
             </div>
             <div style="padding:20px 24px; display:flex; flex-direction:column; gap:16px;">
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">Quick Presets (Installed Laptop Apps):</label>
+                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">Quick Presets:</label>
                     <div style="display:flex; flex-wrap:wrap; gap:6px;" id="shortcut-preset-buttons">
                         <button type="button" class="preset-app-btn" data-name="Google Chrome" data-url="chrome" data-icon="public" style="padding:4px 10px; border-radius:12px; background:var(--md-sys-color-surface-container-highest); border:1px solid var(--md-sys-color-outline-variant); color:var(--md-sys-color-on-surface); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
                             <span class="material-symbols-rounded" style="font-size:14px; color:var(--md-sys-color-primary);">public</span> Chrome
@@ -6901,7 +7230,7 @@
                             <span class="material-symbols-rounded" style="font-size:14px; color:var(--md-sys-color-primary);">edit_note</span> Notepad
                         </button>
                         <button type="button" class="preset-app-btn" data-name="File Explorer" data-url="explorer" data-icon="folder_open" style="padding:4px 10px; border-radius:12px; background:var(--md-sys-color-surface-container-highest); border:1px solid var(--md-sys-color-outline-variant); color:var(--md-sys-color-on-surface); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                            <span class="material-symbols-rounded" style="font-size:14px; color:var(--md-sys-color-primary);">folder_open</span> Explorer
+                            <span class="material-symbols-rounded" style="font-size:14px; color:var(--md-sys-color-primary);">folder_open</span> Files
                         </button>
                         <button type="button" class="preset-app-btn" data-name="Calculator" data-url="calc" data-icon="calculate" style="padding:4px 10px; border-radius:12px; background:var(--md-sys-color-surface-container-highest); border:1px solid var(--md-sys-color-outline-variant); color:var(--md-sys-color-on-surface); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px;">
                             <span class="material-symbols-rounded" style="font-size:14px; color:var(--md-sys-color-primary);">calculate</span> Calculator
@@ -6909,39 +7238,39 @@
                     </div>
                 </div>
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">Shortcut Name / Title</label>
+                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">Name</label>
                     <input type="text" id="shortcut-name-input" class="m3-input" placeholder="e.g. YouTube, Spotify, Notepad, Chrome" style="width:100%; height:42px; background:var(--md-sys-color-surface-container); border:1px solid var(--md-sys-color-outline-variant); border-radius:12px; padding:0 14px; color:inherit; font-family:inherit;">
                 </div>
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">URL, Web Link or App Command</label>
+                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--md-sys-color-on-surface);">Link or Command</label>
                     <input type="text" id="shortcut-url-input" class="m3-input" placeholder="e.g. https://youtube.com or chrome, notepad, explorer, calc" style="width:100%; height:42px; background:var(--md-sys-color-surface-container); border:1px solid var(--md-sys-color-outline-variant); border-radius:12px; padding:0 14px; color:inherit; font-family:inherit;">
                 </div>
                 <div>
-                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:8px; color:var(--md-sys-color-on-surface);">Icon Category</label>
+                    <label style="display:block; font-size:12px; font-weight:700; margin-bottom:8px; color:var(--md-sys-color-on-surface);">Icon</label>
                     <div style="display:flex; flex-wrap:wrap; gap:8px;" id="shortcut-icon-picker">
                         <button type="button" class="icon-choice-chip active" data-icon="auto_favicon">
-                            <span class="material-symbols-rounded" style="font-size:16px;">public</span> Auto Favicon
+                            <span class="material-symbols-rounded" style="font-size:16px;">public</span> Favicon
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="smart_display">
                             <span class="material-symbols-rounded" style="font-size:16px;">smart_display</span> Video
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="music_note">
-                            <span class="material-symbols-rounded" style="font-size:16px;">music_note</span> Music
+                            <span class="material-symbols-rounded" style="font-size:16px;">music_note</span> Audio
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="movie">
-                            <span class="material-symbols-rounded" style="font-size:16px;">movie</span> Movie
+                            <span class="material-symbols-rounded" style="font-size:16px;">movie</span> Cinema
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="edit_note">
                             <span class="material-symbols-rounded" style="font-size:16px;">edit_note</span> Notes
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="folder_open">
-                            <span class="material-symbols-rounded" style="font-size:16px;">folder_open</span> Files
+                            <span class="material-symbols-rounded" style="font-size:16px;">folder_open</span> Folder
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="calculate">
-                            <span class="material-symbols-rounded" style="font-size:16px;">calculate</span> Calc
+                            <span class="material-symbols-rounded" style="font-size:16px;">calculate</span> Calculator
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="sports_esports">
-                            <span class="material-symbols-rounded" style="font-size:16px;">sports_esports</span> Gaming
+                            <span class="material-symbols-rounded" style="font-size:16px;">sports_esports</span> Games
                         </button>
                         <button type="button" class="icon-choice-chip" data-icon="school">
                             <span class="material-symbols-rounded" style="font-size:16px;">school</span> Study
@@ -6957,7 +7286,7 @@
             </div>
             <div style="display:flex; justify-content:flex-end; gap:10px; padding:14px 24px; border-top:1px solid var(--md-sys-color-outline-variant); background:var(--md-sys-color-surface-container);">
                 <button class="icon-btn" id="cancel-add-shortcut-btn" style="width:auto; padding:6px 16px; font-weight:700; font-size:13px; height:36px;">Cancel</button>
-                <button class="icon-btn is-morph-rect" id="save-shortcut-btn" style="width:auto; padding:6px 20px; font-weight:700; font-size:13px; height:36px; background:var(--md-sys-color-primary); color:var(--md-sys-color-on-primary);">Save Shortcut</button>
+                <button class="icon-btn is-morph-rect" id="save-shortcut-btn" style="width:auto; padding:6px 20px; font-weight:700; font-size:13px; height:36px; background:var(--md-sys-color-primary); color:var(--md-sys-color-on-primary);">Save</button>
             </div>
         </div>
     </div>
@@ -10033,10 +10362,12 @@
                     }
 
                     const tempVid = document.createElement('video');
-                    tempVid.preload = 'metadata';
+                    tempVid.preload = 'auto';
                     tempVid.src = tempSrc;
                     tempVid.muted = true;
                     tempVid.playsInline = true;
+                    tempVid.setAttribute('playsinline', '');
+                    tempVid.setAttribute('webkit-playsinline', '');
                     if (tempSrc.startsWith('http:') || tempSrc.startsWith('https:')) {
                         tempVid.crossOrigin = 'anonymous';
                     }
@@ -10062,22 +10393,22 @@
                         try {
                             if (tempVid.videoWidth > 0 && tempVid.videoHeight > 0) {
                                 const canvas = document.createElement('canvas');
-                                canvas.width = 240; 
-                                canvas.height = 135;
+                                canvas.width = 320; 
+                                canvas.height = 180;
                                 const ctx = canvas.getContext('2d');
-                                ctx.drawImage(tempVid, 0, 0, 240, 135);
+                                ctx.drawImage(tempVid, 0, 0, 320, 180);
 
-                                // Option C: Hybrid Smart Frame (Black Frame Avoidance)
+                                // Hybrid Smart Frame (Black Frame Avoidance)
                                 if (strategy === 'hybrid') {
                                     let isBlack = true;
                                     try {
-                                        const imgData = ctx.getImageData(0, 0, 240, 135);
+                                        const imgData = ctx.getImageData(0, 0, 320, 180);
                                         const data = imgData.data;
                                         let brightCount = 0;
                                         for (let i = 0; i < data.length; i += 64) {
                                             if (data[i] > 18 || data[i + 1] > 18 || data[i + 2] > 18) {
                                                 brightCount++;
-                                                if (brightCount >= 4) {
+                                                if (brightCount >= 5) {
                                                     isBlack = false;
                                                     break;
                                                 }
@@ -10087,23 +10418,24 @@
                                         isBlack = false;
                                     }
 
-                                    // If 1-second mark gave a solid black frame, seek to 33% timestamp
-                                    if (isBlack && !hasRetried33 && tempVid.duration && tempVid.duration > 2.0) {
+                                    // If 2.5s mark gave a solid black frame, seek to 33% timestamp or 4.5s
+                                    if (isBlack && !hasRetried33 && tempVid.duration && tempVid.duration > 4.0) {
                                         hasRetried33 = true;
-                                        tempVid.currentTime = tempVid.duration * 0.33;
-                                        return; // Recapture at 33% on next onseeked!
+                                        tempVid.currentTime = Math.min(tempVid.duration * 0.33, 4.5);
+                                        return; // Recapture on next onseeked!
                                     }
                                 }
 
                                 hasCaptured = true;
                                 clearTimeout(timer);
-                                const dataUrl = canvas.toDataURL('image/jpeg', 0.80);
+                                const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
                                 file.thumb = dataUrl;
                                 const targetKey = file.fileKey || (window.IDBStorage ? window.IDBStorage.generateFileKey(name, file.size || 0, file.lastModified || 0) : name);
                                 if (window.IDBStorage) {
                                     if (typeof window.IDBStorage.saveThumbnail === 'function') {
                                         window.IDBStorage.saveThumbnail(targetKey, dataUrl).catch(() => {});
                                         window.IDBStorage.saveThumbnail(name, dataUrl).catch(() => {});
+                                        if (file.path) window.IDBStorage.saveThumbnail(file.path, dataUrl).catch(() => {});
                                     }
                                     if (typeof window.IDBStorage.saveMedia === 'function') {
                                         window.IDBStorage.saveMedia({
@@ -10138,29 +10470,44 @@
 
                     const timer = setTimeout(() => {
                         if (!hasCaptured) {
-                            const fallback = generateProceduralVideoThumb(cleanName);
-                            file.thumb = fallback;
-                            callback(fallback, { duration: 0, width: 240, height: 135 });
-                            cleanup();
+                            if (tempVid.videoWidth > 0 && tempVid.videoHeight > 0) {
+                                tryCaptureFrame();
+                            }
+                            if (!hasCaptured) {
+                                const fallback = generateProceduralVideoThumb(cleanName);
+                                file.thumb = fallback;
+                                callback(fallback, { duration: 0, width: 240, height: 135 });
+                                cleanup();
+                            }
                         }
-                    }, 2500);
+                    }, 5000);
 
                     tempVid.onloadedmetadata = () => {
-                        let targetSec = 1.0;
-                        if (strategy === 'percentage') {
-                            targetSec = (tempVid.duration && tempVid.duration > 0) ? Math.max(0.2, tempVid.duration * 0.33) : 1.0;
-                        } else if (strategy === 'first_frame') {
-                            targetSec = (tempVid.duration && tempVid.duration <= 1.2) ? Math.max(0.1, tempVid.duration * 0.4) : 1.0;
-                        } else {
-                            // Hybrid: start at 1.0s, will test black frame and jump to 33% if black
-                            targetSec = (tempVid.duration && tempVid.duration <= 1.2) ? Math.max(0.1, tempVid.duration * 0.4) : 1.0;
+                        let targetSec = 2.5; // extract video canvas frame at 2-3 seconds timestamp
+                        if (tempVid.duration && tempVid.duration > 0) {
+                            if (tempVid.duration <= 3.0) {
+                                targetSec = Math.max(0.2, tempVid.duration * 0.4);
+                            } else if (strategy === 'percentage') {
+                                targetSec = Math.max(2.0, tempVid.duration * 0.33);
+                            } else if (strategy === 'first_frame') {
+                                targetSec = 2.0;
+                            } else {
+                                targetSec = 2.5; // default 2-3 seconds
+                            }
                         }
-                        tempVid.currentTime = targetSec;
+                        try {
+                            tempVid.currentTime = targetSec;
+                        } catch(e) {
+                            tryCaptureFrame();
+                        }
                     };
 
                     tempVid.onseeked = tryCaptureFrame;
+                    tempVid.oncanplay = () => {
+                        if (tempVid.currentTime >= 0.5) tryCaptureFrame();
+                    };
                     tempVid.onloadeddata = () => {
-                        if (tempVid.currentTime >= 0.2) tryCaptureFrame();
+                        if (tempVid.currentTime >= 0.5) tryCaptureFrame();
                     };
 
                     tempVid.onerror = () => {
@@ -10276,7 +10623,7 @@
                             if (thumbUrl) {
                                 item.thumb = thumbUrl;
                                 const thumbEl = el.querySelector('.explorer-item-thumb');
-                                if (thumbEl) thumbEl.innerHTML = `<img src="${thumbUrl}" alt="${safeName}">`;
+                                if (thumbEl) thumbEl.innerHTML = `<img src="${thumbUrl}" alt="${safeName}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'material-symbols-rounded\\'>${isAudio ? 'music_note' : 'movie'}</span>';">`;
                                 if (meta && meta.duration && !item.duration) {
                                     item.duration = meta.duration;
                                     const metaEl = el.querySelector('.explorer-item-meta');
@@ -10289,9 +10636,10 @@
                             Promise.all([
                                 typeof window.IDBStorage.getThumbnail === 'function' ? window.IDBStorage.getThumbnail(fileKey).catch(() => null) : Promise.resolve(null),
                                 typeof window.IDBStorage.getThumbnail === 'function' ? window.IDBStorage.getThumbnail(item.name).catch(() => null) : Promise.resolve(null),
+                                (item.path && typeof window.IDBStorage.getThumbnail === 'function') ? window.IDBStorage.getThumbnail(item.path).catch(() => null) : Promise.resolve(null),
                                 typeof window.IDBStorage.getMedia === 'function' ? window.IDBStorage.getMedia(fileKey).catch(() => null) : Promise.resolve(null)
-                            ]).then(([cached1, cached2, cachedMedia]) => {
-                                const found = cached1 || cached2 || (cachedMedia && (cachedMedia.thumb || cachedMedia.poster || cachedMedia.coverUrl));
+                            ]).then(([cached1, cached2, cached3, cachedMedia]) => {
+                                const found = cached1 || cached2 || cached3 || (cachedMedia && (cachedMedia.thumb || cachedMedia.poster || cachedMedia.coverUrl));
                                 if (found) {
                                     applyThumbnail(found, cachedMedia);
                                 } else {
@@ -10482,18 +10830,78 @@
         const bufferingVideo = document.getElementById('buffering-video');
         let bufferStallNudgeTimer = null;
 
+        if (bufferingVideo) {
+            bufferingVideo.muted = true;
+            bufferingVideo.loop = true;
+            bufferingVideo.playsInline = true;
+            bufferingVideo.setAttribute('muted', '');
+            bufferingVideo.setAttribute('playsinline', '');
+            bufferingVideo.setAttribute('webkit-playsinline', '');
+            if (!bufferingVideo.currentSrc && !bufferingVideo.src) {
+                bufferingVideo.src = './am-loading-video.webm';
+            }
+        }
+
+        // Test loading animation button in Settings -> About
+        document.getElementById('test-loading-anim-btn')?.addEventListener('click', () => {
+            showBufferingIndicator();
+            if (typeof showToast === 'function') {
+                showToast("🎬 Previewing Loading Animation (am-loading-video.webm)");
+            }
+            setTimeout(() => {
+                hideBufferingIndicator();
+            }, 3000);
+        });
+
+        // App launch splash screen auto-dismissal
+        const appLaunchSplash = document.getElementById('app-launch-splash');
+        if (appLaunchSplash) {
+            const dismissSplash = () => {
+                if (!appLaunchSplash || appLaunchSplash.dataset.dismissed) return;
+                appLaunchSplash.dataset.dismissed = 'true';
+                appLaunchSplash.style.opacity = '0';
+                appLaunchSplash.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    if (appLaunchSplash.parentNode) appLaunchSplash.remove();
+                }, 450);
+            };
+            if (document.readyState === 'complete') {
+                setTimeout(dismissSplash, 400);
+            } else {
+                window.addEventListener('load', () => setTimeout(dismissSplash, 400));
+            }
+            setTimeout(dismissSplash, 1200); // Safety fallback
+        }
+
+        let isRapidSeeking = false;
+        let seekDebounceTimer = null;
+        let bufferingDisplayTimer = null;
+
         function showBufferingIndicator() {
-            if (bufferingSpinner && video && !video.ended) {
+            if (isRapidSeeking || window.isSmartRecordingActive) return;
+            if (bufferingSpinner) {
                 bufferingSpinner.classList.add('active');
                 if (bufferingVideo) {
+                    bufferingVideo.muted = true;
+                    bufferingVideo.loop = true;
                     try {
-                        bufferingVideo.play().catch(() => {});
+                        const playPromise = bufferingVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                bufferingVideo.muted = true;
+                                bufferingVideo.play().catch(() => {});
+                            });
+                        }
                     } catch(e) {}
                 }
             }
         }
 
         function hideBufferingIndicator() {
+            if (bufferingDisplayTimer) {
+                clearTimeout(bufferingDisplayTimer);
+                bufferingDisplayTimer = null;
+            }
             if (bufferingSpinner) {
                 bufferingSpinner.classList.remove('active');
                 if (bufferingVideo) {
@@ -10508,20 +10916,35 @@
             }
         }
 
-        video?.addEventListener('loadstart', showBufferingIndicator);
+        video?.addEventListener('loadstart', () => {
+            if (!isRapidSeeking) showBufferingIndicator();
+        });
         video?.addEventListener('waiting', () => {
-            showBufferingIndicator();
+            // Instant nudge: immediately awaken media decoder without 1.2s lag
+            if (video && !video.paused) {
+                try { video.play().catch(() => {}); } catch(e) {}
+            }
             if (bufferStallNudgeTimer) clearTimeout(bufferStallNudgeTimer);
             bufferStallNudgeTimer = setTimeout(() => {
-                if (video && !video.paused && video.readyState < 3) {
-                    try {
-                        video.play().catch(() => {});
-                    } catch(e) {}
+                if (video && !video.paused) {
+                    try { video.play().catch(() => {}); } catch(e) {}
                 }
-            }, 1200);
+            }, 60);
+
+            // Debounce buffering spinner: fast keyframe seek will resolve in milliseconds
+            if (bufferingDisplayTimer) clearTimeout(bufferingDisplayTimer);
+            bufferingDisplayTimer = setTimeout(() => {
+                if (video && !video.paused && video.readyState < 3 && !isRapidSeeking && !window.isSmartRecordingActive) {
+                    showBufferingIndicator();
+                }
+            }, 260);
         });
 
-        video?.addEventListener('stalled', showBufferingIndicator);
+        video?.addEventListener('stalled', () => {
+            if (video && !video.paused) {
+                try { video.play().catch(() => {}); } catch(e) {}
+            }
+        });
         video?.addEventListener('canplay', hideBufferingIndicator);
         video?.addEventListener('canplaythrough', hideBufferingIndicator);
         video?.addEventListener('playing', () => {
@@ -10616,8 +11039,8 @@
 
         // When application goes to background or loses focus
         function handleAppHidden() {
-            // Keep playback running in Music Mode
-            if (isMusicMode) {
+            // Keep playback running in Music Mode or while Screen/Video Recording is active
+            if (isMusicMode || window.isSmartRecordingActive) {
                 return;
             }
             // Auto-pause video playback when window loses focus
@@ -10649,6 +11072,7 @@
         /* --- BLUETOOTH & AUDIO DEVICE CONNECT / DISCONNECT HANDLER --- */
         let lastDeviceChangeTime = 0;
         function handleAudioDeviceChange() {
+            if (window.isSmartRecordingActive) return;
             const now = Date.now();
             if (now - lastDeviceChangeTime < 500) return;
             lastDeviceChangeTime = now;
@@ -11818,36 +12242,66 @@
             if (time < 0) time = 0;
             if (video && video.duration && time > video.duration) time = video.duration;
 
-            // Suspend AudioContext during seek to prevent audio pops/glitches/desync
-            if (audioCtx && audioCtx.state === 'running') {
-                audioCtx.suspend().then(() => {
-                    _performSeek(time);
-                    const _resumeAudio = () => {
-                        if (audioCtx) audioCtx.resume().catch(() => {});
-                        video.removeEventListener('seeked', _resumeAudio);
-                    };
-                    video.addEventListener('seeked', _resumeAudio, { once: true });
-                }).catch(() => _performSeek(time));
-            } else {
-                _performSeek(time);
+            isRapidSeeking = true;
+            if (seekDebounceTimer) clearTimeout(seekDebounceTimer);
+            seekDebounceTimer = setTimeout(() => { isRapidSeeking = false; }, 250);
+
+            const wasPlaying = video && !video.paused && !video.ended;
+
+            // Instant click/pop suppression without suspending AudioContext thread
+            if (gainNode && audioCtx && audioCtx.state === 'running') {
+                try {
+                    const ct = audioCtx.currentTime;
+                    const val = gainNode.gain.value;
+                    gainNode.gain.cancelScheduledValues(ct);
+                    gainNode.gain.setValueAtTime(val, ct);
+                    gainNode.gain.linearRampToValueAtTime(0.01, ct + 0.003);
+                    gainNode.gain.linearRampToValueAtTime(val, ct + 0.04);
+                } catch(e) {}
             }
 
-            function _performSeek(t) {
-                if (window.VLCEngine && typeof window.VLCEngine.seekTo === 'function') {
-                    window.VLCEngine.seekTo(t, video);
-                } else if (video) {
+            // High-speed keyframe seek (VLC & KMPlayer zero-latency engine)
+            if (window.VLCEngine && typeof window.VLCEngine.seekTo === 'function') {
+                window.VLCEngine.seekTo(time, video);
+            } else if (video) {
+                let fastSeekDone = false;
+                if (typeof video.fastSeek === 'function') {
                     try {
-                        if (typeof video.fastSeek === 'function') video.fastSeek(t);
-                        else video.currentTime = t;
-                    } catch(e) { video.currentTime = t; }
+                        video.fastSeek(time);
+                        fastSeekDone = true;
+                    } catch(e) {
+                        fastSeekDone = false;
+                    }
                 }
+                if (!fastSeekDone) {
+                    try {
+                        video.currentTime = time;
+                    } catch(e) {}
+                }
+            }
 
-                if (video && video.duration) {
-                    const pct = (t / video.duration) * 100 || 0;
-                    if (swirlyFill) swirlyFill.style.width = pct + '%';
-                    if (simpleFill) simpleFill.style.width = pct + '%';
-                    updateTimeDisplay();
+            // Immediate synchronous UI progress bar update
+            if (video && video.duration) {
+                const pct = (time / video.duration) * 100 || 0;
+                if (swirlyFill) swirlyFill.style.width = pct + '%';
+                if (simpleFill) simpleFill.style.width = pct + '%';
+                updateTimeDisplay();
+            }
+
+            // Zero-latency instant resume: eliminate stalls on seek jumps in long videos
+            if (wasPlaying && video) {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {});
                 }
+                const resumeImmediate = () => {
+                    hideBufferingIndicator();
+                    if (video && wasPlaying && video.paused && !video.ended) {
+                        video.play().catch(() => {});
+                    }
+                };
+                video.addEventListener('seeked', resumeImmediate, { once: true });
+                video.addEventListener('canplay', resumeImmediate, { once: true });
             }
         }
 
@@ -14266,6 +14720,12 @@
             if (deleteSection) deleteSection.style.display = 'flex';
             if (deleteConfirmPanel) deleteConfirmPanel.style.display = 'none';
 
+            const completionBackdrop = document.getElementById('playback-completion-backdrop');
+            if (completionBackdrop) completionBackdrop.classList.add('active');
+
+            const targetNameEl = document.getElementById('hud-delete-target-filename');
+            if (targetNameEl) targetNameEl.textContent = title;
+
             playbackCompletionHud.classList.add('active');
         }
 
@@ -14273,11 +14733,17 @@
             if (playbackCompletionHud) {
                 playbackCompletionHud.classList.remove('active');
             }
+            const completionBackdrop = document.getElementById('playback-completion-backdrop');
+            if (completionBackdrop) completionBackdrop.classList.remove('active');
             const deleteSection = document.getElementById('hud-delete-section');
             const deleteConfirmPanel = document.getElementById('hud-delete-confirm-panel');
             if (deleteSection) deleteSection.style.display = 'flex';
             if (deleteConfirmPanel) deleteConfirmPanel.style.display = 'none';
         }
+
+        document.getElementById('playback-completion-backdrop')?.addEventListener('click', () => {
+            hidePlaybackCompletionHud();
+        });
 
         async function playAdjacentMediaFile(fileObj) {
             if (!fileObj) return;
@@ -14367,6 +14833,10 @@
 
         deleteVideoBtn?.addEventListener('click', () => {
             triggerHaptic(15);
+            const targetNameEl = document.getElementById('hud-delete-target-filename');
+            if (targetNameEl && currentFilename) {
+                targetNameEl.textContent = currentFilename;
+            }
             const warningText = document.querySelector('#hud-delete-confirm-panel .m3-confirm-warning p');
             if (warningText && currentFilename) {
                 warningText.textContent = `Permanently delete "${currentFilename}" from your computer's hard drive and wipe all records? This cannot be undone.`;
@@ -14448,7 +14918,7 @@
             if (playlistSidebar) playlistSidebar.style.display = 'none';
 
             // 6. Show clear notification popup
-            showToast(`🗑️ "${targetTitle}" deleted`);
+            showToast("Video Deleted");
         });
 
         subUpload?.addEventListener('change', (e) => {
@@ -16270,13 +16740,38 @@
         document.getElementById('rewind-btn')?.addEventListener('click', () => { if (video) { fastSeekTo(video.currentTime - AppState.seekStep); showToast(`⏪ -${AppState.seekStep}s`); } });
         document.getElementById('forward-btn')?.addEventListener('click', () => { if (video) { fastSeekTo(video.currentTime + AppState.seekStep); showToast(`⏩ +${AppState.seekStep}s`); } });
 
-        // Draw Watermark Badge Helper with border style and position support
+        // Draw Watermark Badge Helper with dynamically autosizing border and position support
         function drawWatermarkBadge(ctx, width, height, titleText, timeText) {
             if (!AppState.captureWatermark) return;
-            const badgeW = Math.max(340, width * 0.26) * 0.75;
-            const badgeH = Math.max(74, height * 0.075) * 0.75;
-            let padX = 35, padY = height - badgeH - 35;
 
+            const fontFam = AppState.font || 'Roboto';
+            const badgeH = Math.max(54, Math.round(height * 0.075 * 0.75));
+            const titleFontSize = Math.max(13, Math.round(badgeH * 0.28));
+            const timeFontSize = Math.max(11, Math.round(badgeH * 0.22));
+
+            const dispTitle = titleText || currentFilename || "Lecture Note";
+            const dispTime = timeText || `${formatTime(video ? video.currentTime : 0)} • ${new Date().toLocaleDateString()} • AM Player`;
+
+            // Measure title and time text to dynamically scale badge border width to title length
+            ctx.save();
+            ctx.font = 'bold ' + titleFontSize + 'px ' + fontFam;
+            const titleMetrics = ctx.measureText(dispTitle);
+            const titleW = titleMetrics.width;
+
+            ctx.font = '600 ' + timeFontSize + 'px ' + fontFam;
+            const timeMetrics = ctx.measureText(dispTime);
+            const timeW = timeMetrics.width;
+            ctx.restore();
+
+            // Balanced dynamic horizontal padding based on font and badge height
+            const hPadding = Math.max(20, Math.round(badgeH * 0.35));
+            const maxAllowedW = Math.max(200, width - 70);
+            const textContentW = Math.max(titleW, timeW);
+
+            // Dynamic autosizing: tightly fits short titles, smoothly expands for long titles
+            const badgeW = Math.min(maxAllowedW, Math.max(160, Math.round(textContentW + hPadding * 2)));
+
+            let padX = 35, padY = height - badgeH - 35;
             if (AppState.watermarkPos === 'bottom-left') {
                 padX = 35; padY = height - badgeH - 35;
             } else if (AppState.watermarkPos === 'top-right') {
@@ -16304,23 +16799,24 @@
             }
 
             ctx.beginPath();
+            const borderRadius = Math.max(12, Math.round(badgeH * 0.24));
             if (typeof ctx.roundRect === 'function') {
-                ctx.roundRect(padX, padY, badgeW, badgeH, Math.max(12, Math.round(badgeH * 0.24)));
+                ctx.roundRect(padX, padY, badgeW, badgeH, borderRadius);
             } else {
                 ctx.rect(padX, padY, badgeW, badgeH);
             }
             ctx.fill();
             if (AppState.watermarkBorder !== 'none') ctx.stroke();
 
-            const fontFam = AppState.font || 'Roboto';
+            const maxTextDrawW = badgeW - hPadding * 2;
             ctx.fillStyle = "#FFFFFF";
-            ctx.font = 'bold ' + Math.max(13, Math.round(badgeH * 0.28)) + 'px ' + fontFam;
+            ctx.font = 'bold ' + titleFontSize + 'px ' + fontFam;
             ctx.textBaseline = "middle";
-            ctx.fillText(titleText || currentFilename || "Lecture Note", padX + 20, padY + badgeH * 0.36);
+            ctx.fillText(dispTitle, padX + hPadding, padY + badgeH * 0.36, maxTextDrawW);
 
             ctx.fillStyle = AppState.customColor || "#00FF66";
-            ctx.font = '600 ' + Math.max(11, Math.round(badgeH * 0.22)) + 'px ' + fontFam;
-            ctx.fillText(timeText || `${formatTime(video ? video.currentTime : 0)} • ${new Date().toLocaleDateString()} • AM Player`, padX + 20, padY + badgeH * 0.72);
+            ctx.font = '600 ' + timeFontSize + 'px ' + fontFam;
+            ctx.fillText(dispTime, padX + hPadding, padY + badgeH * 0.72, maxTextDrawW);
             ctx.restore();
         }
 
@@ -16574,14 +17070,24 @@
             }
         }
 
-        function startSmartRecording() {
+        let activeSystemAudioStream = null;
+        let activeRecCanvasStream = null;
+
+        async function startSmartRecording() {
             if (!video) {
                 showToast("No active video to record");
                 return;
             }
 
             try {
-                // 1. Ensure Web Audio subsystem is active and running for system audio capture
+                window.isSmartRecordingActive = true;
+
+                // Ensure video is playing and stays playing smoothly at full frame rate
+                if (video.paused && !video.ended) {
+                    safePlay(video);
+                }
+
+                // 1. Ensure Web Audio subsystem is active and running for audio mixing
                 if (!audioInited || !audioCtx) {
                     try { initAudio(); } catch(e) {}
                 }
@@ -16591,34 +17097,101 @@
                 if (audioCtx && !audioDestinationNode) {
                     try {
                         audioDestinationNode = audioCtx.createMediaStreamDestination();
+                    } catch(e) {}
+                }
+
+                // Route internal player audio through gainNode to recording destination
+                if (audioCtx && audioDestinationNode) {
+                    try {
                         if (gainNode) gainNode.connect(audioDestinationNode);
                         else if (analyserNode) analyserNode.connect(audioDestinationNode);
                     } catch(e) {}
                 }
 
-                // 2. High performance video stream capture (smooth frame pacing, zero lag)
-                let rawVideoStream = null;
-                if (typeof video.captureStream === 'function') {
-                    rawVideoStream = video.captureStream();
-                } else if (typeof video.mozCaptureStream === 'function') {
-                    rawVideoStream = video.mozCaptureStream();
+                // 2. Capture and mix true system-level audio into the output recording
+                if (activeSystemAudioStream) {
+                    try { activeSystemAudioStream.getTracks().forEach(t => t.stop()); } catch(e) {}
+                    activeSystemAudioStream = null;
+                }
+                if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+                    try {
+                        const sysAudio = await navigator.mediaDevices.getUserMedia({
+                            audio: {
+                                echoCancellation: false,
+                                noiseSuppression: false,
+                                autoGainControl: false
+                            },
+                            video: false
+                        }).catch(() => null);
+
+                        if (sysAudio && audioCtx && audioDestinationNode) {
+                            activeSystemAudioStream = sysAudio;
+                            const sysSource = audioCtx.createMediaStreamSource(sysAudio);
+                            const sysGain = audioCtx.createGain();
+                            sysGain.gain.value = 1.0;
+                            sysSource.connect(sysGain);
+                            sysGain.connect(audioDestinationNode);
+                        }
+                    } catch(sysErr) {
+                        console.debug("System audio mix notice:", sysErr);
+                    }
                 }
 
-                if (!rawVideoStream) {
+                // 3. High performance video stream capture (zero stall, full frame rate)
+                let rawVideoStream = null;
+                if (typeof video.captureStream === 'function') {
+                    rawVideoStream = video.captureStream(60);
+                } else if (typeof video.mozCaptureStream === 'function') {
+                    rawVideoStream = video.mozCaptureStream(60);
+                }
+
+                // Remove conflicting audio tracks on raw video stream so they do not fight with Web Audio
+                if (rawVideoStream && typeof rawVideoStream.getAudioTracks === 'function') {
+                    rawVideoStream.getAudioTracks().forEach(track => {
+                        try {
+                            track.stop();
+                            rawVideoStream.removeTrack(track);
+                        } catch(e) {}
+                    });
+                }
+
+                // Resolve video track (with silky-smooth canvas stream fallback if needed)
+                let videoTrack = null;
+                if (rawVideoStream && rawVideoStream.getVideoTracks().length > 0) {
+                    videoTrack = rawVideoStream.getVideoTracks()[0];
+                } else {
+                    const recCanvas = document.createElement('canvas');
+                    recCanvas.width = video.videoWidth || 1280;
+                    recCanvas.height = video.videoHeight || 720;
+                    const recCtx = recCanvas.getContext('2d');
+                    activeRecCanvasStream = recCanvas.captureStream(60);
+                    videoTrack = activeRecCanvasStream.getVideoTracks()[0];
+
+                    function renderRecLoop() {
+                        if (!window.isSmartRecordingActive) return;
+                        if (video && !video.paused && video.readyState >= 2) {
+                            recCtx.drawImage(video, 0, 0, recCanvas.width, recCanvas.height);
+                        }
+                        if ('requestVideoFrameCallback' in video) {
+                            video.requestVideoFrameCallback(renderRecLoop);
+                        } else {
+                            requestAnimationFrame(renderRecLoop);
+                        }
+                    }
+                    renderRecLoop();
+                }
+
+                if (!videoTrack) {
+                    window.isSmartRecordingActive = false;
                     showToast("Video recording stream not supported by browser");
                     return;
                 }
 
-                // 3. Compose combined stream with synchronized video & system audio tracks
+                // 4. Compose combined stream with synchronized video & mixed internal/system audio
                 const combinedStream = new MediaStream();
+                combinedStream.addTrack(videoTrack);
 
-                // Add video track
-                const videoTracks = rawVideoStream.getVideoTracks();
-                if (videoTracks && videoTracks.length > 0) {
-                    combinedStream.addTrack(videoTracks[0]);
-                }
-
-                // Add system/lecture audio track from Web Audio engine
+                // Add mixed audio track from Web Audio engine (internal player sound + system output)
                 let audioTrackAdded = false;
                 if (audioDestinationNode && audioDestinationNode.stream) {
                     const destAudioTracks = audioDestinationNode.stream.getAudioTracks();
@@ -16627,7 +17200,7 @@
                         audioTrackAdded = true;
                     }
                 }
-                if (!audioTrackAdded) {
+                if (!audioTrackAdded && rawVideoStream) {
                     const rawAudioTracks = rawVideoStream.getAudioTracks();
                     if (rawAudioTracks && rawAudioTracks.length > 0) {
                         combinedStream.addTrack(rawAudioTracks[0]);
@@ -16636,8 +17209,8 @@
                 }
 
                 recordedChunks = [];
-                
-                // 4. Hardware accelerated & smooth codec selection
+
+                // 5. Codec selection for high frame rate, artifact-free encoding
                 const codecPreferences = [
                     'video/webm;codecs=h264,opus',
                     'video/webm;codecs=avc1,opus',
@@ -16658,11 +17231,11 @@
 
                 const options = {
                     mimeType,
-                    videoBitsPerSecond: 8000000,
+                    videoBitsPerSecond: 4500000,
                     audioBitsPerSecond: 192000
                 };
                 mediaRecorder = new MediaRecorder(combinedStream, options);
-                
+
                 mediaRecorder.ondataavailable = (e) => {
                     if (e.data && e.data.size > 0) {
                         recordedChunks.push(e.data);
@@ -16670,6 +17243,16 @@
                 };
 
                 mediaRecorder.onstop = () => {
+                    window.isSmartRecordingActive = false;
+                    if (activeSystemAudioStream) {
+                        try { activeSystemAudioStream.getTracks().forEach(t => t.stop()); } catch(e) {}
+                        activeSystemAudioStream = null;
+                    }
+                    if (activeRecCanvasStream) {
+                        try { activeRecCanvasStream.getTracks().forEach(t => t.stop()); } catch(e) {}
+                        activeRecCanvasStream = null;
+                    }
+
                     if (recordingPillIndicator) recordingPillIndicator.classList.remove('active');
                     if (recordTimerInterval) clearInterval(recordTimerInterval);
 
@@ -16695,7 +17278,7 @@
                             a.href = URL.createObjectURL(blob);
                             a.click();
                             setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-                            showToast("🎬 Video Clip Saved with Audio!");
+                            showToast("🎬 Video Clip Saved with System & Player Audio!");
                         } else {
                             showToast("⚠️ Recording too short or empty");
                         }
@@ -16707,6 +17290,11 @@
                 recordStartTime = Date.now();
                 if (recordingPillIndicator) recordingPillIndicator.classList.add('active');
                 if (recordingPillTimer) recordingPillTimer.textContent = 'REC 00:00';
+
+                // Keep video playing uninterrupted
+                if (video.paused && !video.ended) {
+                    safePlay(video);
+                }
 
                 // Live recording timer badge on the icon
                 if (recordTabDisplay) {
@@ -16738,12 +17326,14 @@
                 showToast("🔴 Recording Started (Smooth 60fps & Audio)");
                 updateRecordDialogState();
             } catch(err) {
+                window.isSmartRecordingActive = false;
                 console.error("Smart record failed:", err);
                 showToast("Could not start recording on this video");
             }
         }
 
         function stopSmartRecording() {
+            window.isSmartRecordingActive = false;
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 try {
                     if (typeof mediaRecorder.requestData === 'function') {

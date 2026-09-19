@@ -1,6 +1,6 @@
 {
   "name": "am-player",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Adarsh's Media Player - High-Performance Workstation Media Player with Native LibVLC & Hardware Acceleration",
   "main": "main.cjs",
   "scripts": {
@@ -140,7 +140,14 @@
       "idb-storage.js",
       "index.html",
       "manifest.json",
+      "sw.js",
       "am-icon.ico",
+      "am-icon.png",
+      "am-icon-192.png",
+      "am-icon-512.png",
+      "am-icon-180.png",
+      "favicon.ico",
+      "am-loading-video.webm",
       "package.json"
     ]
   },

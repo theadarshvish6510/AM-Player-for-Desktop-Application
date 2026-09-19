@@ -489,9 +489,9 @@ async function createMainWindow() {
   const winWidth = Math.min(1440, Math.floor(screenWidth * 0.92));
   const winHeight = Math.min(920, Math.floor(screenHeight * 0.90));
 
-  let appIconPath = path.join(__dirname, 'am-icon.ico');
+  let appIconPath = path.join(__dirname, process.platform === 'win32' ? 'am-icon.ico' : 'am-icon.png');
   if (!fs.existsSync(appIconPath)) {
-    appIconPath = path.join(__dirname, 'am-icon.ico');
+    appIconPath = path.join(__dirname, 'am-icon.png');
   }
   if (!fs.existsSync(appIconPath)) {
     appIconPath = path.join(__dirname, 'am-icon.ico');
@@ -593,9 +593,9 @@ async function createMainWindow() {
 function setupSystemTray() {
   if (tray) return;
 
-  let iconPath = path.join(__dirname, 'am-icon.ico');
+  let iconPath = path.join(__dirname, process.platform === 'win32' ? 'am-icon.ico' : 'am-icon.png');
   if (!fs.existsSync(iconPath)) {
-    iconPath = path.join(__dirname, 'am-icon.ico');
+    iconPath = path.join(__dirname, 'am-icon.png');
   }
   if (!fs.existsSync(iconPath)) {
     iconPath = path.join(__dirname, 'am-icon.ico');
