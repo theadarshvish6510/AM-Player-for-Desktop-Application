@@ -1,51 +1,84 @@
 # 🎬 Adarsh's Media Player (AM Player) v2.1.1
-> **Industrial-grade, high-performance multimedia workstation built with Native LibVLC, Direct3D11/DXVA2 hardware decoding, 16D Cinematic Spatial Audio DSP, Split-View Lecture Workstation with KaTeX Math Subtitles, Universal Smart Thumbnail Generation, and Google Material 3 Expressive design.**
+> **Industrial-grade, high-performance multimedia workstation built with Native LibVLC, Rust Accelerated Core, Direct3D11/DXVA2 hardware decoding, 16D Cinematic Spatial Audio DSP, Split-View Lecture Workstation with KaTeX Math Subtitles, Universal Smart Thumbnail Generation, and Google Material 3 Expressive design.**
 
 [![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](package.json)
+[![Release](https://img.shields.io/badge/Release-Windows_.exe-00FF66.svg?logo=windows)](https://github.com/theadarshvish6510/am-player/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/theadarshvish6510/am-player?style=social)](https://github.com/theadarshvish6510/am-player)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Electron](https://img.shields.io/badge/Electron-33.2.1-47848F.svg)](https://www.electronjs.org/)
+[![Electron](https://img.shields.io/badge/Electron-33.2.1-47848F.svg?logo=electron)](https://www.electronjs.org/)
 [![Material Design](https://img.shields.io/badge/Material_Design-M3_Expressive-6750A4.svg)](https://m3.material.io/)
 [![Audio Engine](https://img.shields.io/badge/Audio_Engine-16D_Spatial_DSP-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
 [![Storage](https://img.shields.io/badge/Storage-IndexedDB_Persistent-00C853.svg)](idb-storage.js)
 
 ---
 
+### ⭐ Show Some Love & Star the Repo!
+If you find **Adarsh's Media Player (AM Player)** helpful, fun, or useful for your daily music, movie, or lecture sessions:
+* Please give this repository a **⭐ Star on GitHub**! It motivates us to keep building and shipping exciting new features.
+* **Fork** the repo to customize it or contribute back with Pull Requests.
+* Share it with your friends, classmates, and fellow developers! 💖
+
+---
+
+## 💾 Download Windows Software (.exe) & Standalone Releases
+
+Aap AM Player ko direct apne Windows PC par normal software ki tarah download aur install kar sakte hain:
+
+| Package Type | File Name | Description | Direct Download |
+| :--- | :--- | :--- | :--- |
+| **Windows Installer (Setup)** | `AM-Player-Setup-2.1.1.exe` | Standard NSIS installer with desktop shortcut, Start Menu entry, protocol handler & uninstaller. | [📥 Download Setup .exe](https://github.com/theadarshvish6510/am-player/releases/latest) |
+| **Portable Version** | `AM-Player-Portable-2.1.1.exe` | Zero installation required. Ek single standalone `.exe` jisko aap USB drive ya kisi bhi folder se direct run kar sakte hain. | [📦 Download Portable .exe](https://github.com/theadarshvish6510/am-player/releases/latest) |
+| **Web / PWA Application** | Online Web App | Chrome / Edge me khol kar address bar se **1-Click Install** karein bina kisi download ke. | [🌐 Open Live App](https://github.com/theadarshvish6510/am-player) |
+
+### 🚀 Windows PC par Install karne ka Tareeqa:
+1. **GitHub Releases** page se `AM-Player-Setup-2.1.1.exe` download karein.
+2. File par double-click karein. (Agar Windows SmartScreen alert aaye to *"More info"* -> *"Run anyway"* par click karein).
+3. Installation automatically complete ho jayegi aur aapke Desktop aur Start Menu par **AM Player** ka brand icon (`am-icon.ico`) create ho jayega.
+4. App open karein aur seamless 4K/120FPS playback enjoy karein!
+
+---
+
 ## 📑 Table of Contents
 1. [🌟 Overview & Core Philosophy](#-overview--core-philosophy)
-2. [🚀 High-Throughput Engine & Streaming Pipeline](#-high-throughput-engine--streaming-pipeline)
+2. [💾 Download Windows Executables (.exe)](#-download-windows-software-exe--standalone-releases)
+3. [⭐ Show Love & Star the Repo](#-show-some-love--star-the-repo)
+4. [🚀 High-Throughput Engine & Streaming Pipeline](#-high-throughput-engine--streaming-pipeline)
    - [Zero-Copy Local HTTP 206 Streaming](#zero-copy-local-http-206-streaming)
-   - [Direct3D11 & DXVA2 GPU Acceleration](#direct3d11--dxva2-gpu-acceleration)
-   - [Zero-Latency Keyframe Scrubbing](#zero-latency-keyframe-scrubbing)
-3. [📁 Folder Browser & Media History Workflow](#-folder-browser--media-history-workflow)
+   - [Direct3D11, DXVA2 & Rust Acceleration](#direct3d11-dxva2--rust-acceleration)
+   - [Zero-Lag Smart Buffering HUD (`am-loading-video.webm`)](#zero-lag-smart-buffering-hud)
+   - [Instant App Launch Splash Screen](#instant-app-launch-splash-screen)
+5. [📁 Folder Browser & Media History Workflow](#-folder-browser--media-history-workflow)
    - [Folder Toggle & Video-Only Filtering](#folder-toggle--video-only-filtering)
    - [One-Tap Fold Back to Media History](#one-tap-fold-back-to-media-history)
    - [Unified History Tracking & Resume Playback](#unified-history-tracking--resume-playback)
-4. [🖼️ Universal Smart Thumbnail Generation Engine](#-universal-smart-thumbnail-generation-engine)
+6. [🖼️ Universal Smart Thumbnail Generation Engine](#-universal-smart-thumbnail-generation-engine)
    - [3 Strategy Selector (First Frame @ 1.0s, Percentage, Hybrid)](#3-strategy-selector)
    - [Universal Thumbnail Pipeline (Folders, Recents, Music, Video)](#universal-thumbnail-pipeline)
    - [High-Performance IndexedDB Caching](#high-performance-indexeddb-caching)
-5. [🎨 Google Material Design 3 (M3) Expressive UI](#-google-material-design-3-m3-expressive-ui)
+7. [🎨 Google Material Design 3 (M3) Expressive UI](#-google-material-design-3-m3-expressive-ui)
    - [Dynamic Material You Theme Palette](#dynamic-material-you-theme-palette)
    - [Dual Workstation Views (Default vs. Material Workstation)](#dual-workstation-views)
-6. [🎧 16D Cinematic Spatial Audio & Acoustic DSP Engine](#-16d-cinematic-spatial-audio--acoustic-dsp-engine)
+   - [Verified Production Assets Suite (`am-icon.ico`, `am-icon.png`)](#verified-production-assets-suite)
+8. [🎧 16D Cinematic Spatial Audio & Acoustic DSP Engine](#-16d-cinematic-spatial-audio--acoustic-dsp-engine)
    - [16D Dynamic Orbit & HRTF Ear-Flip Rotation](#16d-dynamic-orbit--hrtf-ear-flip-rotation)
    - [Acoustic Tail & DearVR Reverb Reflections](#acoustic-tail--dearvr-reverb-reflections)
    - [10-Band Graphic Equalizer & Acoustic Presets](#10-band-graphic-equalizer--acoustic-presets)
    - [200% Volume Booster & Limiter Compressor](#200-volume-booster--limiter-compressor)
    - [Auto Loudness Normalization & Audio Focus](#auto-loudness-normalization--audio-focus)
-7. [🖥️ Specialized Multimedia Workstations](#️-specialized-multimedia-workstations)
-   - [🎓 1. Lecture Mode (Split-View PDF + Timestamped Notes)](#1--lecture-mode)
+9. [🖥️ Specialized Multimedia Workstations](#️-specialized-multimedia-workstations)
+   - [🎓 1. Lecture Mode (Split-View PDF + KaTeX Math + Silence Skipping)](#1--lecture-mode)
    - [🍿 2. Theater Mode (Ambilight Canvas + Image Enhancer)](#2--theater-mode)
    - [🎵 3. Music Mode (Vinyl Visualizers + Background Tray Playback)](#3--music-mode)
    - [📂 4. Playlist & Media Explorer Mode](#4--playlist--media-explorer-mode)
-8. [📝 Advanced Subtitle & KaTeX Math Rendering Engine](#-advanced-subtitle--katex-math-rendering-engine)
-9. [⚡ Touch, Mouse & Gesture Controls](#-touch-mouse--gesture-controls)
-10. [🛡️ Privacy, Auto-Purge TTL & Storage Management](#️-privacy-auto-purge-ttl--storage-management)
-11. [⌨️ Complete Keyboard Shortcuts Cheat Sheet](#️-complete-keyboard-shortcuts-cheat-sheet)
-12. [📦 Supported Formats & Codecs](#-supported-formats--codecs)
-13. [🛠️ Installation, Development & Standalone Builds](#️-installation-development--standalone-builds)
-14. [📋 Changelog & Release Notes](#-changelog--release-notes)
-15. [📄 License & Author](#-license--author)
+   - [🎬 5. Playback Completion & Post-Watch Dialog](#5--playback-completion--post-watch-dialog)
+10. [📝 Advanced Subtitle & KaTeX Math Rendering Engine](#-advanced-subtitle--katex-math-rendering-engine)
+11. [⚡ Touch, Mouse & Gesture Controls](#-touch-mouse--gesture-controls)
+12. [🛡️ Privacy, Auto-Purge TTL & Storage Management](#️-privacy-auto-purge-ttl--storage-management)
+13. [⌨️ Complete Keyboard Shortcuts Cheat Sheet](#️-complete-keyboard-shortcuts-cheat-sheet)
+14. [📦 Supported Formats & Codecs](#-supported-formats--codecs)
+15. [🛠️ Installation, Development & Building from Source](#️-installation-development--building-from-source)
+16. [📋 Changelog & Release Notes](#-changelog--release-notes)
+17. [📄 License & Author](#-license--author)
 
 ---
 
@@ -64,13 +97,22 @@ Traditional Chromium ya standard web players 10GB–50GB+ files ko memory (RAM) 
 * **HTTP 206 Partial Content (Range Requests):** Poori file RAM mein load karne ke bajaye sirf active viewport aur agle 4MB–8MB video buffer ko fetch karta hai.
 * **Instant 50GB+ Playback:** 50GB se badi raw 4K BluRay file bhi click karte hi 0.1 second ke andar play hoti hai.
 
-### Direct3D11 & DXVA2 GPU Acceleration
+### Direct3D11, DXVA2 & Rust Acceleration
+* **VLC & Rust Core Engine v2.1.0:** Hardware-accelerated zero-copy frame pointer processing with an ultra-lean memory footprint (< 35 MB RAM), calibrated for 120 FPS / 4K Ultra HD compositing.
 * Chromium hardware acceleration flags (`--enable-accelerated-video-decode`, `--enable-zero-copy`, `--enable-features=DirectCompositionVideoOverlays`) ke sath configured.
 * Decoding workload ko CPU se utha kar dedicated GPU video memory (VRAM) par transfer karta hai, jisse CPU usage 80% tak kam hoti hai aur laptops thande aur silent rehte hain.
 * True 10-bit color depth aur 60fps/120fps high refresh rate displays ke liye calibrated.
 
 ### Zero-Latency Keyframe Scrubbing
 * `HTMLVideoElement.fastSeek()` ke sath synchronized timeline scrubber jo direct nearest video keyframe par latch karta hai, allowing smooth scrubbing bina spinning loaders ke.
+
+### Zero-Lag Smart Buffering HUD (`am-loading-video.webm`)
+* Traditional generic CSS spinners ke bajaye AM Player high-efficiency circular-masked WebM animation (`am-loading-video.webm`) use karta hai jo stream stalls, network hiccups ya keyframe sync ke dauran instant visual feedback deta hai.
+* Anti-Stall Nudge Watchdog 1.2 seconds me decoder buffer ko awaken karta hai taaki stream kabhi freeze na ho.
+* Settings panel ke "About" tab me **"Test Loading Animation"** button ke zariye aap live animation ko anytime preview kar sakte hain.
+
+### Instant App Launch Splash Screen
+* Application open hote hi modern cinematic launch splash screen initialize hota hai, jisme circular glowing border ke andar `am-loading-video.webm` looping animation, brand icon (`am-icon.png`), aur version badge (`v2.1.1`) display hota hai aur DOM ready hote hi 400ms me smooth fade-out ho jata hai.
 
 ---
 
@@ -171,6 +213,10 @@ AM Player Google ke latest **Material Design 3 (Material You)** design guideline
 * **1. Default Clean View:** Distraction-free, centered cinema viewport. Minimalist media playback ke liye best.
 * **2. Material Workstation View:** Multi-column productivity layout. Left side mein search aur mode selector chips, right side mein persistent folder chips, quick links, aur media explorer grid.
 
+### Verified Production Assets Suite
+* **Full Multi-Resolution Icon Suite:** Standard `am-icon.ico` (16x16, 32x32, 48x48, 256x256), `am-icon.png` (512x512 Master), `am-icon-192.png`, `am-icon-512.png`, aur `am-icon-180.png` (Apple Touch Icon).
+* **Settings -> About Interactive Test:** Settings ke About tab me verified production assets card included hai, jahan se user directly WebM circular animation aur icon specifications live test kar sakta hai.
+
 ---
 
 ## 🎧 16D Cinematic Spatial Audio & Acoustic DSP Engine
@@ -245,6 +291,15 @@ Hi-Fi audio listening aur library organization:
 * **Natural Alphanumeric Sorting:** Files ko logical order mein sort karta hai (`Lecture 1.mp4`, `Lecture 2.mp4` ... `Lecture 10.mp4`).
 * **Next / Previous Episode Auto-Latch:** Current playing file ke folder se agle episode ka automatic detection.
 * **Grid Mode vs. Compact List Mode:** Visual large posters ya compact file table view.
+
+---
+
+### 🎬 5. Playback Completion & Post-Watch Dialog
+Video ya lecture complete hone par AM Player intelligent Material 3 end screen trigger karta hai:
+* **Next Episode Instant Play:** Folder ke agle video ko highlight karke one-tap continue playback provide karta hai.
+* **Replay Current Video:** Ek click me start frame se dubara lecture revise karein.
+* **Previous Video Card:** Agar peeche ka episode dekhna ho to direct backward navigation card.
+* **Complete & Delete File Option:** Finished video file ko direct confirmation prompt ke sath disk se unlink karne ka option (storage conscious users ke liye).
 
 ---
 
@@ -325,70 +380,114 @@ Hi-Fi audio listening aur library organization:
 
 ---
 
-## 🛠️ Installation, Development & Standalone Builds
+## 🛠️ Installation, Development & Building from Source
 
-### Prerequisites
-* [Node.js](https://nodejs.org/) (Version 18.0 or higher recommended)
-* npm (comes bundled with Node.js)
+### 🌐 Method 1: Instant PWA Install (No Build Tools Required)
+AM Player is a production-certified **Progressive Web App (PWA)**:
+1. Open the app URL in **Google Chrome**, **Microsoft Edge**, or **Brave**.
+2. Click the **Install** icon (laptop / plus icon) in the browser's address bar.
+3. Click **Install**.
+4. That's it! AM Player will launch in its own native desktop window with a taskbar icon, offline capabilities, and instant startup.
 
-### 1. Clone & Install Dependencies
+---
+
+### 💻 Method 2: Standalone Windows .exe Install (GitHub Releases)
+Simply go to the **[GitHub Releases](https://github.com/theadarshvish6510/am-player/releases)** page:
+* Download `AM-Player-Setup-2.1.1.exe` for the full installer.
+* Or download `AM-Player-Portable-2.1.1.exe` for a single-file portable version that runs without installation.
+
+---
+
+### 🔨 Method 3: Build From Source & Create Your Own .exe
+
+#### Prerequisites
+* [Node.js](https://nodejs.org/) (Version 18.0 or higher)
+* Git
+
+#### 1. Clone & Install Dependencies
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/am-player.git
+git clone https://github.com/theadarshvish6510/am-player.git
 
 # Navigate into the project folder
 cd am-player
 
-# Install dependencies
+# Install all dependencies
 npm install
 ```
 
-### 2. Run in Development Mode
-To start the Electron desktop application with hardware acceleration:
+#### 2. Run Locally in Development
 ```bash
+# Start Native Desktop App with Electron & Hardware Acceleration
+npm start
+# or:
 npm run electron:start
-```
 
-To run as a local progressive web app (PWA) server:
-```bash
+# Run local Web / PWA Server
 npm run dev
 ```
 
-### 3. Build Standalone Windows Executables (.exe)
-AM Player includes pre-configured `electron-builder` scripts for Windows distribution:
+#### 3. Package Windows Executables (.exe)
+AM Player comes with pre-configured `electron-builder` configurations:
 
 ```bash
-# 1. Build standard NSIS Windows Installer (.exe setup)
+# 1. Build standard NSIS Windows Installer (Setup .exe with desktop icon & uninstaller)
 npm run dist:win
 
-# 2. Build Portable Executable (Single standalone .exe without install)
+# 2. Build Portable Single-File Executable (.exe without installation)
 npm run dist:portable
+
+# (Optional) Build for macOS (.dmg) or Linux (.AppImage)
+npm run dist:mac
+npm run dist:linux
 ```
-Sabhi generated release packages `dist-electron/` folder ke andar save honge.
+Sabhi generated `.exe` binaries **`dist/`** folder ke andar save ho jayengi.
+
+#### 4. How to Publish the .exe to GitHub Releases:
+1. Apne repo ko GitHub par push karein:
+   ```bash
+   git add .
+   git commit -m "Release v2.1.1 Production Stable"
+   git push origin main
+   ```
+2. GitHub repository par jayein -> Right sidebar me **Releases** -> **"Draft a new release"** par click karein.
+3. Tag version dalein: `v2.1.1`.
+4. `dist/` folder se `AM-Player-Setup-2.1.1.exe` aur `AM-Player-Portable-2.1.1.exe` ko **Attach binaries by dropping them here** area me drag & drop karein.
+5. **Publish release** par click karein! Ab koi bhi direct aapke GitHub se `.exe` download kar sakta hai! 🚀
 
 ---
 
 ## 📋 Changelog & Release Notes
 
-### 🚀 v2.1.1 (Current Stable Release)
-* **Full Version Alignment:** Bumped version to `v2.1.1` across `package.json`, `metadata.json`, `manifest.json`, and Service Worker cache manifests.
+### 🚀 v2.1.1 (Current Stable Production Release)
+* **Official Windows .exe Packaging:** Pre-configured electron-builder NSIS and Portable release pipelines for one-click Windows desktop installation.
+* **Verified Production Assets Suite:** Full high-res icon pack (`am-icon.ico`, `am-icon.png`, `180px`, `192px`, `512px`), tested and cached across Web, PWA, and Electron.
+* **Cinematic App Launch Splash Screen:** Startup animation loop powered by circular-masked `am-loading-video.webm` and brand typography with smooth 400ms DOM dismissal.
+* **Zero-Lag Smart Buffering HUD:** Replaced legacy CSS spinners with native `am-loading-video.webm` looping engine and watchdog auto-nudge against stream stalls.
+* **Settings "About" Developer & Asset Showcase:** Added interactive "Test Loading Animation" control and direct links to GitHub profile and repository.
 * **Service Worker Invalidation (`media-app-shell-v2.1.1`):** Upgraded 3-Tier cache namespace so existing PWA and web installs receive prompt auto-refresh and instant asset synchronization.
-* **Term Renaming ("Lecture Mode"):** Standardized the playback mode naming by converting all remaining "Video" mode instances to "Lecture" / "Lecture Mode" across the home screen, quick upload cards, and folder mode switchers.
-* **Material 3 "About" Developer Tab:** Added a new dedicated "About" section in Settings featuring:
-  - **Developer:** Tillu Sarkar
-  - **GitHub:** [@theadarshvish6510](https://github.com/theadarshvish6510)
-  - **Email:** thetilludoggy6510@gmail.com
-  - **Release:** `v2.1.1` badge
-  - **Action:** Clickable "View GitHub Profile" action button.
+* **Lecture Mode Standardization:** Unified all video playback terminology under "Lecture Mode" for study, note-taking, and scientific PDF workflows.
 
 ### 🌟 v2.1.0
 * **Playback Completion Modal Dialog:** Material 3 finished watching end screen with Next, Current Replay, Previous episode cards, and Complete & Delete workflow with prompt confirmation.
 * **LibVLC Engine & GPU Decoders:** Direct3D11/DXVA2 hardware accelerated pipelines.
+* **KaTeX Math Subtitle Rendering:** Physics & Mathematics LaTeX equation rendering in real-time subtitles.
+
+---
+
+## 💖 Community, Support & Feedback
+
+Agar aapko AM Player pasand aaya ho ya aapki study / entertainment routine ko aasan banaya ho, to please apna support dikhayein:
+* ⭐ **Star this repository on GitHub** - Ye sabse badi help hai project ki reach badhane ke liye!
+* 🐛 **Report Bugs & Suggest Features** via [GitHub Issues](https://github.com/theadarshvish6510/am-player/issues).
+* 🤝 **Pull Requests** are always welcome! Feel free to contribute.
 
 ---
 
 ## 📄 License & Author
 
-* **Architect & Developer:** **Adarsh Vishwakarma**
-* **Project:** **Adarsh's Media Player (AM Player)**
+* **Architect & Developer:** **Adarsh Vishwakarma (Tillu Sarkar)**
+* **GitHub Profile:** [@theadarshvish6510](https://github.com/theadarshvish6510)
+* **Email Contact:** thetilludoggy6510@gmail.com
+* **Project Repository:** [Adarsh's Media Player (AM Player)](https://github.com/theadarshvish6510/am-player)
 * **License:** Distributed under the permissive [MIT License](LICENSE). Feel free to inspect, customize, and extend for your own multimedia and educational needs!
