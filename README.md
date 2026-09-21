@@ -122,7 +122,7 @@ AM Player ka folder explorer aur media history system intuitive navigation ke li
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 📂 Added Folders:  [ 📁 Movies ]  [ 📁 Lectures (ACTIVE) ]  [ 📁 Music ]    │
+│ 📂 Added Folders:  [ 📁 Movies ]  [ 📁 Lectures (ACTIVE) ]  [ 📁 Music ]  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 🎥 Lectures (5 Videos)                 [Click Active Folder Again to Fold]  │
 │ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────────┐ │
@@ -194,7 +194,7 @@ AM Player Google ke latest **Material Design 3 (Material You)** design guideline
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ 🎬 AM PLAYER v2.1 - Material 3 Expressive Workstation                       │
+│ 🎬 AM PLAYER v2.1 - Material 3 Expressive Workstation                      │
 ├───────────────────────────────┬─────────────────────────────────────────────┤
 │ 🔍 Quick Search Bar           │ 📌 Quick Links & Bookmarks (Add Shortcut)   │
 │ 📁 Choose Media Mode:         ├─────────────────────────────────────────────┤
